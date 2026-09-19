@@ -1,7 +1,7 @@
 # Stage 1: Team Formation and Idea Development
 
 ## Overview
-This directory contains the complete documentation for **Stage 1** of our Portfolio Project. It outlines our team formation, collaboration strategies, brainstorming journey, evaluation of explored ideas, and the final selection of our MVP (**DevCompass**).
+This directory contains the complete documentation for **Stage 1** of our Portfolio Project. It outlines our team formation, collaboration strategies, brainstorming journey, evaluation of explored ideas, and the final selection of our MVP (**Developer Compass**).
 
 ## Objectives Met in this Stage
 - Building a cohesive and effective multidisciplinary team.
