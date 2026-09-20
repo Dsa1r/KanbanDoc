@@ -76,9 +76,9 @@ In our idea we introduce the top ‘Next Up’ Action Banner and stripping the i
 ---
 
 ### Expected Outcomes (The Result)
-*Reduced Time-to-Start: The user will spend zero minutes wondering what task to pick up next when they open the website.
-*Eliminates Screen Clutter: The user can look at the workspace without feeling overwhelmed or lost in administrative data.
-*Independent onboarding: A Junior engineer can easily and successfully navigate their daily task cycle without needing a manager to constantly tell them their next step.
+* Reduced Time-to-Start: The user will spend zero minutes wondering what task to pick up next when they open the website.
+* Eliminates Screen Clutter: The user can look at the workspace without feeling overwhelmed or lost in administrative data.
+* Independent onboarding: A Junior engineer can easily and successfully navigate their daily task cycle without needing a manager to constantly tell them their next step.
 
 ---
 
