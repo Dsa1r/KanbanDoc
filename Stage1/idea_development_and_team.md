@@ -69,7 +69,7 @@ During our brainstorming phase, we explored several potential concepts before fi
 
  ---
 
- ###THE SCAMPER FRAMEWORK: 
+ ### THE SCAMPER FRAMEWORK: 
  (Innovating Jira/Trello FOR JUNIOR SOFTWARE DEVELOPER)
 
 * S- Substitute (What can we swap out?)
@@ -84,7 +84,7 @@ We adopt the concept of a GPS navigation system. Just like the GPS tells the dri
 * M- Modify/Magnify (What can we make bigger/magnify?)
 We can magnify the ‘Where to start’ action button, and [START CODING] banner at the top of the screen.
 
-*P- Put it to another use (Who else can use this?)
+* P- Put it to another use (Who else can use this?)
 We take the Kanban concept and put it to use specifically and exclusively for junior software engineers.
 
 * E- Eliminate (What can we delete entirely?)
