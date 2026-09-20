@@ -69,6 +69,26 @@ During our brainstorming phase, we explored several potential concepts before fi
 
  ---
 
+ ###The SCAMPER Framework: (Innovating Jira/Trello)
+
+S- Substitute (What can we swap out?)
+We can substitute Jira’s heavy corporate managers’ data dashboard with a simple, beginner friendly checklist.
+C- Combine (What can we merge?)
+We combined Kanban board with an educational guide, so that it tracks work and teaches workflow at the same time.
+A- Adapt (What can we borrow from elsewhere?)
+We adopt the concept of a GPS navigation system. Just like the GPS tells the driver the immediate next turn we will tell the junior developer in our top banner the immediate next task.
+M- Modify/Magnify (What can we make bigger/magnify?)
+We can magnify the ‘Where to start’ action button, and [START CODING] banner at the top of the screen.
+P- Put it to another use (Who else can use this?)
+We take the Kanban concept and put it to use specifically and exclusively for junior software engineers.
+E- Eliminate (What can we delete entirely?)
+We can take off about 80% _is is just estimation- of Jiras’ screen clutter. Deleting complex Charts, configurations sidebar, setting tabs.
+R- Reverse/ Rearrange (What can we flip around?)
+Instead of making the junior developers search the board to find the task, we reverse it to make the board automatically appear the correct task at the top of the header for them.
+
+
+---
+
 ### What makes Developers compass project MVP idea stand-out?
 Junior Developers often experience cognitive overload and decision paralysis when looking at traditional Project Management Tools. They don't know where to start?, where each phase starts and ends?, what the next steps are?, or what it is called?.
 In our idea we introduce the top ‘Next Up’ Action Banner and stripping the interface down to only three columns to act as an educational guardrail.
