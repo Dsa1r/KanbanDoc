@@ -67,6 +67,12 @@ During our brainstorming phase, we explored several potential concepts before fi
   * Risk of scope creep (adding too many features like dark mode or extra notifications too fast). *Mitigation:* Strict adherence to the core MVP scope.
   * Data persistence on refresh. *Mitigation:* Implementing browser `LocalStorage`.
 
+ ---
+ 
+### Conclusion
+By focusing entirely on the junior experience, we turn a tedious management tool into a supportive learning environment. We are confident that our Kanban will be completely distinct from anything else on the market.
+
+
 ### What makes Developers compass project MVP idea stand-out?
 Junior Developers often experience cognitive overload and decision paralysis when looking at traditional Project Management Tools. They don't know where to start?, where each phase starts and ends?, what the next steps are?, or what it is called?.
 In our idea we introduce the top ‘Next Up’ Action Banner and stripping the interface down to only three columns to act as an educational guardrail.
