@@ -73,6 +73,12 @@ During our brainstorming phase, we explored several potential concepts before fi
 Junior Developers often experience cognitive overload and decision paralysis when looking at traditional Project Management Tools. They don't know where to start?, where each phase starts and ends?, what the next steps are?, or what it is called?.
 In our idea we introduce the top ‘Next Up’ Action Banner and stripping the interface down to only three columns to act as an educational guardrail.
 
+---
+
+### Expected Outcomes (The Result)
+*Reduced Time-to-Start: The user will spend zero minutes wondering what task to pick up next when they open the website.
+*Eliminates Screen Clutter: The user can look at the workspace without feeling overwhelmed or lost in administrative data.
+*Independent onboarding: A Junior engineer can easily and successfully navigate their daily task cycle without needing a manager to constantly tell them their next step.
 
 ---
 
