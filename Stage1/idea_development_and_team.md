@@ -5,7 +5,7 @@
 ## 1. Team Formation Overview
 Our team brings together a diverse blend of technical software engineering skills, business analysis, enterprise architecture, and domain expertise.
 
-### 1.1Team Members & Bios:
+### 1.1 Team Members & Bios:
 * **Areej Alghamdi:**
   * **Background:** Healthcare Sector background (Nursing) transitioning into software engineering, combining domain insights with technical development for the Holberton School final project.
 * **Noura Alosaimi:**
@@ -22,7 +22,7 @@ Our team brings together a diverse blend of technical software engineering skill
 ### 1.2 Collaboration & Communication Strategy:
 
 * **Communication Tools:** We use WhatsApp for daily syncs, quick asynchronous updates, and real-time technical troubleshooting.
-  * **Task Management & Documentation:** We use Notion specifically for task distribution and workflow tracking, while project documentation and code versioning are handled entirely via GitHub.
+* **Task Management & Documentation:** We use Notion specifically for task distribution and workflow tracking, while project documentation and code versioning are handled entirely via GitHub.
 * **Workflow & Decision Making:** Tasks and workflows are managed and distributed by the Project Manager, who oversees and ensures the completion of all assignments. Technical decisions are made collaboratively.
 
 ---
