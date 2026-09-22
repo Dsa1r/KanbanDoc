@@ -5,7 +5,7 @@
 ## 1. Team Formation Overview
 Our team brings together a diverse blend of technical software engineering skills, business analysis, enterprise architecture, and domain expertise.
 
-### Team Members & Bios:
+### 1.1Team Members & Bios:
 * **Areej Alghamdi:**
   * **Background:** Healthcare Sector background (Nursing) transitioning into software engineering, combining domain insights with technical development for the Holberton School final project.
 * **Noura Alosaimi:**
@@ -17,35 +17,41 @@ Our team brings together a diverse blend of technical software engineering skill
 * **Dana Alqwaifel:**
   * **Background:** computer information systems student (Data Science and Management Track), and Software Engineering student at Holberton School, collaborating on technical problem-solving and system architecture.
   * **Technical Skills:** C, C#, Java, Python, ASP.NET, SQL, OOP, System Design, APIs, Cloud Computing.
+  * 
+---
+### 1.2 Collaboration & Communication Strategy:
 
+* **Communication Tools:** We use WhatsApp for daily syncs, quick asynchronous updates, and real-time technical troubleshooting.
+  * **Task Management & Documentation:** We use Notion specifically for task distribution and workflow tracking, while project documentation and code versioning are handled entirely via GitHub.
+* **Workflow & Decision Making:** Tasks and workflows are managed and distributed by the Project Manager, who oversees and ensures the completion of all assignments. Technical decisions are made collaboratively.
 
 ---
 
 ## 2. Ideas Explored & Rejected
 During our brainstorming phase, we explored several potential concepts before finalizing our MVP:
 
-### Idea 1: Supplier Sourcing Platform for Small Businesses
+### Idea 2.1: Supplier Sourcing Platform for Small Businesses
 * **Overview:** A web platform designed to help new entrepreneurs and small business owners find, compare, and communicate with suitable suppliers and materials in one centralized place instead of scattering across multiple channels[cite: 1].
 * **Key Features:** Buyer/supplier accounts, categorized supplier search, Request for Quotation (RFQ), and quotation comparisons[cite: 1].
 * **Strengths:** Solves a real-world search friction, clear target audience, and high scalability potential[cite: 1].
 * **Weaknesses & Challenges:** Existing B2B competition, two-sided marketplace dependency, and the complexity of supplier data acquisition and verification[cite: 1].
 * **Reason for Rejection:** Although it addressed a genuine problem, the complexity of building a two-sided marketplace and acquiring suppliers made it unsuitable for the strict MVP timeline[cite: 1].
 
-### Idea 2: EduPulse — EduPulse: AI Academic Analytics
+### Idea 2.2: EduPulse — EduPulse: AI Academic Analytics
 * **Overview:** An intelligent platform designed to aggregate academic data, analyze student study journeys, and provide explainable recommendations and adaptive support.
 * **Strengths:** Addresses student fragmentation of schedules and grades; introduces proactive advisory logic.
 * **Weaknesses & Challenges:** High friction in data input/transcript acquisition, and high algorithmic complexity in accurately predicting individual student circumstances.
 * **Reason for Rejection:** High technical complexity and scope risk within the short timeframe.
 
 
-### Idea 3: PathFinder (Adaptive Tech Career Roadmap Platform)
+### Idea 2.3: PathFinder (Adaptive Tech Career Roadmap Platform)
 - **Overview:** A web platform that helps tech students discover which specialization path (web, mobile, data, cybersecurity, etc.) suits them best. Instead of a single static roadmap, the platform generates multiple roadmap variants per path tailored to the learner's style (project-first vs. theory-first), and uses AI-driven analysis of post-task reflection answers to build a dynamic, evolving skill profile.
 - **Key Features:** Adaptive multi-variant roadmaps per tech path; AI-powered reflection analysis that converts free-text answers into structured skill scores; per-task time/effort estimation; auto-generated PDF skill report and lightweight HTML portfolio upon roadmap completion; sequential progress-lock tied to sharing progress on LinkedIn.
 - **Strengths:** Addresses a widely relatable pain point, most tech students genuinely struggle to pick a specialization and waste significant time on trial and error. Differentiates clearly from static tools like roadmap.sh by adapting to the individual learner and producing a tangible, shareable proof-of-skill output rather than just a completion badge. The LinkedIn-sharing mechanic also creates organic, built-in marketing potential.
 - **Weaknesses & Challenges:** The full feature set is large for a short MVP window adaptive roadmap generation, continuous AI-based skill analysis, automated PDF/portfolio generation, and LinkedIn integration are each non-trivial on their own. The platform also depends on curating sufficient quality course/project content per path, which is a manual content-acquisition bottleneck.
 - **Reason for Rejection:** Although the idea solves a genuine and highly relatable problem, its combined feature scope (multi-variant adaptive roadmaps + continuous AI skill analysis + automated PDF/portfolio generation + LinkedIn-gated progression) effectively describes a complete product rather than an MVP achievable within the project's strict short timeline.
 
-### Idea 4: StartupLens (Idea-to-Market Comparison Tool for Entrepreneurs)
+### Idea 2.4: StartupLens (Idea-to-Market Comparison Tool for Entrepreneurs)
 
 - **Overview:** A web tool that helps aspiring entrepreneurs validate their business idea by comparing it against a database of existing startups and companies. The user describes their idea through a structured input flow, and an AI-powered matching engine returns a report of similar companies, the key people behind them, the main challenges and opportunities they faced, and common traits shared across companies similar to the user's idea.
 - **Key Features:** Structured idea-intake form (domain, problem solved, target audience, rough business model); AI-based analysis of the submitted idea to extract domain and potential weaknesses; comparison engine matching the idea against a curated company/startup database; output report showing similar companies, founders/stakeholders, key challenges, opportunities, and shared traits; development suggestions directing the user toward relevant consultation resources based on their idea type and identified gaps.
