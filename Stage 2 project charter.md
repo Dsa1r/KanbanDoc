@@ -1,9 +1,13 @@
-Stage 3: The Project Charter The final document
+Stage 2: The Project Charter The final document
 ---
 
 ### The purpose of DevCompass
 
 To bridge the gap between complex enterprise project management tools and junior developers. By stripping away traditional administrative clutter and introducing automation, DevCompass provides junior developers with a clean, low-friction workspace that reduces cognitive overload, speeds up onboarding, and minimizes the time senior engineers spend answering repetitive workflow questions.
+
+
+### Project Objectives: 
+
 
 Objective 1:  Develop a functional MVP of DevCompass within the project timeframe, featuring a simplified columns Kanban workflow.
 Objective 2:  Implement a dynamic “Next Up” banner that automatically identifies and displays the user's highest-priority next task, reducing uncertainty about what to work on next.
