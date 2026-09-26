@@ -80,6 +80,7 @@ Mitigation: By creating and locking in the Database UML right now in Week 1, all
 ---
 
 ### Stage 1 — Team Formation and Idea Development (Duration: 1 Week)
+
 • Form the core team and establish collaborative workflows.
 
 • Brainstorm, evaluate at least 3 project ideas, and align on learning goals.
