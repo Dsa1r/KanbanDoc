@@ -58,7 +58,8 @@ AI Blocking Assistant: A text-based assistant to help developers resolve code bl
 
 ---
 
-# Risks: Potential risks with mitigation strategies.
+# Risks: Potential risks with mitigation strategies
+---
 
 ### Risk 1: 
 Drag-and-Drop Technical Complexity: Building a system for moving cards from scratch can be difficult and time-consuming.
