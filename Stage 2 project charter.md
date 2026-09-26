@@ -56,7 +56,7 @@ Multi-Language Support: Localizing the platform interface into languages other t
 Senior software developer adding the tasks.
 AI Blocking Assistant: A text-based assistant to help developers resolve code blockers natively inside their task cards.
 
---
+---
 
 # Risks: Potential risks with mitigation strategies.
 
