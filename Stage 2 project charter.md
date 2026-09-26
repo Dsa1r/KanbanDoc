@@ -20,16 +20,16 @@ Attracting 20 users (student/trainee) to try the platform in the launch week.
 
 ---
 
-### Stakeholders and Roles: A list of all stakeholders and a description of team roles
+## Stakeholders and Roles: A list of all stakeholders and a description of team roles
 ---
 
 
-## Stakeholders:
+### Stakeholders:
 Junior Developers: Bootcamp Students (End Users): The primary consumers who utilize the interface to track tasks without project management fatigue.
 Course Instructors: Evaluators: the primary stakeholders, who evaluate the charter,and grade the DevCompass application. 
 Development Team: The team who are  responsible for design, construction and testing DevCompass.
 
-## Team Roles:
+### Team Roles:
 Full Stack (User & Dashboard Domain)
 Full Stack ((Curriculum & Provisioning Domain)
 Full Stack (Kanban Frame & Movement)
