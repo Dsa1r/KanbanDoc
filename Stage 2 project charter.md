@@ -56,18 +56,20 @@ Multi-Language Support: Localizing the platform interface into languages other t
 Senior software developer adding the tasks.
 AI Blocking Assistant: A text-based assistant to help developers resolve code blockers natively inside their task cards.
 
+--
 
+# Risks: Potential risks with mitigation strategies.
 
-### Risks: Potential risks with mitigation strategies.
-
-# Risk 1: Drag-and-Drop Technical Complexity: Building a system for moving cards from scratch can be difficult and time-consuming.
+### Risk 1: 
+Drag-and-Drop Technical Complexity: Building a system for moving cards from scratch can be difficult and time-consuming.
 Mitigation: Using a documented and ready-to-drag and-drop React library instead of building the entire system from scratch.
 
-# Risk 2: Limited Development Time: The team may spend too much time improving the design or adding advanced features.
+### Risk 2: Limited Development Time: The team may spend too much time improving the design or adding advanced features.
 Mitigation: Set clear milestones for each stage and move on to the next stage once the basic MVP requirements are met.
 
-# Risk 3: junior development failure: Integration Disconnect. If you skip the UML step and start coding immediately, this is what typically happens to a team of 4:Developer A writes frontend code expecting a variable named “task_title” .Developer B writes backend code naming the exact same field “title_name” . When you try to merge your code in Week 5 for example, the application breaks completely, and you lose days rewriting code.
+### Risk 3: junior development failure: Integration Disconnect. If you skip the UML step and start coding immediately, this is what typically happens to a team of 4:Developer A writes frontend code expecting a variable named “task_title” .Developer B writes backend code naming the exact same field “title_name” . When you try to merge your code in Week 5 for example, the application breaks completely, and you lose days rewriting code.
 Mitigation: By creating and locking in the Database UML right now in Week 1, all 4 team members have an identical reference point. The frontend developers know exactly what variables to request, and the backend developers know exactly what data schema to build.
+---
 
 
 ### High-Level Plan: Timeline or phases of the project.
