@@ -30,10 +30,14 @@ Course Instructors: Evaluators: the primary stakeholders, who evaluate the chart
 Development Team: The team who are  responsible for design, construction and testing DevCompass.
 
 ### Team Roles:
-Full Stack (User & Dashboard Domain)
-Full Stack ((Curriculum & Provisioning Domain)
-Full Stack (Kanban Frame & Movement)
-Full Stack (Rich Card & QA Domain)
+•Full Stack (User & Dashboard Domain)
+
+•Full Stack ((Curriculum & Provisioning Domain)
+
+•Full Stack (Kanban Frame & Movement)
+
+•Full Stack (Rich Card & QA Domain)
+
 --
 
 • Scope: In-scope and out-of-scope items.
