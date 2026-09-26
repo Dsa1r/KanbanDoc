@@ -40,7 +40,7 @@ Development Team: The team who are  responsible for design, construction and tes
 
 --
 
-• Scope: In-scope and out-of-scope items.
+## Scope: In-scope and out-of-scope items.
 
 ## In Scope:
 Simplified Kanban Interface: specific columns could include the next but not limited: Triage and design/ active coding/ Testing/ Review and Merge strictly tracking immediate engineering tasks.
@@ -55,6 +55,7 @@ Multi-Language Support: Localizing the platform interface into languages other t
 Senior software developer adding the tasks.
 AI Blocking Assistant: A text-based assistant to help developers resolve code blockers natively inside their task cards.
 
+---
 
 ### Risks: Potential risks with mitigation strategies.
 
