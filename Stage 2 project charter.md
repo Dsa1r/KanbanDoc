@@ -20,7 +20,7 @@ Attracting 20 users (student/trainee) to try the platform in the launch week.
 
 ---
 
-## Stakeholders and Roles: A list of all stakeholders and a description of team roles
+# Stakeholders and Roles: A list of all stakeholders and a description of team roles
 ---
 
 
@@ -34,6 +34,7 @@ Full Stack (User & Dashboard Domain)
 Full Stack ((Curriculum & Provisioning Domain)
 Full Stack (Kanban Frame & Movement)
 Full Stack (Rich Card & QA Domain)
+--
 
 • Scope: In-scope and out-of-scope items.
 
