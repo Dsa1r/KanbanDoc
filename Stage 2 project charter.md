@@ -38,9 +38,10 @@ Development Team: The team who are  responsible for design, construction and tes
 
 •Full Stack (Rich Card & QA Domain)
 
---
+---
 
-## Scope: In-scope and out-of-scope items.
+# Scope: In-scope and out-of-scope items.
+---
 
 ## In Scope:
 Simplified Kanban Interface: specific columns could include the next but not limited: Triage and design/ active coding/ Testing/ Review and Merge strictly tracking immediate engineering tasks.
