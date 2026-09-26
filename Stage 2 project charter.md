@@ -87,7 +87,9 @@ Mitigation: By creating and locking in the Database UML right now in Week 1, all
 
 • Finalize and lock in the selected MVP concept (DevCompass).
 
+
 ### Stage 2 — Project Charter Development (Duration: 1 Week)
+
 • Define project purpose and establish 2-3 SMART objectives.
 
 • Outline stakeholders, team roles, and full-stack ownership.
@@ -98,7 +100,9 @@ Mitigation: By creating and locking in the Database UML right now in Week 1, all
 
 • Outline the high-level project timeline and phases.
 
+
 ### Stage 3 — Technical Documentation (Duration: 2 Weeks)
+
 • Create prioritized User Stories and UI mockups in Figma.
 
 • Design the high-level system architecture and database schema / ER diagrams.
@@ -107,7 +111,9 @@ Mitigation: By creating and locking in the Database UML right now in Week 1, all
 
 • Document Source Control Management (SCM) and Quality Assurance (QA) plans, along with technical justifications.
 
+
 ### Stage 4 — MVP Development and Execution (Duration: 6 Weeks)
+
 • Project Setup: Initialize Frontend, Backend, and DB repositories, configure Git/GitHub, deploy systems, and set up project management tracking tools with individual tasks.
 
 • Core Authentication: Implement end-to-end authentication (Login, Sign up, Logout) across Frontend, API, and DB, alongside the Home page.
@@ -120,7 +126,9 @@ Mitigation: By creating and locking in the Database UML right now in Week 1, all
 
 • Testing & Polish: Execute unit and integration testing, resolve bugs, and polish optional features.
 
+
 ### Stage 5 — Project Closure (Duration: 2 Weeks)
+
 • Finalize project deliverables including the project poster, presentation, and landing page.
 
 • Perform a final review across the entire project to ensure complete readiness.
