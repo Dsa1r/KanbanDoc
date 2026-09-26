@@ -81,6 +81,7 @@ Mitigation: By creating and locking in the Database UML right now in Week 1, all
 
 ### Stage 1 — Team Formation and Idea Development (Duration: 1 Week)
 
+
 • Form the core team and establish collaborative workflows.
 
 • Brainstorm, evaluate at least 3 project ideas, and align on learning goals.
@@ -89,6 +90,7 @@ Mitigation: By creating and locking in the Database UML right now in Week 1, all
 
 
 ### Stage 2 — Project Charter Development (Duration: 1 Week)
+
 
 • Define project purpose and establish 2-3 SMART objectives.
 
@@ -103,6 +105,7 @@ Mitigation: By creating and locking in the Database UML right now in Week 1, all
 
 ### Stage 3 — Technical Documentation (Duration: 2 Weeks)
 
+
 • Create prioritized User Stories and UI mockups in Figma.
 
 • Design the high-level system architecture and database schema / ER diagrams.
@@ -113,6 +116,7 @@ Mitigation: By creating and locking in the Database UML right now in Week 1, all
 
 
 ### Stage 4 — MVP Development and Execution (Duration: 6 Weeks)
+
 
 • Project Setup: Initialize Frontend, Backend, and DB repositories, configure Git/GitHub, deploy systems, and set up project management tracking tools with individual tasks.
 
@@ -128,6 +132,7 @@ Mitigation: By creating and locking in the Database UML right now in Week 1, all
 
 
 ### Stage 5 — Project Closure (Duration: 2 Weeks)
+
 
 • Finalize project deliverables including the project poster, presentation, and landing page.
 
