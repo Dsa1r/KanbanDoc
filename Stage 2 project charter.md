@@ -17,9 +17,11 @@ Implement a dynamic “Next Up” banner that automatically identifies and displ
 Optimize the workflow application to achieve a task-creation time under at most 5 seconds for a new user supported by contextual tooltips to explain concepts to junior developers.
 ### Objective 4:
 Attracting 20 users (student/trainee) to try the platform in the launch week.
+
 ---
 
-### Stakeholders and Roles: A list of all stakeholders and a description of team roles.
+### Stakeholders and Roles: A list of all stakeholders and a description of team roles
+---
 
 
 ## Stakeholders:
