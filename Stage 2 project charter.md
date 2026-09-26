@@ -9,13 +9,13 @@ To bridge the gap between complex enterprise project management tools and junior
 ### Project Objectives: 
 
 
-# Objective 1:  
+#### Objective 1:  
 Develop a functional MVP of DevCompass within the project timeframe, featuring a simplified columns Kanban workflow.
-# Objective 2: 
+### Objective 2: 
 Implement a dynamic “Next Up” banner that automatically identifies and displays the user's highest-priority next task, reducing uncertainty about what to work on next.
-# Objective 3: 
+### Objective 3: 
 Optimize the workflow application to achieve a task-creation time under at most 5 seconds for a new user supported by contextual tooltips to explain concepts to junior developers.
-# Objective 4:
+### Objective 4:
 Attracting 20 users (student/trainee) to try the platform in the launch week.
 
 
