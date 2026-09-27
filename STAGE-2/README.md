@@ -10,4 +10,4 @@ This directory contains the core planning, scoping, and architectural baseline e
 * **Risk Management:** Locking in the database schema and UML references early to prevent integration disconnects and variable mismatches between the frontend and backend.
 
 ## Document Index
-* **[Project Charter.md](./Project%20Charter.md)**: The comprehensive document detailing SMART objectives, stakeholder roles, full-stack domain distribution, risk mitigation strategies, and the high-level timeline (Stages 1–5).
+* **[Project Charter.md](https://github.com/Dsa1r/KanbanDoc/blob/4b7afe2251f1db7c1d9dae41fc3a2cec50600148/STAGE-2/%20Project%20Charter.md)**: The comprehensive document detailing SMART objectives, stakeholder roles, full-stack domain distribution, risk mitigation strategies, and the high-level timeline (Stages 1–5).
