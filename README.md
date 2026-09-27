@@ -41,7 +41,7 @@ You can track our detailed progress and reports across the project phases:
 * ### [Stage 1: Team Formation and Idea Development]([./Stage1/idea_development_and_team.md](https://github.com/Dsa1r/KanbanDoc/tree/3c67d7ba89bc36cdd723a7b9c65a6cf7afe59fc3/Stage1))
   * **Summary:** Covers our early brainstorming journeys, team formation, and initial concept evolution.
 
-* ### [Stage 2: Project Charter]([./STAGE-2/Project%20Charter.md](https://github.com/Dsa1r/KanbanDoc/tree/3c67d7ba89bc36cdd723a7b9c65a6cf7afe59fc3/STAGE-2))
+* ### [Stage 2: Project Charter]([3/STAGE-2)](https://github.com/Dsa1r/KanbanDoc/tree/28ba754d67b3788e1b36559390508dfa00120558/STAGE-2))
   * **Summary:** Outlines the finalized project purpose, SMART objectives, stakeholder mapping, multidisciplinary full-stack team roles, clear scope boundaries (in/out-of-scope), and risk management strategies.
 
 ---
