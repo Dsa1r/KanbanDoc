@@ -32,7 +32,7 @@ Development Team: The team who are  responsible for design, construction and tes
 ### Team Roles:
 •Full Stack (User & Dashboard Domain)
 
-•Full Stack ((Curriculum & Provisioning Domain)
+•Full Stack (Curriculum & Provisioning Domain)
 
 •Full Stack (Kanban Frame & Movement)
 
@@ -70,7 +70,7 @@ Limited Development Time: The team may spend too much time improving the design 
 Mitigation: Set clear milestones for each stage and move on to the next stage once the basic MVP requirements are met.
 
 ### Risk 3: 
-junior development failure: Integration Disconnect. If you skip the UML step and start coding immediately, this is what typically happens to a team of 4:Developer A writes frontend code expecting a variable named “task_title” .Developer B writes backend code naming the exact same field “title_name” . When you try to merge your code in Week 5 for example, the application breaks completely, and you lose days rewriting code.
+Frontend and Backend Schema Misalignment: Integration Disconnect. If you skip the UML step and start coding immediately, this is what typically happens to a team of 4:Developer A writes frontend code expecting a variable named “task_title” .Developer B writes backend code naming the exact same field “title_name” . When you try to merge your code in Week 5 for example, the application breaks completely, and you lose days rewriting code.
 Mitigation: By creating and locking in the Database UML right now in Week 1, all 4 team members have an identical reference point. The frontend developers know exactly what variables to request, and the backend developers know exactly what data schema to build.
 
 ---
