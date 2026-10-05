@@ -1,0 +1,71 @@
+flowchart TD
+    %% الكيانات (Entities)
+    USER["USER"]
+    TEAM["TEAM"]
+    PROJECT["PROJECT"]
+    TASK["TASK"]
+
+    %% العلاقات (Relationships)
+    R_TEAM_USER{"Includes"}
+    R_TEAM_PROJECT{"Manages"}
+    R_PROJECT_TASK{"Contains"}
+    R_USER_TASK{"Assigned_To"}
+
+    %% خصائص USER
+    U_id(["<u>id</u>"])
+    U_name(["name"])
+    U_email(["email"])
+    U_pass(["pass"])
+    U_phone(["phone"])
+
+    USER --- U_id
+    USER --- U_name
+    USER --- U_email
+    USER --- U_pass
+    USER --- U_phone
+
+    %% خصائص TEAM
+    T_id(["<u>id</u>"])
+    T_name(["name"])
+
+    TEAM --- T_id
+    TEAM --- T_name
+
+    %% خصائص PROJECT
+    P_id(["<u>id</u>"])
+    P_name(["name"])
+    P_desc(["description"])
+
+    PROJECT --- P_id
+    PROJECT --- P_name
+    PROJECT --- P_desc
+
+    %% خصائص TASK
+    TK_id(["<u>id</u>"])
+    TK_name(["name"])
+    TK_desc(["description"])
+    TK_res(["resources"])
+    TK_val(["list_or_validation"])
+    TK_phase(["phase"])
+    TK_status(["status"])
+
+    TASK --- TK_id
+    TASK --- TK_name
+    TASK --- TK_desc
+    TASK --- TK_res
+    TASK --- TK_val
+    TASK --- TK_phase
+    TASK --- TK_status
+
+    %% توصيلات العلاقات مع القيود (Cardinalities)
+    TEAM ---|"(1,1)"| R_TEAM_USER
+    R_TEAM_USER ---|"(0,N)"| USER
+
+    TEAM ---|"(1,1)"| R_TEAM_PROJECT
+    R_TEAM_PROJECT ---|"(0,N)"| PROJECT
+
+    PROJECT ---|"(1,1)"| R_PROJECT_TASK
+    R_PROJECT_TASK ---|"(1,N)"| TASK
+
+    USER ---|"(0,N)"| R_USER_TASK
+    R_USER_TASK ---|"(0,1)"| TASK
