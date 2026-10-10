@@ -24,11 +24,3 @@ graph TD
    
     Frontend --->|Sends user requests via HTTPS| Backend
     Backend --->|Queries & updates data via Python SDK| DB
-   
-    classDef clientStyle stroke:#38bdf8,fill:#f0f9ff
-    classDef appStyle stroke:#a78bfa,fill:#f5f3ff
-    classDef dataStyle stroke:#4ade80,fill:#f0fdf4
-   
-    class Frontend clientStyle
-    class Backend appStyle
-    class DB dataStyle
