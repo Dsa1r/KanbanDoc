@@ -44,6 +44,8 @@ You can track our detailed progress and reports across the project phases:
 * ### [Stage 2: Project Charter](https://github.com/Dsa1r/KanbanDoc/tree/c85c572b15aab74d46ed04a3318fe557dfb5027d/STAGE-2)
   * **Summary:** Outlines the finalized project purpose, SMART objectives, stakeholder mapping, multidisciplinary full-stack team roles, clear scope boundaries (in/out-of-scope), and risk management strategies.
 
+- ### [Stage 3: Comprehensive Technical Documentation](https://github.com/Dsa1r/KanbanDoc/tree/41ebcf6cfa6399b7c61a1d483387ccd2e142acb5/stage3)
+  * **Summary:** Delivers a robust and exhaustive engineering blueprint for the DevCompass MVP. This phase bridges product requirements and execution by defining MoSCoW-prioritized User Stories with Given-When-Then acceptance criteria, Figma UI wireframe layouts, high-level system architecture and data flows, object-oriented class models, complete PostgreSQL database schemas with relational ER diagrams, detailed sequence interaction flows across core use cases (Login, Progress Tracking, and Project Generation), full REST API specifications, and rigorous SCM/QA lifecycle strategies.
 ---
 
 ## Authors & Team
