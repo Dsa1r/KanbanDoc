@@ -1,4 +1,4 @@
-# System Architecture
+## System Architecture
 
 ## 1. High-Level System Architecture
 
