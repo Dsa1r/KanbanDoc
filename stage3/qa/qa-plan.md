@@ -41,5 +41,3 @@ The Quality Assurance (QA) plan for **DevCompass** ensures system reliability, c
 | **UI Tests** | React components and Kanban board | React Testing Library | Frontend Developer |
 
 ---
-
-[⬅ Back to Master Index](../README.md)
