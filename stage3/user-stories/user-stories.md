@@ -35,7 +35,7 @@ To streamline development and focus on implementation, requirements are partitio
 
 ## Could Have:
 -As a user, I want to toggle between dark mode and light mode themes so that I can comfortably view my Kanban board in low-light environments.<br>
-- As a user, I want to see a celebratory confetti micro-animation when I drag a task to Done so that I get rewarding visual feedback on my progress.<br>
+-As a user, I want to see a celebratory confetti micro-animation when I drag a task to Done so that I get rewarding visual feedback on my progress.<br>
 
 
 ## Won’t Have:
@@ -46,7 +46,7 @@ To streamline development and focus on implementation, requirements are partitio
 
 # User Stories with Given-When-Then Criteria as a Scenario. 
 ## 1. Must Have Requirements (Core MVP Engine)
-*The following scenarios define how each feature behaves under specific conditions and serve as the acceptance criteria for testing.
+The following scenarios define how each feature behaves under specific conditions and serve as the acceptance criteria for testing.
 
 ### 1.1. User Account Creation
 * **User Story:** As a user, I want to create a new account so I can access the milestone tracking system.
