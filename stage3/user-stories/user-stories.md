@@ -3,9 +3,9 @@
 # Domain Terminology
   To ensure clarity across project scope and user stories, the board architecture distinguishes between Stages and Phases:
 
-- Stages (Domain Modules): Broad project areas — Database, Backend, and Frontend.
+- Stages (Domain Modules): Broad project areas — Database, Backend, and Frontend (Three stages).
 
-- Phases / Columns (Workflow Status): Progress status columns — To-Do, In Progress, Review/Test and Done.
+- Phases / Columns (Workflow Status): Progress status columns — To-Do, In Progress, Review/Test and Done (Four Phases/ Column).
 
 ## Requirements Prioritization Strategy (MoSCoW Split)
 To manage tight project timelines and ensure core delivery (execution tiers) within our curriculum deadlines, we utilize the MoSCoW prioritization method. This framework clearly defines what is mandatory for our **Minimum Viable Product (MVP)** versus what is intentionally deferred to future iterations.<br>
@@ -35,16 +35,12 @@ To manage tight project timelines and ensure core delivery (execution tiers) wit
 2.1 Explicit Guidance in Task Execution: As a user, I want to open a task and see its description, steps to follow, and why it matters so I understand the objective and execution plan.<br>
 2.2. Task-Specific Learning Resources: As a user, I want to see learning resources directly within a task's details so I can quickly access the documentation and guides needed to complete that specific objective.<br>
 2.3. Stage-Based Board Filtering: As a user, I want to filter the board by a specific development stage (Database, backend, and frontend), so I can view only the tasks relevant to that stage without overwhelming my active board viwe.<br>
-2.4. Upcoming Task Preview Toggle: As a user, I want to click a "Show More / Show Less" button on a phase column so I can expand or collapse upcoming tasks without cluttering my board.
-2.5. 
-As a user, I want to toggle open a view of the next few tasks within a stage column so I can look ahead at upcoming steps without overwhelming my active board view.
+2.4. Upcoming Task Preview Toggle: As a user, I want to click a "Show More / Show Less" button on a phase column so I can expand or collapse upcoming tasks without cluttering my board.<br>
+2.5. Integrated Documentation & Resource Links: As a user, I want to see clickable resource links in both my roadmap nodes and individual task descriptions so I can instantly access recommended learning tools and documentation.<br>
+2.6 Kanban-to-Roadmap Progress Sync: As a user, I want moving a task to Done on the Kanban board to light up its corresponding roadmap node so that I can visually track my overall learning progress.<br>
+2.7 As a user, I want to see clickable resource links in both my roadmap nodes and individual task descriptions so I can instantly access recommended learning tools and documentation.<br>
+2.8 Project History & Status Audit: As a user, I want to access my previous and active projects so I can review my learning history, track completed tasks, and resume or audit my progress at any time.<br>
 
--As a user, I want to toggle open a view of the next few tasks within a stage column so I can look ahead at upcoming steps without overwhelming my active board view.<br>
--As a user, I want to open a page that reveals my learning roadmap so I can visualize my macro learning journey from setup to frontend deployment, including the why, what, and brief alternative paths with suggested resources.<br>
--As a user, I want to drag a task to Done on the Kanban board and see its corresponding node light up on the roadmap (snake line) so that my micro-progress natively updates my macro journey without a data mismatch.<br>
--As a user, I want to see clickable resource links in both my roadmap nodes and individual task descriptions so I can instantly access recommended learning tools and documentation.<br>
--As a user, I want to be able to view my completed project page and roadmap after completion so I can review my historical learning path and tasks with the ability to audit.<br>
--As a user, I want to be able to view my completed project page and roadmap after completion so I can review my historical learning path and tasks with the ability to audit.<br>
 
 ## Could Have:
 -As a user, I want to toggle between dark mode and light mode themes so that I can comfortably view my Kanban board in low-light environments.<br>
