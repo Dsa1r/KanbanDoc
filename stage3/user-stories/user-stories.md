@@ -145,6 +145,15 @@ The following scenarios define how each feature behaves under specific condition
   * **Given** a project contains multiple tasks across stages,
   * **When** a team member views the header bar,
   * **Then** the system calculates the ratio of `DONE` tasks against total tasks and displays an updated percentage bar.
+
+### 1.12. Macro Learning Roadmap Journey
+* **User Story:** As a user, I want to open a page that reveals my learning roadmap so I can visualize my macro learning journey from setup to frontend deployment, including the why, what, and brief alternative paths with suggested resources.
+* **Scenario: Rendering Macro Journey Visualization**
+  * **Given** the user navigates to the `/roadmap` route,
+  * **When** the page loads,
+  * **Then** the system parses the project's entire `Task` and `Stage` hierarchy and renders a sequential macro path line (snake line UI).
+
+---
   
 ### 1.4. Backlog Main Phase Display
 * **User Story:** As a user, I want to see the main phases listed in my Kanban board backlog so my team or I can manage their tasks.
@@ -166,13 +175,6 @@ The following scenarios define how each feature behaves under specific condition
   * **Given** a user clicks on a task card on the Kanban board,
   * **When** the modal expands,
   * **Then** the system displays the description attribute from `TaskPhase`, including step-by-step instructions and contextual importance.
-
-### 1.8. Macro Learning Roadmap Journey
-* **User Story:** As a user, I want to open a page that reveals my learning roadmap so I can visualize my macro learning journey from setup to frontend deployment, including the why, what, and brief alternative paths with suggested resources.
-* **Scenario: Rendering Macro Journey Visualization**
-  * **Given** the user navigates to the `/roadmap` route,
-  * **When** the page loads,
-  * **Then** the system parses the project's entire `Task` and `Stage` hierarchy and renders a sequential macro path line (snake line UI).
 
 ### 1.9. Micro-Progress & Macro-Roadmap Synchronization
 * **User Story:** As a user, I want to drag a task to "Done" on the Kanban board and see its corresponding node light up on the roadmap (snake line) so that my micro-progress natively updates my macro journey without a data mismatch.
@@ -197,15 +199,7 @@ The following scenarios define how each feature behaves under specific condition
 * **Scenario: Dashboard Context Presentation**
   * **Given** an authenticated user completes login,
   * **When** the dashboard renders,
-  * **Then** the system presents a summary card highlighting active project metrics, completion percentages, and a direct entrance link to the Kanban board.
-
-### 2.3. Collective Progress Monitoring
-* **User Story:** As a team member, I want to see the overall project progress so I can understand how much work the team has completed.
-* **Scenario: Aggregated Completion Metric Calculation**
-  * **Given** a project contains multiple tasks across stages,
-  * **When** a team member views the header bar,
-  * **Then** the system calculates the ratio of `DONE` tasks against total tasks and displays an updated percentage bar.
-
+  * **Then** the system presents a summary card highlighting active project metrics, completion percentages, and a direct entrance link to the Kanban board. 
 
 
 ### 2.7. Explicit Guidance & Tool Recommendations
