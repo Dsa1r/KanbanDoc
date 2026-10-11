@@ -114,9 +114,16 @@ The following scenarios define how each feature behaves under specific condition
 ### 1.7. Backlog Stage and Column Layout 
 * **User Story:** As a user, I want to see the main development phases organized into columns in my Kanban backlog so my team and I can view tasks by stage.
 * **Scenario: Backlog Main Phase Display**
-* **Given** a user opens the Kanban board view,
-* **When** the layout initializes,
-* **Then** the backlog column displays tasks grouped by fixed stage phases (DATABASE, BACKEND, FRONTEND).
+*  **Given** a user opens the Kanban board view,
+*  **When** the layout initializes,
+*  **Then** the backlog column displays tasks grouped by fixed stage phases (DATABASE, BACKEND, FRONTEND).
+  
+### 1.8. Workflow Column Layout
+* **User Story:** As a user, I want to see my task statuses organized into clear columns so I can instantly view our workflow layout.
+* **Scenario: Status Column Alignment**
+*  **Given** a project Kanban board is active,
+*  **When** tasks load from the database,
+*  **Then** tasks map strictly into four standard columns driven by `TaskStatus`: `TO_DO`, `IN_PROGRESS`, `TESTING_REVIEW`, and `DONE`.
 
 ### 1.4. Backlog Main Phase Display
 * **User Story:** As a user, I want to see the main phases listed in my Kanban board backlog so my team or I can manage their tasks.
