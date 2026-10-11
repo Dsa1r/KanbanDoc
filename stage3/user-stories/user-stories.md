@@ -1,11 +1,15 @@
 # User Stories Prioritization Strategy (MoSCoW Split) , Technical Requirements & Acceptance Criteria 
 
 ## Requirements Prioritization Strategy (MoSCoW Split)
-To streamline development and focus on implementation, requirements are partitioned into actionable execution tiers:
+To manage tight project timelines and ensure core delivery (execution tiers) within our curriculum deadlines, we utilize the MoSCoW prioritization method. This framework clearly defines what is mandatory for our **Minimum Viable Product (MVP)** versus what is intentionally deferred to future iterations.<br>
+
 - **Must Have (M):** Fundamental MVP architecture and core execution paths required for the system to function end-to-end.
 - **Should Have (S):** Critical feature enhancements, team collaboration tools, filtering, and resource integrations that elevate application usability.
 - **Could Have (C):** Requirements that stakeholders and developers explicitly agree NOT to build in the current project phase or release cycle. 
 - **Won't Have (W) (Out of Scope for current release):** Features that add polish, delight, or convenience, but are non-essential.
+
+
+To manage tight project timelines and ensure core delivery within our curriculum deadlines, we utilize the MoSCoW prioritization method. This framework clearly defines what is mandatory for our **Minimum Viable Product (MVP)** versus what is intentionally deferred to future iterations.
 
 ## Must Have:
 -As a potential new user, I want to see a clear website description on the signing up page so I understand the onboarding process.<br>
