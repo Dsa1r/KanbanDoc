@@ -9,35 +9,38 @@ To streamline development and focus on implementation, requirements are partitio
 
 ## Must Have:
 -As a potential new user, I want to see a clear website description on the signing up page so I understand the onboarding process.<br>
--As a user, I want to create a new account so I can access the milestone tracking system.
-As a user, I want to securely log into my account so I can view my personalized roadmap.
-As a user, I want to reset my password if I forget it so I can securely regain access to my account.
-As a junior developer, I want to define a new project with a name and description so I can isolate my specific stage from other stages (Database, back end and front end)
-As a returning user, I want to see a brief application overview when I log in so I can quickly orient myself before viewing my roadmap. (Kanban itself) .
-As a user, I want to be able to add team members to my project so we can collaborate with a team in the project.
-As a team member, I want to see the overall project progress so I can understand how much work the team has completed.
-As a user, I want to see the main phases listed in my Kanban board backlog so my team or I can manage their tasks.(fix column in the Kanban and it will be the first column with stages DB, Backend, Front End).
-As a user, I want to click on the main development stages (DB, Backend, or Frontend) so the Kanban board instantly filters to show only the tasks for that phase.
-As a user, I want to see my task statuses organized into clear columns so I can instantly view our workflow layout.
-As a user, I want to drag and drop a task card from one column to another so that its active status updates automatically.
+-As a user, I want to create a new account so I can access the milestone tracking system.<br>
+-As a user, I want to securely log into my account so I can view my personalized roadmap.<br>
+-As a user, I want to reset my password if I forget it so I can securely regain access to my account.<br>
+-As a junior developer, I want to define a new project with a name and description so I can isolate my specific stage from other stages (Database, back end and front end).<br>
+-As a returning user, I want to see a brief application overview when I log in so I can quickly orient myself before viewing my roadmap. (Kanban itself).<br>
+-As a user, I want to be able to add team members to my project so we can collaborate with a team in the project.<br>
+-As a team member, I want to see the overall project progress so I can understand how much work the team has completed.<br>
+-As a user, I want to see the main phases listed in my Kanban board backlog so my team or I can manage their tasks.(fix column in the Kanban and it will be the first column with stages DB, Backend, Front End).<br>
+-As a user, I want to click on the main development stages (DB, Backend, or Frontend) so the Kanban board instantly filters to show only the tasks for that phase.<br>
+-As a user, I want to see my task statuses organized into clear columns so I can instantly view our workflow layout.<br>
+-As a user, I want to drag and drop a task card from one column to another so that its active status updates automatically.<br>
 
-Should Have
-As a user, I want to see explicit instructions and tool recommendations for each task so I never have to guess what to do next.
-As a user, I want to open a task and see its description, steps to follow, and why it matters so I understand the objective and execution plan.
-As a user, I want to click on the main development stages (DB, Backend, or Frontend) so the Kanban board instantly filters to show only the tasks for that stage.
-As a user, I want to toggle open a view of the next few tasks within a stage column so I can look ahead at upcoming steps without overwhelming my active board view.
-As a user, I want to open a page that reveals my learning roadmap so I can visualize my macro learning journey from setup to frontend deployment, including the why, what, and brief alternative paths with suggested resources.
-As a user, I want to drag a task to Done on the Kanban board and see its corresponding node light up on the roadmap (snake line) so that my micro-progress natively updates my macro journey without a data mismatch.
-As a user, I want to see clickable resource links in both my roadmap nodes and individual task descriptions so I can instantly access recommended learning tools and documentation.
-As a user, I want to be able to view my completed project page and roadmap after completion so I can review my historical learning path and tasks with the ability to audit.
-As a user, I want to be able to view my completed project page and roadmap after completion so I can review my historical learning path and tasks with the ability to audit.
 
-Could Have:
-As a user, I want to toggle between dark mode and light mode themes so that I can comfortably view my Kanban board in low-light environments.
- As a user, I want to see a celebratory confetti micro-animation when I drag a task to Done so that I get rewarding visual feedback on my progress.
-Won’t Have
-As a user, I want an AI assistant to automatically generate step-by-step task descriptions from a single title so that I don't have to write them manually.
-As an Arabic-speaking user, I want to switch the application UI language to Arabic so that I can navigate the roadmap in my native language.
+##Should Have
+-As a user, I want to see explicit instructions and tool recommendations for each task so I never have to guess what to do next.<br>
+-As a user, I want to open a task and see its description, steps to follow, and why it matters so I understand the objective and execution plan.<br>
+-As a user, I want to click on the main development stages (DB, Backend, or Frontend) so the Kanban board instantly filters to show only the tasks for that stage.<br>
+-As a user, I want to toggle open a view of the next few tasks within a stage column so I can look ahead at upcoming steps without overwhelming my active board view.<br>
+-As a user, I want to open a page that reveals my learning roadmap so I can visualize my macro learning journey from setup to frontend deployment, including the why, what, and brief alternative paths with suggested resources.<br>
+-As a user, I want to drag a task to Done on the Kanban board and see its corresponding node light up on the roadmap (snake line) so that my micro-progress natively updates my macro journey without a data mismatch.<br>
+-As a user, I want to see clickable resource links in both my roadmap nodes and individual task descriptions so I can instantly access recommended learning tools and documentation.<br>
+-As a user, I want to be able to view my completed project page and roadmap after completion so I can review my historical learning path and tasks with the ability to audit.<br>
+-As a user, I want to be able to view my completed project page and roadmap after completion so I can review my historical learning path and tasks with the ability to audit.<br>
+
+##Could Have:
+-As a user, I want to toggle between dark mode and light mode themes so that I can comfortably view my Kanban board in low-light environments.<br>
+- As a user, I want to see a celebratory confetti micro-animation when I drag a task to Done so that I get rewarding visual feedback on my progress.<br>
+
+
+##Won’t Have
+-As a user, I want an AI assistant to automatically generate step-by-step task descriptions from a single title so that I don't have to write them manually.<br>
+-As an Arabic-speaking user, I want to switch the application UI language to Arabic so that I can navigate the roadmap in my native language.<br>
 
 ---
 
