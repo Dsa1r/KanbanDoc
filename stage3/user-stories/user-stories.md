@@ -187,7 +187,14 @@ The following scenarios define how each feature behaves under specific condition
 
 ## 2. Should Have Requirements (Feature & Experience Polish)
 
-### 2.1. Landing Page Value Proposition
+### 2.1. Explicit Guidance in Task Execution
+* **User Story:** As a user, I want to open a task and see its description, steps to follow, and why it matters so I understand the objective and execution plan.
+* **Scenario: Inspecting Task Details**
+  * **Given** a user clicks on a task card on the Kanban board,
+  * **When** the modal expands,
+  * **Then** the system displays the description attribute from `TaskPhase`, including step-by-step instructions and contextual importance.
+    
+###   
 * **User Story:** As a potential new user, I want to see a clear website description on the signing up page so I understand the onboarding process.
 * **Scenario: Onboarding Content Display**
   * **Given** an unauthenticated visitor navigates to the registration page,
