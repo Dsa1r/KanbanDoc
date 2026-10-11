@@ -25,7 +25,7 @@ To manage tight project timelines and ensure core delivery (execution tiers) wit
 1.6. Team Collaboration & Invitations: As a user, I want to be able to add team members to my project so we can collaborate with a team in the project.<br>
 1.7. Backlog Stage and Column phase Initialization: As a user, I want to see the main development phases organized into column in my Kanban backlog so my team and I can view tasks by stage..<br>
 1.8. Workflow Column Layout: As a user, I want to see my task statuses organized into clear columns so I can instantly view our workflow layout.<br>
-1.9. Stage-Based Board Filtering: As a user, I want to click on the main development stages (DB, Backend, or Frontend) so the Kanban board instantly filters to show only the tasks for that phase.<br>
+1.9. Stage-Based Board Filtering: As a user, I want to click on the main development stages (DB, Backend, or Frontend) so the Kanban board instantly filters to show only the tasks for that phases.<br>
 1.10. Interactive Drag and Drop Status Transition: As a user, I want to drag and drop a task card from one column to another so that its active status updates automatically.<br>
 1.11. Collective Progress Monitoring: As a team member, I want to see the overall project progress so I can understand how much work the team has completed.<br>
 1.12. Macro Learning Roadmap Journey: As a user, I want to open a page that reveals my learning roadmap so I can visualize my macro learning journey from setup to frontend deployment, including the why, what, and brief alternative paths with suggested resources.<br>
@@ -114,16 +114,16 @@ The following scenarios define how each feature behaves under specific condition
 ### 1.7. Backlog Stage and Column Layout 
 * **User Story:** As a user, I want to see the main development phases organized into columns in my Kanban backlog so my team and I can view tasks by stage.
 * **Scenario: Backlog Main Phase Display**
-*  **Given** a user opens the Kanban board view,
-*  **When** the layout initializes,
-*  **Then** the backlog column displays tasks grouped by fixed stage phases (DATABASE, BACKEND, FRONTEND).
+  * **Given** a user opens the Kanban board view,
+  * **When** the layout initializes,
+  * **Then** the backlog column displays tasks grouped by fixed stage phases (DATABASE, BACKEND, FRONTEND).
   
 ### 1.8. Workflow Column Layout
 * **User Story:** As a user, I want to see my task statuses organized into clear columns so I can instantly view our workflow layout.
 * **Scenario: Status Column Alignment**
-*  **Given** a project Kanban board is active,
-*  **When** tasks load from the database,
-*  **Then** tasks map strictly into four standard columns driven by `TaskStatus`: `TO_DO`, `IN_PROGRESS`, `TESTING_REVIEW`, and `DONE`.
+  * **Given** a project Kanban board is active,
+  * **When** tasks load from the database,
+  * **Then** tasks map strictly into four standard columns driven by `TaskStatus`: `TO_DO`, `IN_PROGRESS`, `TESTING_REVIEW`, and `DONE`.
 
 ### 1.4. Backlog Main Phase Display
 * **User Story:** As a user, I want to see the main phases listed in my Kanban board backlog so my team or I can manage their tasks.
@@ -212,6 +212,13 @@ The following scenarios define how each feature behaves under specific condition
   * **Given** a stage column has collapsed future tasks,
   * **When** the user clicks the "Toggle Upcoming" control,
   * **Then** the system triggers `TaskPhase.toggle_upcoming_tasks(stage_id)` to show or hide non-active future cards.
+
+### ### 2.6. Stage-Based Board Filtering
+* **User Story:** As a user, I want to click on the main development stages (DB, Backend, or Frontend) so the Kanban board instantly filters to show only the tasks for that phases.
+* **Scenario: Filtering Board View by Stage**
+  * **Given** the Kanban board shows tasks across all stages,
+  * **When** the user clicks on the "BACKEND" stage filter button,
+  * **Then** the system executes `TaskPhase.filter_by_stage(BACKEND)` and renders only tasks associated with `stage_id = BACKEND`.
 
 ### 2.9. Integrated Documentation & Resource Links
 * **User Story:** As a user, I want to see clickable resource links in both my roadmap nodes and individual task descriptions so I can instantly access recommended learning tools and documentation.
