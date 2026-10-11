@@ -10,23 +10,25 @@ To manage tight project timelines and ensure core delivery (execution tiers) wit
 
 
 ## Must Have:
--As a potential new user, I want to see a clear website description on the signing up page so I understand the onboarding process.<br>
--As a user, I want to create a new account so I can access the milestone tracking system.<br>
--As a user, I want to securely log into my account so I can view my personalized roadmap.<br>
--As a user, I want to reset my password if I forget it so I can securely regain access to my account.<br>
--As a junior developer, I want to define a new project with a name and description so I can isolate my specific stage from other stages (Database, back end and front end).<br>
--As a returning user, I want to see a brief application overview when I log in so I can quickly orient myself before viewing my roadmap. (Kanban itself).<br>
--As a user, I want to be able to add team members to my project so we can collaborate with a team in the project.<br>
--As a team member, I want to see the overall project progress so I can understand how much work the team has completed.<br>
--As a user, I want to see the main phases listed in my Kanban board backlog so my team or I can manage their tasks.(fix column in the Kanban and it will be the first column with stages DB, Backend, Front End).<br>
--As a user, I want to click on the main development stages (DB, Backend, or Frontend) so the Kanban board instantly filters to show only the tasks for that phase.<br>
--As a user, I want to see my task statuses organized into clear columns so I can instantly view our workflow layout.<br>
--As a user, I want to drag and drop a task card from one column to another so that its active status updates automatically.<br>
+1.1. Landing Page Value Proposition: As a potential new user, I want to see a clear website description on the signing up page so I understand the onboarding process.<br>
+1.2. User Account Creation: As a user, I want to create a new account so I can access the milestone tracking system.<br>
+1.3.Secure User Authentication: As a user, I want to securely log into my account so I can view my personalized roadmap.<br>
+1.4. Password Recovery Workflow: As a user, I want to reset my password if I forget it so I can securely regain access to my account.<br>
+1.4. Project Scope & Isolation Definition: As a user I want to define a new project(Working Solo) with a name and description so I can isolate my specific stage from other stages (Database, back end and front end).<br>
+1.5. Team Collaboration & Invitations: As a user, I want to be able to add team members to my project so we can collaborate with a team in the project.<br>
+1.6. Backlog Stage and Column phase Initialization: As a user, I want to see the main development phases listed in my Kanban backlog so my team and I can manage tasks by stage..<br>
+1.7. Workflow Column Layout: As a user, I want to see my task statuses organized into clear columns so I can instantly view our workflow layout.<br>
+1.8. Stage-Based Board Filtering: As a user, I want to click on the main development stages (DB, Backend, or Frontend) so the Kanban board instantly filters to show only the tasks for that phase.<br>
+1.9. Interactive Drag and Drop Status Transition: As a user, I want to drag and drop a task card from one column to another so that its active status updates automatically.<br>
+1.10.Collective Progress Monitoring: As a team member, I want to see the overall project progress so I can understand how much work the team has completed.<br>
+1.11. Macro Learning Roadmap Journey: As a user, I want to open a page that reveals my learning roadmap so I can visualize my macro learning journey from setup to frontend deployment, including the why, what, and brief alternative paths with suggested resources.<br>
 
 
 ## Should Have:
--As a user, I want to see explicit instructions and tool recommendations for each task so I never have to guess what to do next.<br>
--As a user, I want to open a task and see its description, steps to follow, and why it matters so I understand the objective and execution plan.<br>
+2.1 Explicit Guidance in Task Execution: As a user, I want to open a task and see its description, steps to follow, and why it matters so I understand the objective and execution plan.<br>
+2.2. Task-Specific Learning Resources: As a user, I want to see learning resources directly within a task's details so I can quickly access the documentation and guides needed to complete that specific objective.<br>
+2.3. As a user, I want to see explicit instructions and why "task objective"resources for each task so I never have to guess how or where to find learning material.<br>
+2.2. Resource Recommendation: 
 -As a user, I want to click on the main development stages (DB, Backend, or Frontend) so the Kanban board instantly filters to show only the tasks for that stage.<br>
 -As a user, I want to toggle open a view of the next few tasks within a stage column so I can look ahead at upcoming steps without overwhelming my active board view.<br>
 -As a user, I want to open a page that reveals my learning roadmap so I can visualize my macro learning journey from setup to frontend deployment, including the why, what, and brief alternative paths with suggested resources.<br>
