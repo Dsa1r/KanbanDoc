@@ -59,7 +59,7 @@ classDiagram
         +ProjectStage stage
         +string name
         +TaskStatus current_status
-        +get_all_task()
+        +get_all_tasks()
     }
 
     class TaskPhase {
