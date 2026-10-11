@@ -9,8 +9,6 @@ To manage tight project timelines and ensure core delivery (execution tiers) wit
 - **Won't Have (W) (Out of Scope for current release):** Features that add polish, delight, or convenience, but are non-essential.
 
 
-To manage tight project timelines and ensure core delivery within our curriculum deadlines, we utilize the MoSCoW prioritization method. This framework clearly defines what is mandatory for our **Minimum Viable Product (MVP)** versus what is intentionally deferred to future iterations.
-
 ## Must Have:
 -As a potential new user, I want to see a clear website description on the signing up page so I understand the onboarding process.<br>
 -As a user, I want to create a new account so I can access the milestone tracking system.<br>
