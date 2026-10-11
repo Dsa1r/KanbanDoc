@@ -73,7 +73,7 @@ The following scenarios define how each feature behaves under specific condition
 * **Scenario: Duplicate Registration Handling**
   * **Given** a user submits an email already present in the database,
   * **When** `User.sign_up()` is executed,
-  * **Then** the system returns a validation error stating "Email address already registered".
+  * **Then** the system returns a validation error stating "An account with this email may already exist. Please try signing in".
 
 ### 1.2. Secure User Authentication
 * **User Story:** As a user, I want to securely log into my account so I can view my personalized roadmap.
@@ -81,6 +81,10 @@ The following scenarios define how each feature behaves under specific condition
   * **Given** a registered user enters valid email and password credentials,
   * **When** they click the "Login" button,
   * **Then** the system executes `User.login()`, authenticates session tokens, and presents the active roadmap view.
+* **Scenario: Secure Login Failure Handling**
+* **Given** a user inputs an unregistered email or an incorrect password,
+*  **When** When the login request is submitted,
+*  **Then** Then the system returns a generic error message stating "Invalid email or password" without revealing whether the email address exists in the database.
 
 ### 1.3. Project Scope & Isolation Definition
 * **User Story:** As a junior developer, I want to define a new project with a name and description so I can isolate my specific stage from other stages (Database, Backend, Frontend).
