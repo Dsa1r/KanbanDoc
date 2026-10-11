@@ -6,7 +6,7 @@
 
 ```mermaid
 classDiagram
-class KanbanController {
+class Kanban {
         +move_task_status(task_id, new_status)
         +filter_by_stage(stage_enum)
         +get_next_task(project_id)
