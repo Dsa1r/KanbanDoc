@@ -44,7 +44,8 @@ To streamline development and focus on implementation, requirements are partitio
 
 ---
 
-## 1. Categorized User Stories with Given-When-Then Criteria as a Scenario. 
+# User Stories with Given-When-Then Criteria as a Scenario. 
+## 1. Must Have Requirements (Core MVP Engine)
 *The following scenarios define how each feature behaves under specific conditions and serve as the acceptance criteria for testing.
 
 ### 1.1. User Account Creation
