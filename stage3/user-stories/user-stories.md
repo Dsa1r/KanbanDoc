@@ -21,14 +21,14 @@ To manage tight project timelines and ensure core delivery (execution tiers) wit
 1.2. User Account Creation: As a user, I want to create a new account so I can access the milestone tracking system.<br>
 1.3.Secure User Authentication: As a user, I want to securely log into my account so I can view my personalized roadmap.<br>
 1.4. Password Recovery Workflow: As a user, I want to reset my password if I forget it so I can securely regain access to my account.<br>
-1.4. Project Scope & Isolation Definition: As a user I want to define a new project (Working Solo) with a name and description so I can isolate my specific stage from other stages (Database, back end and front end).<br>
-1.5. Team Collaboration & Invitations: As a user, I want to be able to add team members to my project so we can collaborate with a team in the project.<br>
-1.6. Backlog Stage and Column phase Initialization: As a user, I want to see the main development phases organized into column in my Kanban backlog so my team and I can view tasks by stage..<br>
-1.7. Workflow Column Layout: As a user, I want to see my task statuses organized into clear columns so I can instantly view our workflow layout.<br>
-1.8. Stage-Based Board Filtering: As a user, I want to click on the main development stages (DB, Backend, or Frontend) so the Kanban board instantly filters to show only the tasks for that phase.<br>
-1.9. Interactive Drag and Drop Status Transition: As a user, I want to drag and drop a task card from one column to another so that its active status updates automatically.<br>
-1.10.Collective Progress Monitoring: As a team member, I want to see the overall project progress so I can understand how much work the team has completed.<br>
-1.11. Macro Learning Roadmap Journey: As a user, I want to open a page that reveals my learning roadmap so I can visualize my macro learning journey from setup to frontend deployment, including the why, what, and brief alternative paths with suggested resources.<br>
+1.5. Project Scope & Isolation Definition: As a user I want to define a new project (Working Solo) with a name and description so I can isolate my specific stage from other stages (Database, back end and front end).<br>
+1.6. Team Collaboration & Invitations: As a user, I want to be able to add team members to my project so we can collaborate with a team in the project.<br>
+1.7. Backlog Stage and Column phase Initialization: As a user, I want to see the main development phases organized into column in my Kanban backlog so my team and I can view tasks by stage..<br>
+1.8. Workflow Column Layout: As a user, I want to see my task statuses organized into clear columns so I can instantly view our workflow layout.<br>
+1.9. Stage-Based Board Filtering: As a user, I want to click on the main development stages (DB, Backend, or Frontend) so the Kanban board instantly filters to show only the tasks for that phase.<br>
+1.10. Interactive Drag and Drop Status Transition: As a user, I want to drag and drop a task card from one column to another so that its active status updates automatically.<br>
+1.11. Collective Progress Monitoring: As a team member, I want to see the overall project progress so I can understand how much work the team has completed.<br>
+1.12. Macro Learning Roadmap Journey: As a user, I want to open a page that reveals my learning roadmap so I can visualize my macro learning journey from setup to frontend deployment, including the why, what, and brief alternative paths with suggested resources.<br>
 
 
 ## Should Have:
@@ -75,18 +75,29 @@ The following scenarios define how each feature behaves under specific condition
    * **When** `User.sign_up()` is executed,
    * **Then** the system returns a validation error stating "An account with this email may already exist. Please try signing in".
 
-### 1.2. Secure User Authentication
+### 1.3. Secure User Authentication
 * **User Story:** As a user, I want to securely log into my account so I can view my personalized roadmap.
 * **Scenario: Successful Authentication**
   * **Given** a registered user enters valid email and password credentials,
   * **When** they click the "Login" button,
   * **Then** the system executes `User.login()`, authenticates session tokens, and presents the active roadmap view.
 * **Scenario: Secure Login Failure Handling**
-*  **Given** a user inputs an unregistered email or an incorrect password,
-*  **When** When the login request is submitted,
-*  **Then** Then the system returns a generic error message stating "Invalid email or password" without revealing whether the email address exists in the database.
+  * **Given** a user inputs an unregistered email or an incorrect password,
+  * **When** When the login request is submitted,
+  * **Then** Then the system returns a generic error message stating "Invalid email or password" without revealing whether the email address exists in the database.
 
-### 1.3. Project Scope & Isolation Definition
+  ### 1.4. Password Recovery Workflow
+* **User Story:** As a user, I want to reset my password if I forget it so I can securely regain access to my account.
+* **Scenario: Password Reset Link Request**
+  * **Given** a user triggers the "Forgot Password" modal with a valid email,
+  * **When** they submit the form,
+  * **Then** the system calls `User.request_password_reset(email)` and dispatches a password recovery token.
+* **Scenario: Password Update Completion**
+  * **Given** a user navigates to the reset URL with a valid token,
+  * **When** they submit a new password,
+  * **Then** the system executes `User.reset_password(token, new_password)` and updates the credentials in the database.
+
+### 1.5. Project Scope & Isolation Definition
 * **User Story:** As a junior developer, I want to define a new project with a name and description so I can isolate my specific stage from other stages (Database, Backend, Frontend).
 * **Scenario: Project Instantiation from Template**
   * **Given** an authenticated user initiates project creation,
@@ -146,18 +157,7 @@ The following scenarios define how each feature behaves under specific condition
   * **When** the page loads completely,
   * **Then** the system displays a value proposition explaining the milestone tracking methodology, learning roadmap features, and Kanban workflow steps.
 
-### 2.2. Password Recovery Workflow
-* **User Story:** As a user, I want to reset my password if I forget it so I can securely regain access to my account.
-* **Scenario: Password Reset Link Request**
-  * **Given** a user triggers the "Forgot Password" modal with a valid email,
-  * **When** they submit the form,
-  * **Then** the system calls `User.request_password_reset(email)` and dispatches a password recovery token.
-* **Scenario: Password Update Completion**
-  * **Given** a user navigates to the reset URL with a valid token,
-  * **When** they submit a new password,
-  * **Then** the system executes `User.reset_password(token, new_password)` and updates the credentials in the database.
-
-### 2.3. Dashboard Application Overview
+### 2.2. Dashboard Application Overview
 * **User Story:** As a returning user, I want to see a brief application overview when I log in so I can quickly orient myself before viewing my roadmap.
 * **Scenario: Dashboard Context Presentation**
   * **Given** an authenticated user completes login,
