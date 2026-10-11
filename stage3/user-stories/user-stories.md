@@ -38,18 +38,18 @@ To manage tight project timelines and ensure core delivery (execution tiers) wit
 2.4. Upcoming Task Preview Toggle: As a user, I want to click a "Show More / Show Less" button on a phase column so I can expand or collapse upcoming tasks without cluttering my board.<br>
 2.5. Integrated Documentation & Resource Links: As a user, I want to see clickable resource links in both my roadmap nodes and individual task descriptions so I can instantly access recommended learning tools and documentation.<br>
 2.6 Kanban-to-Roadmap Progress Sync: As a user, I want moving a task to Done on the Kanban board to light up its corresponding roadmap node so that I can visually track my overall learning progress.<br>
-2.7 As a user, I want to see clickable resource links in both my roadmap nodes and individual task descriptions so I can instantly access recommended learning tools and documentation.<br>
+2.7 Clickable Roadmap & Task Resource Links: As a user, I want to see clickable resource links in both my roadmap nodes and individual task descriptions so I can instantly access recommended learning tools and documentation.<br>
 2.8 Project History & Status Audit: As a user, I want to access my previous and active projects so I can review my learning history, track completed tasks, and resume or audit my progress at any time.<br>
 
 
 ## Could Have:
--As a user, I want to toggle between dark mode and light mode themes so that I can comfortably view my Kanban board in low-light environments.<br>
--As a user, I want to see a celebratory confetti micro-animation when I drag a task to Done so that I get rewarding visual feedback on my progress.<br>
+3.1. Dark Mode & Light Mode Theme Toggle: As a user, I want to toggle between dark mode and light mode themes so that I can comfortably view my Kanban board in low-light environments.<br>
+3.2. Task Completion Confetti Animation: As a user, I want to see a celebratory confetti micro-animation when I drag a task to Done so that I get rewarding visual feedback on my progress.<br>
 
 
 ## Won’t Have:
--As a user, I want an AI assistant to automatically generate step-by-step task descriptions from a single title so that I don't have to write them manually.<br>
--As an Arabic-speaking user, I want to switch the application UI language to Arabic so that I can navigate the roadmap in my native language.<br>
+4.1. AI-Powered Task Generation: As a user, I want an AI assistant to automatically generate step-by-step task descriptions from a single title so that I don't have to write them manually.<br>
+4.2. Arabic Language & RTL Localization: As an Arabic-speaking user, I want to switch the application UI language to Arabic so that I can navigate the roadmap in my native language.<br>
 
 ---
 
