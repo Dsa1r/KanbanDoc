@@ -71,9 +71,9 @@ The following scenarios define how each feature behaves under specific condition
   * **When** they submit the registration form,
   * **Then** the system invokes `User.sign_up()`, creates a record in the `User` table, and redirects to the dashboard.
 * **Scenario: Duplicate Registration Handling**
-  * **Given** a user submits an email already present in the database,
-  * **When** `User.sign_up()` is executed,
-  * **Then** the system returns a validation error stating "An account with this email may already exist. Please try signing in".
+   * **Given** a user submits an email already present in the database,
+   * **When** `User.sign_up()` is executed,
+   * **Then** the system returns a validation error stating "An account with this email may already exist. Please try signing in".
 
 ### 1.2. Secure User Authentication
 * **User Story:** As a user, I want to securely log into my account so I can view my personalized roadmap.
