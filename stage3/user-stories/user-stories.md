@@ -37,9 +37,9 @@ To manage tight project timelines and ensure core delivery (execution tiers) wit
 2.3. Stage-Based Board Filtering: As a user, I want to filter the board by a specific development stage (Database, backend, and frontend), so I can view only the tasks relevant to that stage without overwhelming my active board viwe.<br>
 2.4. Upcoming Task Preview Toggle: As a user, I want to click a "Show More / Show Less" button on a phase column so I can expand or collapse upcoming tasks without cluttering my board.<br>
 2.5. Integrated Documentation & Resource Links: As a user, I want to see clickable resource links in both my roadmap nodes and individual task descriptions so I can instantly access recommended learning tools and documentation.<br>
-2.6 Kanban-to-Roadmap Progress Sync: As a user, I want moving a task to Done on the Kanban board to light up its corresponding roadmap node so that I can visually track my overall learning progress.<br>
-2.7 Clickable Roadmap & Task Resource Links: As a user, I want to see clickable resource links in both my roadmap nodes and individual task descriptions so I can instantly access recommended learning tools and documentation.<br>
-2.8 Project History & Status Audit: As a user, I want to access my previous and active projects so I can review my learning history, track completed tasks, and resume or audit my progress at any time.<br>
+2.6. Kanban-to-Roadmap Progress Sync: As a user, I want moving a task to Done on the Kanban board to light up its corresponding roadmap node so that I can visually track my overall learning progress.<br>
+2.7. Clickable Roadmap & Task Resource Links: As a user, I want to see clickable resource links in both my roadmap nodes and individual task descriptions so I can instantly access recommended learning tools and documentation.<br>
+2.8. Project History & Status Audit: As a user, I want to access my previous and active projects so I can review my learning history, track completed tasks, and resume or audit my progress at any time.<br>
 
 
 ## Could Have:
@@ -82,7 +82,7 @@ The following scenarios define how each feature behaves under specific condition
   * **When** they click the "Login" button,
   * **Then** the system executes `User.login()`, authenticates session tokens, and presents the active roadmap view.
 * **Scenario: Secure Login Failure Handling**
-* **Given** a user inputs an unregistered email or an incorrect password,
+*  **Given** a user inputs an unregistered email or an incorrect password,
 *  **When** When the login request is submitted,
 *  **Then** Then the system returns a generic error message stating "Invalid email or password" without revealing whether the email address exists in the database.
 
