@@ -125,19 +125,33 @@ The following scenarios define how each feature behaves under specific condition
   * **When** tasks load from the database,
   * **Then** tasks map strictly into four standard columns driven by `TaskStatus`: `TO_DO`, `IN_PROGRESS`, `TESTING_REVIEW`, and `DONE`.
 
+### 1.9. Stage-Based Board Filtering
+* **User Story:** As a user, I want to click on the main development stages (DB, Backend, or Frontend) so the Kanban board instantly filters to show only the tasks for that stage.
+* **Scenario: Filtering Board View by Stage**
+  * **Given** the Kanban board shows tasks across all stages,
+  * **When** the user clicks on the "BACKEND" stage filter button,
+  * **Then** the system executes `TaskPhase.filter_by_stage(BACKEND)` and renders only tasks associated with `stage_id = BACKEND`.
+
+### 1.10. Interactive Drag and Drop Status Transition
+* **User Story:** As a user, I want to drag and drop a task card from one column to another so that its active status updates automatically.
+* **Scenario: Drag-and-Drop Execution**
+  * **Given** a task card resides in the `TO_DO` column,
+  * **When** the user drags the card to the `IN_PROGRESS` column,
+  * **Then** the system executes `TaskPhase.move_task_status(task_id, 'IN_PROGRESS')`, updates `current_status` in `Task`, and persists state without a page refresh.
+
+### 1.11. Collective Progress Monitoring
+* **User Story:** As a team member, I want to see the overall project progress so I can understand how much work the team has completed.
+* **Scenario: Aggregated Completion Metric Calculation**
+  * **Given** a project contains multiple tasks across stages,
+  * **When** a team member views the header bar,
+  * **Then** the system calculates the ratio of `DONE` tasks against total tasks and displays an updated percentage bar.
+  
 ### 1.4. Backlog Main Phase Display
 * **User Story:** As a user, I want to see the main phases listed in my Kanban board backlog so my team or I can manage their tasks.
 * **Scenario: Default Stage Column Setup**
   * **Given** a user opens the Kanban board view,
   * **When** the layout initializes,
   * **Then** the backlog column displays tasks grouped by Stage entities (`DATABASE`, `BACKEND`, `FRONTEND`).
-
-### 1.5. Workflow Column Layout
-* **User Story:** As a user, I want to see my task statuses organized into clear columns so I can instantly view our workflow layout.
-* **Scenario: Status Column Alignment**
-  * **Given** a project Kanban board is active,
-  * **When** tasks load from the database,
-  * **Then** tasks map strictly into four standard columns driven by `TaskStatus`: `TO_DO`, `IN_PROGRESS`, `TESTING_REVIEW`, and `DONE`.
 
 ### 1.6. Interactive Drag and Drop Status Transition
 * **User Story:** As a user, I want to drag and drop a task card from one column to another so that its active status updates automatically.
@@ -192,12 +206,7 @@ The following scenarios define how each feature behaves under specific condition
   * **When** a team member views the header bar,
   * **Then** the system calculates the ratio of `DONE` tasks against total tasks and displays an updated percentage bar.
 
-### 2.6. Stage-Based Board Filtering
-* **User Story:** As a user, I want to click on the main development stages (DB, Backend, or Frontend) so the Kanban board instantly filters to show only the tasks for that stage.
-* **Scenario: Filtering Board View by Stage**
-  * **Given** the Kanban board shows tasks across all stages,
-  * **When** the user clicks on the "BACKEND" stage filter button,
-  * **Then** the system executes `TaskPhase.filter_by_stage(BACKEND)` and renders only tasks associated with `stage_id = BACKEND`.
+
 
 ### 2.7. Explicit Guidance & Tool Recommendations
 * **User Story:** As a user, I want to see explicit instructions and tool recommendations for each task so I never have to guess what to do next.
