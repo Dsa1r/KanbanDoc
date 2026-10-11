@@ -9,7 +9,7 @@ To streamline development and focus on implementation, requirements are partitio
 
 ## Must Have:
 ***As a potential new user, I want to see a clear website description on the signing up page so I understand the onboarding process.
-As a user, I want to create a new account so I can access the milestone tracking system.
+***As a user, I want to create a new account so I can access the milestone tracking system.
 As a user, I want to securely log into my account so I can view my personalized roadmap.
 As a user, I want to reset my password if I forget it so I can securely regain access to my account.
 As a junior developer, I want to define a new project with a name and description so I can isolate my specific stage from other stages (Database, back end and front end)
