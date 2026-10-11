@@ -22,7 +22,7 @@ To streamline development and focus on implementation, requirements are partitio
 -As a user, I want to drag and drop a task card from one column to another so that its active status updates automatically.<br>
 
 
-##Should Have
+## Should Have:
 -As a user, I want to see explicit instructions and tool recommendations for each task so I never have to guess what to do next.<br>
 -As a user, I want to open a task and see its description, steps to follow, and why it matters so I understand the objective and execution plan.<br>
 -As a user, I want to click on the main development stages (DB, Backend, or Frontend) so the Kanban board instantly filters to show only the tasks for that stage.<br>
@@ -33,12 +33,12 @@ To streamline development and focus on implementation, requirements are partitio
 -As a user, I want to be able to view my completed project page and roadmap after completion so I can review my historical learning path and tasks with the ability to audit.<br>
 -As a user, I want to be able to view my completed project page and roadmap after completion so I can review my historical learning path and tasks with the ability to audit.<br>
 
-##Could Have:
+## Could Have:
 -As a user, I want to toggle between dark mode and light mode themes so that I can comfortably view my Kanban board in low-light environments.<br>
 - As a user, I want to see a celebratory confetti micro-animation when I drag a task to Done so that I get rewarding visual feedback on my progress.<br>
 
 
-##Won’t Have
+## Won’t Have:
 -As a user, I want an AI assistant to automatically generate step-by-step task descriptions from a single title so that I don't have to write them manually.<br>
 -As an Arabic-speaking user, I want to switch the application UI language to Arabic so that I can navigate the roadmap in my native language.<br>
 
