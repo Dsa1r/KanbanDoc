@@ -57,7 +57,14 @@ To manage tight project timelines and ensure core delivery (execution tiers) wit
 ## 1. Must Have Requirements (Core MVP Engine)
 The following scenarios define how each feature behaves under specific conditions and serve as the acceptance criteria for testing.
 
-### 1.1. User Account Creation
+### 1.1. Landing Page Value Proposition
+* **User Story:** As a potential new user, I want to see a clear website description on the signing up page so I understand the onboarding process.
+* **Scenario: Onboarding Content Display**
+  * **Given** an unauthenticated visitor navigates to the registration page,
+  * **When** the page loads completely,
+  * **Then** the system displays a value proposition explaining the milestone tracking methodology, learning roadmap features, and Kanban workflow steps.
+    
+### 1.2. User Account Creation
 * **User Story:** As a user, I want to create a new account so I can access the milestone tracking system.
 * **Scenario: Successful Registration**
   * **Given** a user is on the signup page with valid credentials (email, password, phone, persona),
