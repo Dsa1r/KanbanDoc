@@ -1,5 +1,12 @@
 # User Stories Prioritization Strategy (MoSCoW Split) , Technical Requirements & Acceptance Criteria 
 
+# Domain Terminology
+** To ensure clarity across project scope and user stories, the board architecture distinguishes between Stages and Phases:
+
+- Stages (Domain Modules): Broad project areas — Database, Backend, and Frontend.
+
+-Phases / Columns (Workflow Status): Progress status columns — To-Do, In Progress, and Done.
+
 ## Requirements Prioritization Strategy (MoSCoW Split)
 To manage tight project timelines and ensure core delivery (execution tiers) within our curriculum deadlines, we utilize the MoSCoW prioritization method. This framework clearly defines what is mandatory for our **Minimum Viable Product (MVP)** versus what is intentionally deferred to future iterations.<br>
 
@@ -14,9 +21,9 @@ To manage tight project timelines and ensure core delivery (execution tiers) wit
 1.2. User Account Creation: As a user, I want to create a new account so I can access the milestone tracking system.<br>
 1.3.Secure User Authentication: As a user, I want to securely log into my account so I can view my personalized roadmap.<br>
 1.4. Password Recovery Workflow: As a user, I want to reset my password if I forget it so I can securely regain access to my account.<br>
-1.4. Project Scope & Isolation Definition: As a user I want to define a new project(Working Solo) with a name and description so I can isolate my specific stage from other stages (Database, back end and front end).<br>
+1.4. Project Scope & Isolation Definition: As a user I want to define a new project (Working Solo) with a name and description so I can isolate my specific stage from other stages (Database, back end and front end).<br>
 1.5. Team Collaboration & Invitations: As a user, I want to be able to add team members to my project so we can collaborate with a team in the project.<br>
-1.6. Backlog Stage and Column phase Initialization: As a user, I want to see the main development phases listed in my Kanban backlog so my team and I can manage tasks by stage..<br>
+1.6. Backlog Stage and Column phase Initialization: As a user, I want to see the main development phases organized into column in my Kanban backlog so my team and I can view tasks by stage..<br>
 1.7. Workflow Column Layout: As a user, I want to see my task statuses organized into clear columns so I can instantly view our workflow layout.<br>
 1.8. Stage-Based Board Filtering: As a user, I want to click on the main development stages (DB, Backend, or Frontend) so the Kanban board instantly filters to show only the tasks for that phase.<br>
 1.9. Interactive Drag and Drop Status Transition: As a user, I want to drag and drop a task card from one column to another so that its active status updates automatically.<br>
@@ -27,9 +34,11 @@ To manage tight project timelines and ensure core delivery (execution tiers) wit
 ## Should Have:
 2.1 Explicit Guidance in Task Execution: As a user, I want to open a task and see its description, steps to follow, and why it matters so I understand the objective and execution plan.<br>
 2.2. Task-Specific Learning Resources: As a user, I want to see learning resources directly within a task's details so I can quickly access the documentation and guides needed to complete that specific objective.<br>
-2.3. As a user, I want to see explicit instructions and why "task objective"resources for each task so I never have to guess how or where to find learning material.<br>
-2.2. Resource Recommendation: 
--As a user, I want to click on the main development stages (DB, Backend, or Frontend) so the Kanban board instantly filters to show only the tasks for that stage.<br>
+2.3. Stage-Based Board Filtering: As a user, I want to filter the board by a specific development stage (Database, backend, and frontend), so I can view only the tasks relevant to that stage without overwhelming my active board viwe.<br>
+2.4. Upcoming Task Preview Toggle: As a user, I want to click a "Show More / Show Less" button on a phase column so I can expand or collapse upcoming tasks without cluttering my board.
+2.5. 
+As a user, I want to toggle open a view of the next few tasks within a stage column so I can look ahead at upcoming steps without overwhelming my active board view.
+
 -As a user, I want to toggle open a view of the next few tasks within a stage column so I can look ahead at upcoming steps without overwhelming my active board view.<br>
 -As a user, I want to open a page that reveals my learning roadmap so I can visualize my macro learning journey from setup to frontend deployment, including the why, what, and brief alternative paths with suggested resources.<br>
 -As a user, I want to drag a task to Done on the Kanban board and see its corresponding node light up on the roadmap (snake line) so that my micro-progress natively updates my macro journey without a data mismatch.<br>
