@@ -54,6 +54,8 @@ Roadmap node states: not_started, in_progress, completed. The state is calculate
 ```json
 { "data": { } }
 ```
+**Error response format:**
+
 ```json
 {
   "error": {
@@ -107,10 +109,10 @@ Roadmap node states: not_started, in_progress, completed. The state is calculate
 
 ## Authentication
 
-### Register User
+### Sign Up (Public)
 
 **URL:**  
-`/api/auth/register`
+` /api/v1/auth/signup`
 
 **Method:**  
 `POST`
@@ -122,10 +124,9 @@ Create a new DevCompass user account.
 
 ```json
 {
-  "name": "Noura",
   "email": "noura@example.com",
-  "password": "password123"
-    "phone": "+966500000000",
+  "password": "password123",
+  "phone": "+966500000000",
   "persona": "junior_developer"
 }
 ```
@@ -159,10 +160,10 @@ Create a new DevCompass user account.
 ``` 
 ---
 
-### Login User
+### Login (Public)
 
 **URL:**  
-`/api/auth/login`
+`/api/v1/auth/login`
 
 **Method:**  
 `POST`
@@ -428,7 +429,7 @@ Example: /api/v1/projects?is_completed=false
 ### Get a Specific Project
 
 **URL:**  
-`/api/projects/{project_id}`
+`/api/v1/projects/{project_id}`
 
 **Method:**  
 `GET`
@@ -440,8 +441,7 @@ Retrieve the information for one specific project.
 The project ID is provided in the URL.
 
 Example:
-
-`/api/projects/1`
+`/api/v1/projects/1`
 
 **Output Format:** JSON
 
@@ -704,7 +704,7 @@ Example: /api/v1/projects/1/stages/BACKEND/upcoming?limit=5
 ### Get Task Details
 
 **URL:**  
-`/api/tasks/{task_id}`
+`/api/v1/tasks/{task_id}`
 
 **Method:**  
 `GET`
@@ -748,7 +748,7 @@ External links should be opened in a new browser tab (target="_blank").
 ### Update Task Status
 
 **URL:**  
-`/api/tasks/{task_id}/status`
+`/api/v1/tasks/{task_id}/status`
 
 **Method:**  
 `PATCH`
@@ -790,30 +790,6 @@ The supported workflow statuses are:
 ```
 Errors: 400 VALIDATION_ERROR (invalid status), 409 PROJECT_COMPLETED.
 
-
----
-
-### Delete Task
-
-**URL:**  
-`/api/tasks/{task_id}`
-
-**Method:**  
-`DELETE`
-
-**Purpose:**  
-Delete a task from a project.
-
-**Input Format:**  
-The task ID is provided in the URL.
-
-**Output Format:** JSON
-
-```json
-{
-  "message": "Task deleted successfully"
-}
-```
 
 ---
 # Roadmap Endpoints
@@ -869,7 +845,7 @@ Retrieve the macro learning roadmap (snake line) of a project. Each node is link
 **Purpose:**
 Retrieve the details of one roadmap node: what it is, why it matters, alternative paths, and suggested resources.
 
-**Input Format:**The project ID and node ID are provided in the URL.
+**Input Format:** The project ID and node ID are provided in the URL.
 
 **Output Format:** JSON
 
@@ -899,7 +875,7 @@ Retrieve the details of one roadmap node: what it is, why it matters, alternativ
 |---|---|---|
 | GET  | `/api/v1/public/overview` | Retrieve the website description (Public) |
 | POST | `/api/v1/auth/signup` | Register a new user (Public) |
-| POST | `/api/auth/login` | Log in a user (Public) |
+| POST | `/api/v1/auth/login` | Log in a user (Public) |
 | POST | `/api/v1/auth/logout` | 	Log out a user |
 | GET | `	/api/v1/auth/me` | Retrieve the current user |
 | POST | `/api/v1/auth/forgot-password` | Request a password reset (Public) |
@@ -908,7 +884,6 @@ Retrieve the details of one roadmap node: what it is, why it matters, alternativ
 | GET | `/api/v1/project-templates` | Retrieve project templates |
 | POST | `/api/v1/projects` | Create a project from a template |
 | GET | `/api/v1/projects` | Retrieve projects (active or archive) |
-| DELETE | `/api/tasks/{task_id` | Delete a task |
 | GET | `/api/v1/projects/{project_id}` | Retrieve a specific project |
 | GET | `/api/v1/projects/{project_id}/progress` | Retrieve project progress |
 | POST | `/api/v1/projects/{project_id}/complete` | Complete a project (owner only)|
