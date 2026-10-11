@@ -1,11 +1,11 @@
 # User Stories Prioritization Strategy (MoSCoW Split) , Technical Requirements & Acceptance Criteria 
 
 # Domain Terminology
-** To ensure clarity across project scope and user stories, the board architecture distinguishes between Stages and Phases:
+  To ensure clarity across project scope and user stories, the board architecture distinguishes between Stages and Phases:
 
 - Stages (Domain Modules): Broad project areas — Database, Backend, and Frontend.
 
--Phases / Columns (Workflow Status): Progress status columns — To-Do, In Progress, and Done.
+- Phases / Columns (Workflow Status): Progress status columns — To-Do, In Progress, Review/Test and Done.
 
 ## Requirements Prioritization Strategy (MoSCoW Split)
 To manage tight project timelines and ensure core delivery (execution tiers) within our curriculum deadlines, we utilize the MoSCoW prioritization method. This framework clearly defines what is mandatory for our **Minimum Viable Product (MVP)** versus what is intentionally deferred to future iterations.<br>
