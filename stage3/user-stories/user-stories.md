@@ -86,7 +86,7 @@ The following scenarios define how each feature behaves under specific condition
   * **When** When the login request is submitted,
   * **Then** Then the system returns a generic error message stating "Invalid email or password" without revealing whether the email address exists in the database.
 
-  ### 1.4. Password Recovery Workflow
+### 1.4. Password Recovery Workflow
 * **User Story:** As a user, I want to reset my password if I forget it so I can securely regain access to my account.
 * **Scenario: Password Reset Link Request**
   * **Given** a user triggers the "Forgot Password" modal with a valid email,
@@ -98,11 +98,25 @@ The following scenarios define how each feature behaves under specific condition
   * **Then** the system executes `User.reset_password(token, new_password)` and updates the credentials in the database.
 
 ### 1.5. Project Scope & Isolation Definition
-* **User Story:** As a junior developer, I want to define a new project with a name and description so I can isolate my specific stage from other stages (Database, Backend, Frontend).
+* **User Story:** As a user, I want to define a new project with a name and description so I can isolate my specific stage from other stages (Database, Backend, Frontend).
 * **Scenario: Project Instantiation from Template**
   * **Given** an authenticated user initiates project creation,
   * **When** they enter a project name, description, and template type,
   * **Then** the system calls `ProjectTemplate.generate_project()`, creates a `Project` record, and builds isolated stage workflows.
+
+### 1.6. Team Collaboration & Invitations
+* **User Story:** As a user, I want to be able to add team members to my project so we can collaborate with a team in the project.
+* **Scenario: Adding a Team Member**
+  * **Given** a project owner is on the Team Management settings page,
+  * **When** they select an existing user by ID or email to invite to a project,
+  * **Then** the system creates a new entry in `TeamMember` linking `user_id` and `team_id`.
+
+### 1.7. Backlog Stage and Column Layout 
+* **User Story:** As a user, I want to see the main development phases organized into columns in my Kanban backlog so my team and I can view tasks by stage.
+* **Scenario: Backlog Main Phase Display**
+* **Given** a user opens the Kanban board view,
+* **When** the layout initializes,
+* **Then** the backlog column displays tasks grouped by fixed stage phases (DATABASE, BACKEND, FRONTEND).
 
 ### 1.4. Backlog Main Phase Display
 * **User Story:** As a user, I want to see the main phases listed in my Kanban board backlog so my team or I can manage their tasks.
@@ -164,14 +178,7 @@ The following scenarios define how each feature behaves under specific condition
   * **When** the dashboard renders,
   * **Then** the system presents a summary card highlighting active project metrics, completion percentages, and a direct entrance link to the Kanban board.
 
-### 2.4. Team Collaboration & Invitations
-* **User Story:** As a user, I want to be able to add team members to my project so we can collaborate with a team in the project.
-* **Scenario: Adding a Team Member**
-  * **Given** a project owner is on the Team Management settings page,
-  * **When** they select an existing user by ID or email to invite to a project,
-  * **Then** the system creates a new entry in `TeamMember` linking `user_id` and `team_id`.
-
-### 2.5. Collective Progress Monitoring
+### 2.3. Collective Progress Monitoring
 * **User Story:** As a team member, I want to see the overall project progress so I can understand how much work the team has completed.
 * **Scenario: Aggregated Completion Metric Calculation**
   * **Given** a project contains multiple tasks across stages,
