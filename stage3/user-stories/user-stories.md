@@ -38,7 +38,7 @@ To manage tight project timelines and ensure core delivery (execution tiers) wit
 2.4. Task-Specific Learning Resources: As a user, I want to see learning resources directly within a task's details so I can quickly access the documentation and guides needed to complete that specific objective.<br>
 2.5. Kanban-to-Roadmap Progress Sync: As a user, I want moving a task to Done on the Kanban board to light up its corresponding roadmap node so that I can visually track my overall learning progress.<br>
 2.6. Clickable Roadmap & Task Resource Links: As a user, I want to see clickable resource links in both my roadmap nodes and individual task descriptions so I can instantly access recommended learning tools and documentation.<br>
-2.7. Project History & Status Audit: As a user, I want to access my previous and active projects so I can review my learning history, track completed tasks, and resume or audit my progress at any time.<br>
+2.7. Project History & Status Audit: As a user, I want to access my previous and active projects from a central dashboard, So that I can review my overall learning history, track completed milestones,and resume or update any project's progress at any time.
 
 
 ## Could Have:
@@ -199,11 +199,18 @@ The following scenarios define how each feature behaves under specific condition
   * **Then** the link opens in a secure new browser tab (`target="_blank"`).
 
 ### 2.7. Project History & Status Audit
-* **User Story:** As a user, I want to access my previous and active projects so I can review my learning history, track completed tasks, and resume or audit my progress at any time.
-* **Scenario: Accessing Project History and Status Audit
-  * **Given** a user navigates to their project history dashboard,
-  * **When** they select a project (regardless of whether its status is `IN_PROGRESS`, `ARCHIVED`, or `COMPLETED`),
-  * **Then** the system loads the historical roadmap and Kanban board state as read-only or editable history for auditing.
+* **User Story:** As a user, I want to access my previous and active projects from a central dashboard, So that I can review my overall learning history, track completed milestones, and resume or update any project's progress at any time.
+* **Scenario: Viewing the Project History Dashboard
+  * **Given** a user is logged into DevCompass and navigates to the project history dashboard,
+  * **When** the page loads,
+  * **Then** the system calls `view_historical_projects()` and displays a list of all active, completed, and past projects along with their calculated progress percentages (`calculate_progress_percentage()`).
+
+### 2.8. Selecting and Updating a Project
+* **User Story:** As a user, I want to access my previous and active projects from a central dashboard, So that I can review my overall learning history, track completed milestones, and resume or update any project's progress at any time.
+* **Scenario: Selecting and Updating a Project
+  * **Given** a user is viewing their project history list,
+  * **When** they select any project from the dashboard,
+  * **Then** the system loads the selected project’s roadmap (`get_roadmap()`) and opens the interactive Kanban board, allowing the user to view, edit, or drag tasks directly (`move_task_status()`).
 
 ---
 
