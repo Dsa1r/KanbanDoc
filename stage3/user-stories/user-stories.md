@@ -184,21 +184,21 @@ The following scenarios define how each feature behaves under specific condition
   * **When** the resources section populates,
   * **Then** the system displays curated documentation and external guides attached to that specific task.
 
-###2.5. Kanban-to-Roadmap Progress Sync
+### 2.5. Kanban-to-Roadmap Progress Sync
 * **User Story:** As a user, I want moving a task to Done on the Kanban board to light up its corresponding roadmap node so that I can visually track my overall learning progress.
 * **Scenario: Synchronized Node Completion
   * **Given** a task is linked to a macro node on the roadmap,
   * **When** the user drags that task to DONE on the Kanban board,
   * **Then** the system updates `Task.current_status` to DONE, and the corresponding roadmap UI node updates its status state to illuminated/completed.
 
-###2.6. Clickable Roadmap & Task Resource Links
+### 2.6. Clickable Roadmap & Task Resource Links
 * **User Story:** As a user, I want to see clickable resource links in both my roadmap nodes and individual task descriptions so I can instantly access recommended learning tools and documentation.
 * **Scenario: Opening Clickable Resource Links
   * **Given** a user is inspecting a task modal or a roadmap node card,
   * **When** they click an external resource URL stored in `TaskPhase.resources`,
   * **Then** the link opens in a secure new browser tab (`target="_blank"`).
 
-###2.7. Project History & Status Audit
+### 2.7. Project History & Status Audit
 * **User Story:** As a user, I want to access my previous and active projects so I can review my learning history, track completed tasks, and resume or audit my progress at any time.
 * **Scenario: Accessing Project History and Status Audit
   * **Given** a user navigates to their project history dashboard,
