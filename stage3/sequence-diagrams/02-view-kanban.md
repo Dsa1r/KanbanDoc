@@ -1,8 +1,8 @@
 # Sequence Diagrams
 
-## Use Case 1: User Log in
+## Use Case 2: View Tasks by Phase and Overall Track.
 
-This sequence diagram illustrates the user login authentication process, including database checks and password verification.
+This sequence diagram illustrates the workflow for retrieving and displaying project tasks grouped by phases and stages, along with calculating completion progress across individual stages and the overall track.
 
 ---
 
