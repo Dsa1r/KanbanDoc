@@ -1,6 +1,6 @@
 # Sequence Diagrams Overview
 
-This document provides a high-level overview of the core system workflows and interactions visualized through the sequence diagrams for **DevCompass**. These diagrams map out the communication between the User, the React Frontend, the Flask Backend API, and the PostgreSQL Database.
+This document provides a high-level overview of the core system workflows and interactions visualized through the sequence diagrams for **DevCompass**. These diagrams map out the communication between the User, the React Frontend, the Flask Backend API, and the Supabase Database.
 
 ---
 
@@ -11,7 +11,7 @@ This document provides a high-level overview of the core system workflows and in
 * **Flow:** 
   - The user enters credentials on the React frontend.
   - A `POST /auth/login` request is sent to the Flask backend.
-  - The backend queries the PostgreSQL database for the user record, verifies the hashed password, and issues an authentication token upon success (or returns a `401 Unauthorized` error if validation fails).
+  - The backend queries the Supabase database for the user record, verifies the hashed password, and issues an authentication token upon success (or returns a `401 Unauthorized` error if validation fails).
 
 ### 2. Use Case 2: View Tasks by Phase and Overall Track (`Project Progress Tracking`)
 * **Objective:** Retrieve and aggregate project tasks to calculate and display progress metrics.
