@@ -12,7 +12,7 @@ title Use Case 3 - Create Fixed Project and Assign Members
     actor U as User
     participant FE as Frontend (React)
     participant BE as Backend (Flask API)
-    participant DB as Database (PostgreSQL)
+    participant DB as Database (Supabase)
  
     U->>+FE: Enter project name, description, select team members (opt), select (built-in Kanban), press Create
     FE->>+BE: POST /projects {name, description, member_ids} + token
