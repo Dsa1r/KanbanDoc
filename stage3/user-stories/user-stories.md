@@ -33,13 +33,12 @@ To manage tight project timelines and ensure core delivery (execution tiers) wit
 
 ## Should Have:
 2.1 Explicit Guidance in Task Execution: As a user, I want to open a task and see its description, steps to follow, and why it matters so I understand the objective and execution plan.<br>
-2.2. Task-Specific Learning Resources: As a user, I want to see learning resources directly within a task's details so I can quickly access the documentation and guides needed to complete that specific objective.<br>
-2.3. Stage-Based Board Filtering: As a user, I want to filter the board by a specific development stage (Database, backend, and frontend), so I can view only the tasks relevant to that stage without overwhelming my active board viwe.<br>
-2.4. Upcoming Task Preview Toggle: As a user, I want to click a "Show More / Show Less" button on a phase column so I can expand or collapse upcoming tasks without cluttering my board.<br>
-2.5. Integrated Documentation & Resource Links: As a user, I want to see clickable resource links in both my roadmap nodes and individual task descriptions so I can instantly access recommended learning tools and documentation.<br>
-2.6. Kanban-to-Roadmap Progress Sync: As a user, I want moving a task to Done on the Kanban board to light up its corresponding roadmap node so that I can visually track my overall learning progress.<br>
-2.7. Clickable Roadmap & Task Resource Links: As a user, I want to see clickable resource links in both my roadmap nodes and individual task descriptions so I can instantly access recommended learning tools and documentation.<br>
-2.8. Project History & Status Audit: As a user, I want to access my previous and active projects so I can review my learning history, track completed tasks, and resume or audit my progress at any time.<br>
+2.2. Dashboard Application Overview: As a returning user, I want to see a brief application overview when I log in so I can quickly orient myself before viewing my roadmap.<br>
+2.3. Upcoming Task Preview Toggle: As a user, I want to click a "Show More / Show Less" button on a phase column so I can expand or collapse upcoming tasks without cluttering my board.<br>
+2.4. Task-Specific Learning Resources: As a user, I want to see learning resources directly within a task's details so I can quickly access the documentation and guides needed to complete that specific objective.<br>
+2.5. Kanban-to-Roadmap Progress Sync: As a user, I want moving a task to Done on the Kanban board to light up its corresponding roadmap node so that I can visually track my overall learning progress.<br>
+2.6. Clickable Roadmap & Task Resource Links: As a user, I want to see clickable resource links in both my roadmap nodes and individual task descriptions so I can instantly access recommended learning tools and documentation.<br>
+2.7. Project History & Status Audit: As a user, I want to access my previous and active projects so I can review my learning history, track completed tasks, and resume or audit my progress at any time.<br>
 
 
 ## Could Have:
@@ -154,36 +153,6 @@ The following scenarios define how each feature behaves under specific condition
   * **Then** the system parses the project's entire `Task` and `Stage` hierarchy and renders a sequential macro path line (snake line UI).
 
 ---
-  
-### 1.4. Backlog Main Phase Display
-* **User Story:** As a user, I want to see the main phases listed in my Kanban board backlog so my team or I can manage their tasks.
-* **Scenario: Default Stage Column Setup**
-  * **Given** a user opens the Kanban board view,
-  * **When** the layout initializes,
-  * **Then** the backlog column displays tasks grouped by Stage entities (`DATABASE`, `BACKEND`, `FRONTEND`).
-
-### 1.6. Interactive Drag and Drop Status Transition
-* **User Story:** As a user, I want to drag and drop a task card from one column to another so that its active status updates automatically.
-* **Scenario: Drag-and-Drop Execution**
-  * **Given** a task card resides in the `TO_DO` column,
-  * **When** the user drags the card to the `IN_PROGRESS` column,
-  * **Then** the system executes `TaskPhase.move_task_status(task_id, 'IN_PROGRESS')`, updates `current_status` in `Task`, and persists state without a page refresh.
-
-### 1.7. Deep Task Execution Details
-* **User Story:** As a user, I want to open a task and see its description, steps to follow, and why it matters so I understand the objective and execution plan.
-* **Scenario: Inspecting Task Details**
-  * **Given** a user clicks on a task card on the Kanban board,
-  * **When** the modal expands,
-  * **Then** the system displays the description attribute from `TaskPhase`, including step-by-step instructions and contextual importance.
-
-### 1.9. Micro-Progress & Macro-Roadmap Synchronization
-* **User Story:** As a user, I want to drag a task to "Done" on the Kanban board and see its corresponding node light up on the roadmap (snake line) so that my micro-progress natively updates my macro journey without a data mismatch.
-* **Scenario: Synchronized Node Completion**
-  * **Given** a task is linked to a macro node on the roadmap,
-  * **When** the user drags that task to `DONE` on the Kanban board,
-  * **Then** the system updates `Task.current_status` to `DONE`, and the corresponding roadmap UI node updates its status state to illuminated/completed.
-
----
 
 ## 2. Should Have Requirements (Feature & Experience Polish)
 
@@ -194,55 +163,46 @@ The following scenarios define how each feature behaves under specific condition
   * **When** the modal expands,
   * **Then** the system displays the description attribute from `TaskPhase`, including step-by-step instructions and contextual importance.
     
-###   
-* **User Story:** As a potential new user, I want to see a clear website description on the signing up page so I understand the onboarding process.
-* **Scenario: Onboarding Content Display**
-  * **Given** an unauthenticated visitor navigates to the registration page,
-  * **When** the page loads completely,
-  * **Then** the system displays a value proposition explaining the milestone tracking methodology, learning roadmap features, and Kanban workflow steps.
-
-### 2.2. Dashboard Application Overview
-* **User Story:** As a returning user, I want to see a brief application overview when I log in so I can quickly orient myself before viewing my roadmap.
+### 2.2. Dashboard Application Overview  
+* **User Story:** As a returning user, I want to see a brief application overview when I log in so I can quickly orient myself before selecting or viewing my active projects. 
 * **Scenario: Dashboard Context Presentation**
   * **Given** an authenticated user completes login,
   * **When** the dashboard renders,
-  * **Then** the system presents a summary card highlighting active project metrics, completion percentages, and a direct entrance link to the Kanban board. 
+  * **Then** the system presents a summary card highlighting active project metrics, completion percentages, and a direct entrance link to the Kanban board.
 
+### 2.3. Upcoming Task Preview Toggle
+* **User Story:** As a user, I want to click a "Show More / Show Less" button on a phase column so I can expand or collapse upcoming tasks without cluttering my board.
+* **Scenario: Toggling Upcoming Task Preview**
+  * **Given** a tage column contains additional hidden tasks,
+  * **When** the user clicks the "Show More" toggle button on that column,
+  * **Then** the column expands to display the additional upcoming tasks, changing the button label to "Show Less".
 
-### 2.7. Explicit Guidance & Tool Recommendations
-* **User Story:** As a user, I want to see explicit instructions and tool recommendations for each task so I never have to guess what to do next.
-* **Scenario: Reading Task Execution Resources**
-  * **Given** a user opens a task detail drawer,
-  * **When** the content populates,
-  * **Then** the system retrieves resources from the `TaskPhase` entity and renders curated documentation links and recommended tools.
+### 2.4. Task-Specific Learning Resources: As a user, I want to see learning resources directly within a task's details so I can quickly access the documentation and guides needed to complete that specific objective.<br>
+Scenario: Accessing Task Learning Resources
+Given a user opens a task detail panel,
+When the resources section populates,
+Then the system displays curated documentation and external guides attached to that specific task.
 
-### 2.8. Upcoming Task Preview Toggle
-* **User Story:** As a user, I want to toggle open a view of the next few tasks within a stage column so I can look ahead at upcoming steps without overwhelming my active board view.
-* **Scenario: Expanding Upcoming Tasks Drawer**
-  * **Given** a stage column has collapsed future tasks,
-  * **When** the user clicks the "Toggle Upcoming" control,
-  * **Then** the system triggers `TaskPhase.toggle_upcoming_tasks(stage_id)` to show or hide non-active future cards.
+2.5. Kanban-to-Roadmap Progress Sync
+User Story: As a user, I want moving a task to Done on the Kanban board to light up its corresponding roadmap node so that I can visually track my overall learning progress.
+Scenario: Synchronized Node Completion
+Given a task is linked to a macro node on the roadmap,
+When the user drags that task to DONE on the Kanban board,
+Then the system updates Task.current_status to DONE, and the corresponding roadmap UI node updates its status state to illuminated/completed.
 
-### ### 2.6. Stage-Based Board Filtering
-* **User Story:** As a user, I want to click on the main development stages (DB, Backend, or Frontend) so the Kanban board instantly filters to show only the tasks for that phases.
-* **Scenario: Filtering Board View by Stage**
-  * **Given** the Kanban board shows tasks across all stages,
-  * **When** the user clicks on the "BACKEND" stage filter button,
-  * **Then** the system executes `TaskPhase.filter_by_stage(BACKEND)` and renders only tasks associated with `stage_id = BACKEND`.
+2.6. Clickable Roadmap & Task Resource Links
+User Story: As a user, I want to see clickable resource links in both my roadmap nodes and individual task descriptions so I can instantly access recommended learning tools and documentation.
+Scenario: Opening Clickable Resource Links
+Given a user is inspecting a task modal or a roadmap node card,
+When they click an external resource URL stored in TaskPhase.resources,
+Then the link opens in a secure new browser tab (target="_blank").
 
-### 2.9. Integrated Documentation & Resource Links
-* **User Story:** As a user, I want to see clickable resource links in both my roadmap nodes and individual task descriptions so I can instantly access recommended learning tools and documentation.
-* **Scenario: Opening Resource Links**
-  * **Given** a user is inspecting a task modal or a roadmap node card,
-  * **When** they click an external resource URL stored in `TaskPhase.resources`,
-  * **Then** the link opens in a secure new browser tab (`target="_blank"`).
-
-### 2.10. Completed Project Archive & Status Audit
-* **User Story:** As a user, I want to be able to view my completed project page and roadmap after completion so I can review my historical learning path and tasks with the ability to audit.
-* **Scenario: Accessing Completed Project Audits**
-  * **Given** a project has `is_completed = true`,
-  * **When** the user opens the "Project Archive" tab and triggers an audit,
-  * **Then** `ProjectTemplate.view_historical_projects()` and `ProjectTemplate.audit_project_status(project_id)` render read-only completion logs.
+2.7. Project History & Status Audit
+User Story: As a user, I want to access my previous and active projects so I can review my learning history, track completed tasks, and resume or audit my progress at any time.
+Scenario: Accessing Project History and Status Audit
+Given a user navigates to their project history dashboard,
+When they select a project (regardless of whether its status is IN_PROGRESS, ARCHIVED, or COMPLETED),
+Then the system loads the historical roadmap and Kanban board state as read-only or editable history for auditing.
 
 ---
 
