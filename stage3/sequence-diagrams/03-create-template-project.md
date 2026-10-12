@@ -2,8 +2,7 @@
 
 ## Use Case 3: create template project
 
-This sequence diagram illustrates the user login authentication process, including database checks and password verification.
-
+This sequence diagram illustrates the workflow for creating a fixed project using a built-in Kanban template, associating selected team members, and generating default tasks upon project initialization.
 ---
 
 ```mermaid
