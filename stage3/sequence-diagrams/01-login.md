@@ -16,7 +16,7 @@ title Use Case 1 - User Log in
     actor U as User
     participant FE as Frontend (React)
     participant BE as Backend (Flask API)
-    participant DB as Database (PostgreSQL)
+    participant DB as Database (Supabase)
  
     U->>+FE: Enter username and password, press Login
     FE->>+BE: POST /auth/login {identifier, password}
