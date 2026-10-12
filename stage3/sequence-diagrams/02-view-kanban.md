@@ -12,7 +12,7 @@ title Use Case 2 - View Tasks by Phase and Overall Track
     actor U as User
     participant FE as Frontend (React)
     participant BE as Backend (Flask API)
-    participant DB as Database (PostgreSQL)
+    participant DB as Database (Supabase)
  
     U->>+FE: Open project progress page
     FE->>+BE: GET /projects/{id}/progress + token
