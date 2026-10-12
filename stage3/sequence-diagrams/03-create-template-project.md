@@ -24,13 +24,10 @@ title Use Case 3 - Create Fixed Project and Assign Members
             BE->>+DB: INSERT project member (projectId, userId)
             DB-->>-BE: Member saved
         end
-        alt built-in tasks selected
+
         BE->>+DB: CreatTasks(projectId)
         DB-->>-BE: Tasks Linked to the project
-        else empty tasks selected
-         BE->>+DB: insert tasks to the kanban by time priority
-        DB-->>-BE: Tasks saved and Linked to the project
-end
+
     
         BE-->>FE: 201 Created (project)
         FE-->>U: Open the project Kanban board
@@ -46,12 +43,13 @@ end
 ---
 ### Detailed Flow Breakdown
 
-1. **Client Request:** The user fills out the project creation form (providing name, description, optional team members, and template preferences) and submits it via the React frontend.
-2. **API Dispatch:** The frontend sends an HTTP `POST` request to `/projects` containing the JSON payload with `{ name, description, member_ids, template_type }` along with the authorization token in the request header.
-3. **Validation & Authorization:** The Flask API verifies the user's JWT token and validates the payload (e.g., ensuring required fields like project name are present).
+1. **Client Request:** The user fills out the project creation form (providing name, description, optional team members, and selecting the built-in Kanban template) and clicks Create via the React frontend.
+2. **API Dispatch:** The frontend sends an HTTP `POST` request to `/projects` containing the JSON payload with `{ name, description, member_ids }` along with the authorization token in the request header.
+3. **Validation & Authorization:** The Flask API verifies the user's JWT token and validates the incoming data (e.g., checking that the project name is provided).
 4. **Data Persistence Flow:**
-   - **Project Insertion:** Upon successful validation, the backend inserts the core project details into PostgreSQL and receives the generated `projectId`.
-   - **Member Assignment:** The backend iterates through the provided `member_ids` list and links each user to the project in the database.
-   - **Task Initialization:** Depending on user selection:
-     - *Built-in tasks selected:* Pre-configured default tasks are created and linked to the project.
-     - *Custom/Empty tasks selected:* Initial tasks are ordered and inserted into the Kanban board based on time priority.
+   - **Project Insertion:** Upon successful validation, the backend inserts the new project record into PostgreSQL and receives the generated `projectId`.
+   - **Member Assignment:** The backend iterates over each selected team member in `member_ids` and inserts a project member record linking `projectId` and `userId`.
+   - **Task Creation:** The backend calls `CreatTasks(projectId)` to populate the project with the built-in Kanban tasks in PostgreSQL.
+5. **API Response & UI Redirection:**
+   - **On Success (`201 Created`):** The API returns an HTTP `201 Created` status with the new project data, and the frontend redirects the user to the newly created project's Kanban board.
+   - **On Validation Error (`400 Bad Request`):** If any required data is missing or invalid, the API responds with an HTTP `400 Bad Request`, prompting the frontend to display validation errors.
