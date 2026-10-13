@@ -42,9 +42,9 @@ Since all team members are **Full-Stack Developers**, the workload was distribut
 
 | Developer | Core Ownership | Key Responsibilities & Tasks |
 | :--- | :--- | :--- |
-| **Reema** | ... | • ... |
-| **Areej** | ... | • ... |
-| **Noura** | ... | • ... |
-| **Dana** | ... | • ... |
+| **Reema** | Project creation, templates & seed content, team members | • ... |
+| **Areej** |  Authentication & JWT, project list (Dashboard), archive & audit, CI/QA, deployment | • ... |
+| **Noura** | Kanban: task list, stage filter, status change (drag and drop), progress | • ... |
+| **Dana** | Task card (details & checklist), task CRUD, Roadmap and its synchronization | • ... |
 
 
