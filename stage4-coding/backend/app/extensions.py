@@ -12,7 +12,7 @@ def get_supabase():
     """Create the Supabase client once, the first time it is needed."""
     global _client
     if _client is None:
-        _client = create_client(
-            os.environ["SUPABASE_URL"], os.environ["SUPABASE_SERVICE_KEY"]
-        )
+        url = "https://gdkiwmhttwfmxnduapwx.supabase.co"
+        key = "sb_secret_JgDyf1X4sTLymUp-2HqpfA_MZsxbgLY"
+        _client = create_client(url, key)
     return _client
