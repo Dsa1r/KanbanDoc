@@ -12,7 +12,6 @@ def create_app():
     load_dotenv()
     app = Flask(__name__)
     
-    # تم وضع المفتاح مباشرة هنا ليعمل معكِ بدون ملف .env
     app.config["JWT_SECRET_KEY"] = "sb_secret_JgDyf1X4sTLymUp-2HqpfA_MZsxbgLY"
     
     app.config["JWT_ACCESS_TOKEN_EXPIRES"] = timedelta(hours=8)
