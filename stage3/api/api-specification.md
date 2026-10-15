@@ -327,7 +327,7 @@ Retrieve the application overview and active project summary shown after login.
 # Project Endpoints
 
 ### Get Project Templates
-**URL:**
+**URL:** \\ ماهو ايند بيونت
 `/api/v1/project-templates`
 
 **Method:**
@@ -343,9 +343,9 @@ Retrieve the available project templates used when creating a project.
 {
   "data": [
     {
-      "template_type": "fullstack_web",
-      "name": "Full-Stack Web Application",
-      "description": "Build a website from database to frontend.",
+      "template_type": "fullstack_web", \\يتغير, يحذف  
+      "name": "Full-Stack Web Application", \\يتغيرو يحذف  
+      "description": "Build a website from database to frontend.", \\
       "stages": ["DATABASE", "BACKEND", "FRONTEND"]
     }
   ]
@@ -369,7 +369,7 @@ JSON
 {
   "name": "Portfolio Website",
   "description": "Personal portfolio web application",
-  "template_type": "fullstack_web"
+  "template_type": "fullstack_web" \\ هنا اي دي 
 }
 ```
 
@@ -381,11 +381,11 @@ JSON
     "id": 1,
     "name": "Portfolio Website",
     "description": "Personal portfolio web application",
-    "template_type": "fullstack_web",
-    "owner_id": "b3f1c2a4-1111-2222-3333-444455556666",
+    "template_type": "fullstack_web", \\ اي دي 
+    "owner_id": "b3f1c2a4-1111-2222-3333-444455556666", \\ تيم ممبر اي دي 
     "team_id": 1,
-    "is_completed": false,
-    "completed_at": null,
+    "is_completed": false, \\ نشيل الاتربيوت من الكلاس دياقرام 
+    "completed_at": null, 
     "created_at": "2026-10-11T10:00:00Z"
   }
 }
@@ -407,7 +407,7 @@ Retrieve the user's projects. Use ?is_completed=true for the Project Archive, or
 **Input Format:**  
 No request body is required.
 
-Example: /api/v1/projects?is_completed=false
+Example: /api/v1/projects?is_completed=false \\ قيت ال بروجكت, مع اليوزر اي دي 
 
 **Output Format:** JSON
 
@@ -417,8 +417,8 @@ Example: /api/v1/projects?is_completed=false
     {
       "id": 1,
       "name": "Portfolio Website",
-      "template_type": "fullstack_web",
-      "is_completed": false
+      "template_type": "fullstack_web", \\ ينشال 
+      "is_completed": false \\   ينشال وينحط البرقرس كنمبر, في الكلاس دياقرام بعد
     }
   ]
 }
@@ -451,18 +451,18 @@ Example:
     "id": 1,
     "name": "Portfolio Website",
     "description": "Personal portfolio web application",
-    "template_type": "fullstack_web",
-    "owner_id": "b3f1c2a4-1111-2222-3333-444455556666",
-    "team_id": 1,
-    "is_completed": false,
+    "template_type": "fullstack_web", \\ تابملت اي دي 
+    "owner_id": "b3f1c2a4-1111-2222-3333-444455556666", \\ تيم ممبر اي دي, 
+    "team_id": 1, \\ مالها داعي 
+    "is_completed": false, \\ هنا برقرس 
     "completed_at": null,
     "created_at": "2026-10-11T10:00:00Z"
   }
 }
 ```
 
-### Get Project Progress
-**URL:**
+### Get Project Progress 
+**URL:** // تنشال كلها مالها داعي 
 `/api/v1/projects/{project_id}/progress`
 
 **Method:**
