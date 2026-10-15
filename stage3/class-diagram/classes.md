@@ -33,8 +33,8 @@ classDiagram
     }
 
     class ProjectTemplate {
-        +uuid id
-        +string template_name
+        +uuid ProjectTemplate id
+        +string template_name \\ قابل للتعديل 
         +json default_tasks
         +generate_project(name, description, template_type, is_team_project)
         +view_historical_projects()
