@@ -453,7 +453,7 @@ Example:
     "description": "Personal portfolio web application",
     "template_type": "fullstack_web", \\ تابملت اي دي 
     "owner_id": "b3f1c2a4-1111-2222-3333-444455556666", \\ تيم ممبر اي دي, 
-    "team_id": 1, \\ مالها داعي 
+    "team_id": 1, \\ قلنا بالاول مالها داعي لكن طلعت مهمة, نخلي استدعاء التيم ممبرز في ايند بوينت التيم ممبرز مو هنا 
     "is_completed": false, \\ هنا برقرس 
     "completed_at": null,
     "created_at": "2026-10-11T10:00:00Z"
