@@ -193,7 +193,7 @@ Authenticate an existing user.
     },
     "access_token": "eyJhbGciOi...",
     "refresh_token": "eyJhbGciOi...",
-    "expires_in": 3600
+    "expires_in": 3600 \\ وهاشد باسوورد
   }
 } 
 ```
@@ -285,13 +285,13 @@ Set a new password using the recovery token.
 ```json
 {
   "data": {
-    "message": "Password updated"
+    "message": "Password updated" \\ هاشد باسوورد و نتااكد
   }
 }
 ```
 
 ---
-## Dashboard \\ نرحع لها بعدين 
+## Dashboard 
 
 ### Get Dashboard
 
