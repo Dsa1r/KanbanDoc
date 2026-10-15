@@ -12,6 +12,8 @@ classDiagram
         +string name
         +string email
         +string phone
+        -string password_hash
+ %% اضفناه
         +sign_up(email, password, phone, name)
         +login(email, password)
         +request_password_reset(email)
@@ -30,27 +32,35 @@ classDiagram
         +uuid id
         +uuid team_id
         +uuid user_id
+        +datetime joined_at
     }
-
+    class TemplateType {
+%% انا عدلت هنا
+        <<enumeration>>
+        FIXED
+        EMPTY
+    }
     class ProjectTemplate {
-        +uuid ProjectTemplate id
-        +string template_name \\ قابل للتعديل 
+        +uuid id
         +json default_tasks
-        +generate_project(name, description, template_type, is_team_project)
-        +view_historical_projects()
-        +audit_project_status(project_id)
+        +generate_project(name, description, template_type, is_team_project)$ Project
+        +view_historical_projects(): List<Project>
+%% انا عدلت هنا  
     }
 
     class Project {
         +uuid id
         +uuid team_id
+        +uuid template_id
+        %% اضفناه عشان API بيستعمله عند كرييت بروجكت
         +string project_name
         +string description
-        +boolean is_completed
         +calculate_progress_percentage()
-        +get_next_task()
         +get_roadmap()
-        +mark_completed()
+        +audit_project_status() 
+
+
+
     }
 
     class Task {
@@ -94,6 +104,8 @@ classDiagram
     User "0..1" -- "0..*" Task : assigned to
     Task "1" *-- "1..4" TaskPhase : has
 
+    ProjectTemplate --> TemplateType
+ %% اضفته انا 
     Task ..> ProjectStage : uses
     Task ..> TaskStatus : uses
     TaskPhase ..> TaskStatus : uses
