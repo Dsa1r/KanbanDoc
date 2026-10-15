@@ -488,7 +488,7 @@ Retrieve the overall project progress (ratio of DONE tasks to total tasks), over
 }
 ```
 
-### Complete Project (Owner only)
+### Complete Project (Owner only \\ تنشال 
 **URL:**
 `/api/v1/projects/{project_id}/complete`
 
@@ -516,7 +516,7 @@ Mark a project as completed. The project becomes read-only and moves to the Proj
 ### Get Project Audit
 
 **URL:**
-`/api/v1/projects/{project_id}/audit`
+`/api/v1/projects/{project_id}/audit` \\ تنشال 
 
 **Method:**
 `GET`
@@ -563,10 +563,10 @@ Retrieve a read-only completion log of a completed project, so the user can revi
 --- 
 # Team Endpoints
 
-### Get Project Members
+### Get Project Members \\ تنحذف 
 
 **URL:** 
-`/api/v1/projects/{project_id}/members`
+`/api/v1/projects/{project_id}/members` 
 
 **Method:**
 `GET`
@@ -591,7 +591,7 @@ Retrieve the members of a project's team.
   ]
 }
 ```
-### Add Team Member (Owner only)
+### Add Team Member \\ نحتاج نضيف ديليت بعد 
 **URL:**
 `/api/v1/projects/{project_id}/members`
 
@@ -615,8 +615,8 @@ Add an existing user to the project team. Send either email or user_id.
     "user_id": "c4d2e3b5-7777-8888-9999-000011112222",
     "team_id": 1,
     "email": "friend@example.com",
-    "role": "member",
-    "joined_at": "2026-10-12T08:00:00Z"
+    "role": "member", \\ تنشال حتى بالديليت 
+    "joined_at": "2026-10-12T08:00:00Z" \\ تنضاف بالكلاس دياقرام تيم ممبر 
   }
 }
 ```
@@ -626,7 +626,7 @@ Errors: 404 USER_NOT_FOUND, 409 ALREADY_MEMBER.
 
 ### Get Project Board
 **URL:**
-`/api/v1/projects/{project_id}/board`
+`/api/v1/projects/{project_id}/board` 
 
 **Method:**
 `GET`
@@ -642,20 +642,20 @@ Retrieve the Kanban board of a project: the backlog stages and the tasks grouped
   "data": {
     "project": { "id": 1, "name": "Portfolio Website", "is_completed": false },
     "progress": { "done": 8, "total": 24, "percent": 33 },
-    "active_stage": "BACKEND",
+    "active_stage": "BACKEND", \\ تنشال 
     "stages": [
-      { "stage_id": "DATABASE", "name": "Database", "order": 1, "task_count": 8 },
+      { "stage_id": "DATABASE",  "name": "Database", "order": 1, "task_count": 8 },
       { "stage_id": "BACKEND", "name": "Backend", "order": 2, "task_count": 8 },
       { "stage_id": "FRONTEND", "name": "Frontend", "order": 3, "task_count": 8 }
     ],
     "columns": {
       "TO_DO": [
         {
-          "id": 104,
+          "id": 104, //  اول رقمين حسب ترتيب التاسك, ثاني رقمين خاص برقم الستيج (1201) 12 رقم التاسك و 01 رقم الستيج
           "title": "Create JWT Login Route",
           "stage_id": "BACKEND",
           "current_status": "TO_DO",
-          "position": 0
+          "position": 0  // تنشال يوزشن 
         }
       ],
       "IN_PROGRESS": [],
@@ -670,7 +670,7 @@ Examples: /api/v1/projects/1/board and /api/v1/projects/1/board?stage=BACKEND. a
 ### Get Upcoming Tasks of a Stage
 
 **URL:**
-`/api/v1/projects/{project_id}/stages/{stage_id}/upcoming`
+`/api/v1/projects/{project_id}/stages/{stage_id}/upcoming` \\ تنشال 
 
 **Method:**
 `GET`
@@ -696,7 +696,7 @@ The project ID and stage ID are provided in the URL.
   ]
 }
 ```
-Example: /api/v1/projects/1/stages/BACKEND/upcoming?limit=5
+Example: /api/v1/projects/1/stages/BACKEND/upcoming?limit=5  \\ لين هنا تنشال 
 
 ---
 # Task Endpoints
