@@ -78,7 +78,7 @@ Roadmap node states: not_started, in_progress, completed. The state is calculate
 
 
 ## Public Endpoints
-### Get Website Overview (Public)
+### Get Website Overview (Public) \\ نتاكد لو هو فرونتد بس وتنشال ولا داتابيس 
 
 **URL:** 
 `/api/v1/public/overview`
@@ -127,7 +127,7 @@ Create a new DevCompass user account.
   "email": "noura@example.com",
   "password": "password123",
   "phone": "+966500000000",
-  "persona": "junior_developer"
+  "persona": "junior_developer" \\ تصير نيم 
 }
 ```
 
@@ -140,10 +140,10 @@ Create a new DevCompass user account.
       "id": "b3f1c2a4-1111-2222-3333-444455556666",
       "email": "noura@example.com",
       "phone": "+966500000000",
-      "persona": "junior_developer"
+      "persona": "junior_developer" \\ تنشال 
     },
     "access_token": "eyJhbGciOi...",
-    "refresh_token": "eyJhbGciOi...",
+    "refresh_token": "eyJhbGciOi...", \\ نتاكد لو ينضاف هاشد باسوورد
     "expires_in": 3600
   }
 }
@@ -189,7 +189,7 @@ Authenticate an existing user.
       "id": "b3f1c2a4-1111-2222-3333-444455556666",
       "email": "noura@example.com",
       "phone": "+966500000000",
-      "persona": "junior_developer"
+      "persona": "junior_developer" نيم المفرو ض 
     },
     "access_token": "eyJhbGciOi...",
     "refresh_token": "eyJhbGciOi...",
@@ -232,7 +232,7 @@ Retrieve the information of the logged-in user.
     "id": "b3f1c2a4-1111-2222-3333-444455556666",
     "email": "noura@example.com",
     "phone": "+966500000000",
-    "persona": "junior_developer"
+    "persona": "junior_developer" \\ تنشال و تنحط يدالها نيم
   }
 }
 ```
@@ -291,7 +291,7 @@ Set a new password using the recovery token.
 ```
 
 ---
-## Dashboard
+## Dashboard \\ نرحع لها بعدين 
 
 ### Get Dashboard
 
@@ -636,24 +636,18 @@ Retrieve the Kanban board of a project: the backlog stages and the tasks grouped
 
 **Input Format:** The project ID is provided in the URL.
 
-**Output Format:** JSON
+**Output Format:** JSON \\ لو هو ال تراك ما احتاج احدد شرط له بالكود انه لازم يطابق ستيج اي دي  مثل باكند ولا فرونتد      ولكن لو ضغط اليوزر ستيج معين احدد بالكود انه استدعي سيتج اي دي للتاسكات حقتها بس 
 ```json
 {
   "data": {
-    "project": { "id": 1, "name": "Portfolio Website", "is_completed": false },
+    "project": { "id": 1, "name": "Portfolio Website", "is_completed": false \\ تنشال  },
     "progress": { "done": 8, "total": 24, "percent": 33 },
-    "active_stage": "BACKEND", \\ تنشال 
-    "stages": [
-      { "stage_id": "DATABASE",  "name": "Database", "order": 1, "task_count": 8 },
-      { "stage_id": "BACKEND", "name": "Backend", "order": 2, "task_count": 8 },
-      { "stage_id": "FRONTEND", "name": "Frontend", "order": 3, "task_count": 8 }
-    ],
     "columns": {
       "TO_DO": [
         {
           "id": 104, //  اول رقمين حسب ترتيب التاسك, ثاني رقمين خاص برقم الستيج (1201) 12 رقم التاسك و 01 رقم الستيج
-          "title": "Create JWT Login Route",
-          "stage_id": "BACKEND",
+          "title": "Create JWT Login Route", 
+          "stage_id": "BACKEND", 
           "current_status": "TO_DO",
           "position": 0  // تنشال يوزشن 
         }
@@ -665,9 +659,11 @@ Retrieve the Kanban board of a project: the backlog stages and the tasks grouped
   }
 }
 ```
+
+
 Examples: /api/v1/projects/1/board and /api/v1/projects/1/board?stage=BACKEND. active_stage is null when no filter is applied.
 
-### Get Upcoming Tasks of a Stage
+### Get Upcoming Tasks of a Stage \\ تنشال 
 
 **URL:**
 `/api/v1/projects/{project_id}/stages/{stage_id}/upcoming` \\ تنشال 
@@ -701,10 +697,10 @@ Example: /api/v1/projects/1/stages/BACKEND/upcoming?limit=5  \\ لين هنا ت
 ---
 # Task Endpoints
 
-### Get Task Details
+### Get Task Details ماتكون ديتليز قد انه تاسك بار 
 
 **URL:**  
-`/api/v1/tasks/{task_id}`
+`/api/v1/tasks/{task_id}` \\ احتاج اعمل يو ار ال للتاسك اللي يبي يدخل الكانبان   موجود فوق داخل تو دو كمثال 
 
 **Method:**  
 `GET`
@@ -716,7 +712,7 @@ Retrieve detailed information and guidance for a specific task: its description,
 The task ID is provided in the URL.
 
 **Output Format:** JSON
-
+`/api/v1/tasks/{task_id}\current_status هذي للديتيلز اللي تحت 
 ```json
 {
   "data": {
@@ -738,17 +734,23 @@ The task ID is provided in the URL.
     "recommended_tools": [
       { "title": "Postman", "url": "https://www.postman.com", "type": "tool" }
     ],
-    "roadmap_node_id": 3
+   
   }
 }
 ```
+`/api/v1/tasks/{task_id} \\ وهذا له يو ار ال خاص 
+          "id": 104, //  اول رقمين حسب ترتيب التاسك, ثاني رقمين خاص برقم الستيج (1201) 12 رقم التاسك و 01 رقم الستيج
+          "title": "Create JWT Login Route", 
+          "stage_id": "BACKEND",
+          "current_status": "TO_DO",
+
 External links should be opened in a new browser tab (target="_blank").
 
 ---
 ### Update Task Status
 
 **URL:**  
-`/api/v1/tasks/{task_id}/status`
+`/api/v1/tasks/{task_id}/status` \\ تنشال و حليناها بالكود اصلا ان شاء الله 
 
 **Method:**  
 `PATCH`
@@ -792,12 +794,12 @@ Errors: 400 VALIDATION_ERROR (invalid status), 409 PROJECT_COMPLETED.
 
 
 ---
-# Roadmap Endpoints
+# Roadmap Endpoints \\ هذي تنشااال
 
 ### Get Project Roadmap
 
 **URL:**
-`/api/v1/projects/{project_id}/roadmap`
+`/api/v1/projects/{project_id}/roadmap` 
 
 **Method:**
 `GET`
@@ -835,7 +837,7 @@ Retrieve the macro learning roadmap (snake line) of a project. Each node is link
 }
 ```
 
-### Get Roadmap Node Details
+### Get Roadmap Node Details \\ تنشال 
 **URL:**
 `/api/v1/projects/{project_id}/roadmap/nodes/{node_id}`
 
@@ -851,7 +853,7 @@ Retrieve the details of one roadmap node: what it is, why it matters, alternativ
 
 ```json
 {
-  "data": {
+  "data": { 
     "id": 2,
     "order": 2,
     "stage_id": "BACKEND",
