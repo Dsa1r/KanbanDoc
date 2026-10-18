@@ -127,7 +127,7 @@ Create a new DevCompass user account.
   "email": "noura@example.com",
   "password": "password123",
   "phone": "+966500000000",
-  "persona": "junior_developer" \\ تصير نيم 
+  "name": "noura" 
 }
 ```
 
@@ -140,7 +140,6 @@ Create a new DevCompass user account.
       "id": "b3f1c2a4-1111-2222-3333-444455556666",
       "email": "noura@example.com",
       "phone": "+966500000000",
-      "persona": "junior_developer" \\ تنشال 
     },
     "access_token": "eyJhbGciOi...",
     "refresh_token": "eyJhbGciOi...", \\ نتاكد لو ينضاف هاشد باسوورد
@@ -189,7 +188,7 @@ Authenticate an existing user.
       "id": "b3f1c2a4-1111-2222-3333-444455556666",
       "email": "noura@example.com",
       "phone": "+966500000000",
-      "persona": "junior_developer" نيم المفرو ض 
+      "name": "noura" 
     },
     "access_token": "eyJhbGciOi...",
     "refresh_token": "eyJhbGciOi...",
@@ -326,32 +325,6 @@ Retrieve the application overview and active project summary shown after login.
 
 # Project Endpoints
 
-### Get Project Templates
-**URL:** \\ ماهو ايند بيونت
-`/api/v1/project-templates`
-
-**Method:**
-`GET`
-
-**Purpose:**
-Retrieve the available project templates used when creating a project.
-
-**Input Format:** No request body is required.
-
-**Output Format:** JSON
-```json
-{
-  "data": [
-    {
-      "template_type": "fullstack_web", \\يتغير, يحذف  
-      "name": "Full-Stack Web Application", \\يتغيرو يحذف  
-      "description": "Build a website from database to frontend.", \\
-      "stages": ["DATABASE", "BACKEND", "FRONTEND"]
-    }
-  ]
-}
-```
-
 ### Create Project
 **URL:** 
 `/api/v1/projects`
@@ -369,7 +342,7 @@ JSON
 {
   "name": "Portfolio Website",
   "description": "Personal portfolio web application",
-  "template_type": "fullstack_web" \\ هنا اي دي 
+  "template_id": "fullstack_web" 
 }
 ```
 
@@ -381,10 +354,9 @@ JSON
     "id": 1,
     "name": "Portfolio Website",
     "description": "Personal portfolio web application",
-    "template_type": "fullstack_web", \\ اي دي 
-    "owner_id": "b3f1c2a4-1111-2222-3333-444455556666", \\ تيم ممبر اي دي 
+    "template_id": "fullstack_web",
+    "team member_id": "b3f1c2a4-1111-2222-3333-444455556666",
     "team_id": 1,
-    "is_completed": false, \\ نشيل الاتربيوت من الكلاس دياقرام 
     "completed_at": null, 
     "created_at": "2026-10-11T10:00:00Z"
   }
@@ -417,8 +389,6 @@ Example: /api/v1/projects?is_completed=false \\ قيت ال بروجكت, مع �
     {
       "id": 1,
       "name": "Portfolio Website",
-      "template_type": "fullstack_web", \\ ينشال 
-      "is_completed": false \\   ينشال وينحط البرقرس كنمبر, في الكلاس دياقرام بعد
     }
   ]
 }
@@ -451,8 +421,8 @@ Example:
     "id": 1,
     "name": "Portfolio Website",
     "description": "Personal portfolio web application",
-    "template_type": "fullstack_web", \\ تابملت اي دي 
-    "owner_id": "b3f1c2a4-1111-2222-3333-444455556666", \\ تيم ممبر اي دي, 
+    "template_id": "fullstack_web",
+    "team member_id": "b3f1c2a4-1111-2222-3333-444455556666",
     "team_id": 1, \\ قلنا بالاول مالها داعي لكن طلعت مهمة, نخلي استدعاء التيم ممبرز في ايند بوينت التيم ممبرز مو هنا 
     "is_completed": false, \\ هنا برقرس 
     "completed_at": null,
@@ -460,34 +430,6 @@ Example:
   }
 }
 ```
-
-### Get Project Progress 
-**URL:** // تنشال كلها مالها داعي 
-`/api/v1/projects/{project_id}/progress`
-
-**Method:**
-`GET`
-
-**Purpose:**
-Retrieve the overall project progress (ratio of DONE tasks to total tasks), overall and per stage.
-
-**Input Format:** The project ID is provided in the URL.
-
-**Output Format:** JSON
-
-```json
-{
-  "data": {
-    "overall": { "done": 8, "total": 24, "percent": 33 },
-    "by_stage": [
-      { "stage_id": "DATABASE", "progress": { "done": 8, "total": 8, "percent": 100 } },
-      { "stage_id": "BACKEND", "progress": { "done": 0, "total": 8, "percent": 0 } },
-      { "stage_id": "FRONTEND", "progress": { "done": 0, "total": 8, "percent": 0 } }
-    ]
-  }
-}
-```
-
 ### Complete Project (Owner only \\ تنشال 
 **URL:**
 `/api/v1/projects/{project_id}/complete`
@@ -513,84 +455,6 @@ Mark a project as completed. The project becomes read-only and moves to the Proj
 }
 ```
 
-### Get Project Audit
-
-**URL:**
-`/api/v1/projects/{project_id}/audit` \\ تنشال 
-
-**Method:**
-`GET`
-
-**Purpose:**
-Retrieve a read-only completion log of a completed project, so the user can review the historical learning path and tasks. Returns 409 PROJECT_NOT_COMPLETED if the project is not completed.
-
-**Input Format:** The project ID is provided in the URL.
- 
-**Output Format:**  JSON
-
-```json
-{
-  "data": {
-    "project": { "id": 1, "name": "Portfolio Website", "is_completed": true },
-    "completed_at": "2026-12-01T12:00:00Z",
-    "progress": { "done": 24, "total": 24, "percent": 100 },
-    "stages": [
-      { "stage_id": "DATABASE", "progress": { "done": 8, "total": 8, "percent": 100 } }
-    ],
-    "tasks": [
-      {
-        "id": 101,
-        "title": "Design User Schema",
-        "stage_id": "DATABASE",
-        "final_status": "DONE",
-        "completed_at": "2026-10-15T09:00:00Z"
-      }
-    ],
-    "roadmap": [
-      {
-        "id": 1,
-        "order": 1,
-        "stage_id": "DATABASE",
-        "title": "Set up the database",
-        "task_ids": [101, 102],
-        "state": "completed"
-      }
-    ]
-  }
-}
-```
-
---- 
-# Team Endpoints
-
-### Get Project Members \\ تنحذف 
-
-**URL:** 
-`/api/v1/projects/{project_id}/members` 
-
-**Method:**
-`GET`
-
-**Purpose:**
-Retrieve the members of a project's team.
-
-**Input Format:** The project ID is provided in the URL.
-
-**Output Format:** JSON
-
-```json
-{
-  "data": [
-    {
-      "user_id": "b3f1c2a4-1111-2222-3333-444455556666",
-      "team_id": 1,
-      "email": "noura@example.com",
-      "role": "owner",
-      "joined_at": "2026-10-11T10:00:00Z"
-    }
-  ]
-}
-```
 ### Add Team Member \\ نحتاج نضيف ديليت بعد 
 **URL:**
 `/api/v1/projects/{project_id}/members`
@@ -615,7 +479,6 @@ Add an existing user to the project team. Send either email or user_id.
     "user_id": "c4d2e3b5-7777-8888-9999-000011112222",
     "team_id": 1,
     "email": "friend@example.com",
-    "role": "member", \\ تنشال حتى بالديليت 
     "joined_at": "2026-10-12T08:00:00Z" \\ تنضاف بالكلاس دياقرام تيم ممبر 
   }
 }
@@ -649,7 +512,6 @@ Retrieve the Kanban board of a project: the backlog stages and the tasks grouped
           "title": "Create JWT Login Route", 
           "stage_id": "BACKEND", 
           "current_status": "TO_DO",
-          "position": 0  // تنشال يوزشن 
         }
       ],
       "IN_PROGRESS": [],
@@ -662,37 +524,6 @@ Retrieve the Kanban board of a project: the backlog stages and the tasks grouped
 
 
 Examples: /api/v1/projects/1/board and /api/v1/projects/1/board?stage=BACKEND. active_stage is null when no filter is applied.
-
-### Get Upcoming Tasks of a Stage \\ تنشال 
-
-**URL:**
-`/api/v1/projects/{project_id}/stages/{stage_id}/upcoming` \\ تنشال 
-
-**Method:**
-`GET`
-
-**Purpose:**
-Retrieve the next few upcoming (not yet active) tasks of a stage, so the user can look ahead without overwhelming the active board. Optional query parameter: limit (default 5, maximum 20).
-
-**Input Format:**
-The project ID and stage ID are provided in the URL.
-
-**Output Format:** JSON
-
-```json
-{
-  "data": [
-    {
-      "id": 105,
-      "title": "Validate Request Payload",
-      "stage_id": "BACKEND",
-      "current_status": "TO_DO",
-      "position": 1
-    }
-  ]
-}
-```
-Example: /api/v1/projects/1/stages/BACKEND/upcoming?limit=5  \\ لين هنا تنشال 
 
 ---
 # Task Endpoints
@@ -746,129 +577,6 @@ The task ID is provided in the URL.
 
 External links should be opened in a new browser tab (target="_blank").
 
----
-### Update Task Status
-
-**URL:**  
-`/api/v1/tasks/{task_id}/status` \\ تنشال و حليناها بالكود اصلا ان شاء الله 
-
-**Method:**  
-`PATCH`
-
-**Purpose:**  
-Move a task to another Kanban column (drag and drop). The response also returns the affected roadmap node and the updated project progress, so the frontend can update the board and the roadmap from a single response.
-
-The supported workflow statuses are:
-
-- TO_DO
-- IN_PROGRESS
-- TESTING_REVIEW
-- DONE
-
-**Input Format:** JSON
-
-```json
-{
-    "status": "DONE"
-}
-```
-
-**Output Format:** JSON
-
-```json
-{
-  "data": {
-    "task": {
-      "id": 104,
-      "title": "Create JWT Login Route",
-      "stage_id": "BACKEND",
-      "current_status": "DONE",
-      "position": 0
-    },
-    "roadmap_node": { "id": 3, "state": "completed" },
-    "progress": { "done": 9, "total": 24, "percent": 38 }
-  }
-}
-```
-Errors: 400 VALIDATION_ERROR (invalid status), 409 PROJECT_COMPLETED.
-
-
----
-# Roadmap Endpoints \\ هذي تنشااال
-
-### Get Project Roadmap
-
-**URL:**
-`/api/v1/projects/{project_id}/roadmap` 
-
-**Method:**
-`GET`
-
-**Purpose:**
-Retrieve the macro learning roadmap (snake line) of a project. Each node is linked to one or more tasks, and its state is calculated from those tasks.
-
-**Input Format:** The project ID is provided in the URL.
-
-**Output Format:** JSON
-
-```json
-{
-  "data": {
-    "project_id": 1,
-    "nodes": [
-      {
-        "id": 1,
-        "order": 1,
-        "stage_id": "DATABASE",
-        "title": "Set up the database",
-        "task_ids": [101, 102],
-        "state": "completed"
-      },
-      {
-        "id": 2,
-        "order": 2,
-        "stage_id": "BACKEND",
-        "title": "Build the API",
-        "task_ids": [103, 104],
-        "state": "in_progress"
-      }
-    ]
-  }
-}
-```
-
-### Get Roadmap Node Details \\ تنشال 
-**URL:**
-`/api/v1/projects/{project_id}/roadmap/nodes/{node_id}`
-
-**Method:**
-`GET`
-
-**Purpose:**
-Retrieve the details of one roadmap node: what it is, why it matters, alternative paths, and suggested resources.
-
-**Input Format:** The project ID and node ID are provided in the URL.
-
-**Output Format:** JSON
-
-```json
-{
-  "data": { 
-    "id": 2,
-    "order": 2,
-    "stage_id": "BACKEND",
-    "title": "Build the API",
-    "task_ids": [103, 104],
-    "state": "in_progress",
-    "what": "Create the server endpoints that the frontend will call.",
-    "why": "The backend connects the database to the user interface.",
-    "alternative_paths": ["Use Node.js with Express instead of Flask"],
-    "resources": [
-      { "title": "Flask Documentation", "url": "https://flask.palletsprojects.com", "type": "documentation" }
-    ]
-  }
-}
-```
 ---
 
 # API Endpoint Summary
