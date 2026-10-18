@@ -1,3 +1,5 @@
+# DevCompass - System Architecture & Class Diagram
+
 ```mermaid
 classDiagram
     class Kanban {
@@ -33,11 +35,13 @@ classDiagram
         +uuid user_id
         +datetime joined_at
     }
+
     class TemplateType {
         <<enumeration>>
         FIXED
         EMPTY
     }
+
     class ProjectTemplate {
         +uuid id
         +json default_tasks
@@ -53,10 +57,7 @@ classDiagram
         +string description
         +calculate_progress_percentage()
         +get_roadmap()
-        +audit_project_status() 
-
-
-
+        +audit_project_status()
     }
 
     class Task {
@@ -103,30 +104,10 @@ classDiagram
     ProjectTemplate --> TemplateType
     Task ..> ProjectStage : uses
     Task ..> TaskStatus : uses
-
-```mermaid
-
-Core Modules & Entities:
-User & Authentication (User):
-
-Manages user accounts, secure authentication state (sign_up, login), and password recovery (request_password_reset, reset_password).
-
-Teams & Collaboration (Team, TeamMember):
-
-Handles group project structures, team membership tracking, and member management (add_member, remove_member).
-
-Project Management (Project, ProjectTemplate):
-
-Projects can be initialized from templates (ProjectTemplate using TemplateType: FIXED or EMPTY). A project tracks overall progression, roadmaps, and audits.
-
-Task Breakdown (Task, TaskPhase, ProjectStage, TaskStatus):
-
-Every project is divided into stages (DATABASE, BACKEND, FRONTEND) and specific tasks. Each task has detailed execution phases (TaskPhase) containing guidance, resources, checklists, and workflow statuses (TO_DO, IN_PROGRESS, TESTING_REVIEW, DONE).
-
-Kanban Board & Tracking (Kanban):
-
-Provides business logic for moving tasks across columns, filtering by stage, fetching upcoming tasks, and calculating real-time project progress percentages.
     TaskPhase ..> TaskStatus : uses
     Kanban ..> Task : updates / filters
     Kanban ..> Project : reads progress / roadmap
+
+```mermaid
+
 
