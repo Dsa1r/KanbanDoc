@@ -256,7 +256,8 @@ Set a new password using the recovery token.
 ```json
 {
   "data": {
-    "message": "Password updated" \\ هاشد باسوورد و نتااكد
+    "message": "Password updated"
+"password_hash": "$2b$12$KIXQ...hashed..."
   }
 }
 ```
