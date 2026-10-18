@@ -455,7 +455,7 @@ Mark a project as completed. The project becomes read-only and moves to the Proj
 }
 ```
 
-### Add Team Member \\ نحتاج نضيف ديليت بعد 
+### Add Team Member
 **URL:**
 `/api/v1/projects/{project_id}/members`
 
@@ -484,6 +484,20 @@ Add an existing user to the project team. Send either email or user_id.
 }
 ```
 Errors: 404 USER_NOT_FOUND, 409 ALREADY_MEMBER.
+
+### Delete Team Member
+
+URL: `/api/v1/projects/{project_id}/members/{user_id}`
+
+Method: `DELETE`
+
+Purpose: Remove a user from the project team. (New endpoint)
+
+Input Format: The project ID and user ID are provided in the URL.
+
+Output Format: No content (204).
+
+Errors: 404 NOT_FOUND (the user is not a member of this project).
 ---
 # Kanban Board Endpoints
 
