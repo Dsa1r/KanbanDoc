@@ -111,26 +111,27 @@ classDiagram
 ```
 ---
 
-Overview & Description
-This document outlines the core object-oriented architecture and domain model for DevCompass, incorporating all finalized team decisions and design considerations.
+## Overview & Description
 
-Core Modules & Entities:
-User & Authentication (User):
+This document outlines the core object-oriented architecture and domain model for **DevCompass**, a web application designed to guide junior developers through building full-stack software projects.
 
-Manages user profiles (name, email, phone) and security credentials (password_hash). Handles authentication workflows (sign_up, login, password reset) securely.
+### Core Modules & Entities:
+1. **User & Authentication (User):**
 
-Teams & Collaboration (Team, TeamMember):
+- Manages user profiles (name, email, phone) and security credentials (password_hash). Handles authentication workflows (sign_up, login, password reset) securely.
 
-Manages collaborative project spaces. A User connects to projects through the associative TeamMember entity (joined_at), enabling multi-user project contribution and owner permissions.
+2. **Teams & Collaboration (Team, TeamMember):**
 
-Project Management (Project, ProjectTemplate):
+- Manages collaborative project spaces. A User connects to projects through the associative TeamMember entity (joined_at), enabling multi-user project contribution and owner permissions.
 
-Projects can be initialized from templates (ProjectTemplate using TemplateType: FIXED or EMPTY). A project tracks overall progression, roadmaps, and audits.
+3. **Project Management (Project, ProjectTemplate):**
 
-Task Breakdown (Task, TaskPhase, ProjectStage, TaskStatus):
+- Projects can be initialized from templates (ProjectTemplate using TemplateType: FIXED or EMPTY). A project tracks overall progression, roadmaps, and audits.
 
-Every project is divided into stages (DATABASE, BACKEND, FRONTEND) and specific tasks. Each task has detailed execution phases (TaskPhase) containing guidance, resources, checklists, and workflow statuses (TO_DO, IN_PROGRESS, TESTING_REVIEW, DONE).
+4. **Task Breakdown (Task, TaskPhase, ProjectStage, TaskStatus):**
 
-Kanban Board & Tracking (Kanban):
+- Every project is divided into stages (DATABASE, BACKEND, FRONTEND) and specific tasks. Each task has detailed execution phases (TaskPhase) containing guidance, resources, checklists, and workflow statuses (TO_DO, IN_PROGRESS, TESTING_REVIEW, DONE).
 
-Provides business logic for moving tasks across columns, filtering by stage, fetching upcoming tasks, and calculating real-time project progress percentages.
+5. **Kanban Board & Tracking (Kanban):**
+
+- Provides business logic for moving tasks across columns, filtering by stage, fetching upcoming tasks, and calculating real-time project progress percentages.
