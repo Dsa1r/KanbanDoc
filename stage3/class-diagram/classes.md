@@ -44,9 +44,10 @@ classDiagram
 
     class ProjectTemplate {
         +uuid id
+        +TemplateType template_type
         +json default_tasks
         +generate_project(name, description, template_type, is_team_project)$ Project
-        +view_historical_projects(): List<Project>
+        +view_historical_projects() List~Project~
     }
 
     class Project {
@@ -96,7 +97,7 @@ classDiagram
     User "1" -- "0..*" TeamMember : membership
     Team "1" -- "0..*" TeamMember : includes
     ProjectTemplate "1" ..> "0..*" Project : instantiates / manages
-    Team "0..1" -- "0..*" Project : manages
+    Team "1" -- "0..*" Project : manages
     Project "1" -- "0..*" Task : contains
     User "0..1" -- "0..*" Task : assigned to
     Task "1" *-- "1..4" TaskPhase : has
@@ -107,24 +108,29 @@ classDiagram
     TaskPhase ..> TaskStatus : uses
     Kanban ..> Task : updates / filters
     Kanban ..> Project : reads progress / roadmap
-
 ```
 ---
 
-## Overview & Description
+Overview & Description
+This document outlines the core object-oriented architecture and domain model for DevCompass, incorporating all finalized team decisions and design considerations.
 
-This document outlines the core object-oriented architecture and domain model for **DevCompass**, a web application designed to guide junior developers through building full-stack software projects.
+Core Modules & Entities:
+User & Authentication (User):
 
-### Core Modules & Entities:
-1. **User & Authentication (`User`):** 
-   - Manages user accounts, secure authentication state (`sign_up`, `login`), and password recovery (`request_password_reset`, `reset_password`).
-2. **Teams & Collaboration (`Team`, `TeamMember`):** 
-   - Handles group project structures, team membership tracking, and member management (`add_member`, `remove_member`).
-3. **Project Management (`Project`, `ProjectTemplate`):** 
-   - Projects can be initialized from templates (`ProjectTemplate` using `TemplateType`: FIXED or EMPTY). A project tracks overall progression, roadmaps, and audits.
-4. **Task Breakdown (`Task`, `TaskPhase`, `ProjectStage`, `TaskStatus`):** 
-   - Every project is divided into stages (`DATABASE`, `BACKEND`, `FRONTEND`) and specific tasks. Each task has detailed execution phases (`TaskPhase`) containing guidance, resources, checklists, and workflow statuses (`TO_DO`, `IN_PROGRESS`, `TESTING_REVIEW`, `DONE`).
-5. **Kanban Board & Tracking (`Kanban`):** 
-   - Provides business logic for moving tasks across columns, filtering by stage, fetching upcoming tasks, and calculating real-time project progress percentages.
+Manages user profiles (name, email, phone) and security credentials (password_hash). Handles authentication workflows (sign_up, login, password reset) securely.
 
+Teams & Collaboration (Team, TeamMember):
 
+Manages collaborative project spaces. A User connects to projects through the associative TeamMember entity (joined_at), enabling multi-user project contribution and owner permissions.
+
+Project Management (Project, ProjectTemplate):
+
+Projects can be initialized from templates (ProjectTemplate using TemplateType: FIXED or EMPTY). A project tracks overall progression, roadmaps, and audits.
+
+Task Breakdown (Task, TaskPhase, ProjectStage, TaskStatus):
+
+Every project is divided into stages (DATABASE, BACKEND, FRONTEND) and specific tasks. Each task has detailed execution phases (TaskPhase) containing guidance, resources, checklists, and workflow statuses (TO_DO, IN_PROGRESS, TESTING_REVIEW, DONE).
+
+Kanban Board & Tracking (Kanban):
+
+Provides business logic for moving tasks across columns, filtering by stage, fetching upcoming tasks, and calculating real-time project progress percentages.
