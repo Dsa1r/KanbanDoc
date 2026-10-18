@@ -104,6 +104,8 @@ classDiagram
     Task ..> ProjectStage : uses
     Task ..> TaskStatus : uses
 
+```mermaid
+
 Core Modules & Entities:
 User & Authentication (User):
 
