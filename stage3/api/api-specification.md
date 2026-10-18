@@ -109,9 +109,11 @@ Create a new DevCompass user account.
       "id": "b3f1c2a4-1111-2222-3333-444455556666",
       "email": "noura@example.com",
       "phone": "+966500000000",
+      "name": "noura",
+      "password_hash": "$2b$12$KIXQ...hashed..."
     },
     "access_token": "eyJhbGciOi...",
-    "refresh_token": "eyJhbGciOi...", \\ نتاكد لو ينضاف هاشد باسوورد
+    "refresh_token": "eyJhbGciOi...",
     "expires_in": 3600
   }
 }
@@ -157,13 +159,14 @@ Authenticate an existing user.
       "id": "b3f1c2a4-1111-2222-3333-444455556666",
       "email": "noura@example.com",
       "phone": "+966500000000",
-      "name": "noura" 
+      "name": "noura",
+      "password_hash": "$2b$12$KIXQ...hashed..."
     },
     "access_token": "eyJhbGciOi...",
     "refresh_token": "eyJhbGciOi...",
-    "expires_in": 3600 \\ وهاشد باسوورد
+    "expires_in": 3600
   }
-} 
+}
 ```
 
 ### Logout
@@ -200,7 +203,7 @@ Retrieve the information of the logged-in user.
     "id": "b3f1c2a4-1111-2222-3333-444455556666",
     "email": "noura@example.com",
     "phone": "+966500000000",
-    "persona": "junior_developer" \\ تنشال و تنحط يدالها نيم
+    "name": "noura" 
   }
 }
 ```
