@@ -76,37 +76,6 @@ Roadmap node states: not_started, in_progress, completed. The state is calculate
 | 404 | NOT_FOUND | Resource does not exist |
 | 409 | EMAIL_ALREADY_REGISTERED / ALREADY_MEMBER / PROJECT_COMPLETED / PROJECT_NOT_COMPLETED | Conflict with current state |
 
-
-## Public Endpoints
-### Get Website Overview (Public) \\ نتاكد لو هو فرونتد بس وتنشال ولا داتابيس 
-
-**URL:** 
-`/api/v1/public/overview`
-
-**Method:**
-`GET`
-
-**Purpose:**
- Retrieve the website description shown on the sign up page.
-
-**Input Format:** No request body is required.
-
-**Output Format:** JSON
-
-```json 
-{
-  "data": {
-    "title": "DevCompass",
-    "value_proposition": "A clean workspace that guides junior developers through building a full-stack website.",
-    "features": [
-      { "title": "Kanban Board", "description": "Track your tasks through clear workflow columns." },
-      { "title": "Learning Roadmap", "description": "Visualize your learning journey from setup to deployment." }
-    ]
-  }
-}
-```
----
-
 ## Authentication
 
 ### Sign Up (Public)
