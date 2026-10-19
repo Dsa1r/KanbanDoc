@@ -11,7 +11,9 @@ from app.extensions import jwt
 def create_app():
     load_dotenv()
     app = Flask(__name__)
-    app.config["JWT_SECRET_KEY"] = os.environ["JWT_SECRET_KEY"]
+    
+    app.config["JWT_SECRET_KEY"] = "sb_secret_JgDyf1X4sTLymUp-2HqpfA_MZsxbgLY"
+    
     app.config["JWT_ACCESS_TOKEN_EXPIRES"] = timedelta(hours=8)
     CORS(app)
     jwt.init_app(app)
