@@ -84,6 +84,9 @@ flowchart TD
     TASK_PHASE --- PH_res
     TASK_PHASE --- PH_check
 
+    RU_joined(["joined_at"])
+    R_TEAM_USER --- RU_joined
+
     TEAM ---|"(0,N)"| R_TEAM_USER
     R_TEAM_USER ---|"(1,N)"| USER
 
@@ -101,3 +104,6 @@ flowchart TD
 
     TASK ---|"(1,1)"| R_TASK_PHASE
     R_TASK_PHASE ---|"(1,4)"| TASK_PHASE
+
+
+
