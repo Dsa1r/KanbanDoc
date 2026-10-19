@@ -25,16 +25,16 @@ flowchart TD
     U_id(["<u>id</u>"])
     U_name(["name"])
     U_email(["email"])
-    U_pass(["pass"])
+    U_pass(["password_hash"])
     U_phone(["phone"])
-    U_persona(["persona"])
+ 
 
     USER --- U_id
     USER --- U_name
     USER --- U_email
     USER --- U_pass
     USER --- U_phone
-    USER --- U_persona
+ 
 
     T_id(["<u>id</u>"])
     T_name(["team_name"])
@@ -42,23 +42,25 @@ flowchart TD
     TEAM --- T_id
     TEAM --- T_name
 
+    PT_type(["template_type<br/>ENUM(FIXED', 'EMPTY)"])
     PT_id(["<u>id</u>"])
-    PT_name(["template_name"])
     PT_tasks(["default_tasks"])
 
+    PROJECT_TEMPLATE --- PT_type
     PROJECT_TEMPLATE --- PT_id
-    PROJECT_TEMPLATE --- PT_name
     PROJECT_TEMPLATE --- PT_tasks
 
     P_id(["<u>id</u>"])
     P_name(["project_name"])
     P_desc(["description"])
-    P_done(["is_completed<br/>BOOLEAN"])
+
+
 
     PROJECT --- P_id
     PROJECT --- P_name
     PROJECT --- P_desc
-    PROJECT --- P_done
+ 
+   
 
     TK_id(["<u>id</u>"])
     TK_name(["name"])
