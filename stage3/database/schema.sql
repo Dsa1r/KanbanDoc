@@ -4,15 +4,14 @@ create extension if not exists "uuid-ossp";
 -- Enumerations for project stages and task statuses
 create type project_stage as enum ('DATABASE', 'BACKEND', 'FRONTEND');
 create type task_status as enum ('TO_DO', 'IN_PROGRESS', 'TESTING_REVIEW', 'DONE');
-
+create type template_type as enum ('FIXED', 'EMPTY');
 -- Users Table
 create table users (
     id uuid primary key default uuid_generate_v4(),
     name varchar(255) not null,
     email varchar(255) unique not null,
-    pass varchar(255) not null,
+    password_hash varchar(255) not null,
     phone varchar(50),
-    persona varchar(100),
     created_at timestamp with time zone default current_timestamp
 );
 
@@ -27,13 +26,14 @@ create table teams (
 create table team_members (
     id uuid primary key default uuid_generate_v4(),
     team_id uuid references teams(id) on delete cascade,
-    user_id uuid references users(id) on delete cascade
+    user_id uuid references users(id) on delete cascade,
+    joined_at timestamp with time zone default current_timestamp
 );
 
 -- Project Templates Table
 create table project_templates (
     id uuid primary key default uuid_generate_v4(),
-    template_name varchar(255) not null,
+    template_type template_type not null,
     default_tasks jsonb not null
 );
 
@@ -41,9 +41,9 @@ create table project_templates (
 create table projects (
     id uuid primary key default uuid_generate_v4(),
     team_id uuid references teams(id) on delete set null,
+    template_id uuid references project_templates(id) on delete set null,
     project_name varchar(255) not null,
     description text,
-    is_completed boolean default false,
     created_at timestamp with time zone default current_timestamp
 );
 
@@ -51,7 +51,6 @@ create table projects (
 create table tasks (
     id uuid primary key default uuid_generate_v4(),
     project_id uuid references projects(id) on delete cascade,
-    assigned_to uuid references users(id) on delete set null,
     name varchar(255) not null,
     stage project_stage not null,
     current_status task_status default 'TO_DO',
