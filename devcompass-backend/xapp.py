@@ -1,3 +1,4 @@
+
 from flask import Flask
 from auth import auth_bp  # 1. Import new Security Department
 
@@ -12,3 +13,4 @@ def home():
 
 if __name__ == '__main__':
     app.run(debug=True)
+

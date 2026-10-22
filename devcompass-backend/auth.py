@@ -1,3 +1,5 @@
+
+
 import os
 from flask import Blueprint, request, jsonify
 from dotenv import load_dotenv
@@ -105,3 +107,4 @@ def reset_password():
         return jsonify({"data": {"message": "Password updated"}}), 200
     except Exception as e:
         return jsonify({"error": str(e)}), 400
+  
