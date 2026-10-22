@@ -1,0 +1,40 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=Libre+Baskerville:wght@400;700&display=swap');
+
+:root {
+  --color-bg: #f6f1e7;
+  --color-surface: #fffdf8;
+  --color-border: #e6ded0;
+  --color-text: #2b3a33;
+  --color-text-muted: #6b6f68;
+  --color-primary: #c0392b;
+  --color-primary-hover: #a93226;
+  --color-accent: #c9a24a;
+  --color-track: #ece4d6;
+  --color-icon-bg: #efe6d6;
+
+  --font-heading: 'Libre Baskerville', Georgia, serif;
+  --font-body: 'DM Sans', system-ui, sans-serif;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, p {
+  margin: 0;
+}
+
+button {
+  font: inherit;
+  cursor: pointer;
+}

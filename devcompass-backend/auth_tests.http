@@ -1,0 +1,36 @@
+### Test 1: Sign Up a new user
+POST http://127.0.0.1:5000/api/v1/auth/signup
+Content-Type: application/json
+
+{
+  "email": "noura99@gmail.com",
+  "password": "password123",
+  "phone": "+966500000000",
+  "name": "noura" 
+}
+
+###
+### Test 2: Log In an existing user
+POST http://127.0.0.1:5000/api/v1/auth/login
+Content-Type: application/json
+
+{
+  "email": "noura99@gmail.com",
+  "password": "password123"
+}
+
+###
+### Test 3: Log Out
+POST http://127.0.0.1:5000/api/v1/auth/logout
+
+###
+
+### Test 4: Forgot Password
+POST http://127.0.0.1:5000/api/v1/auth/forgot-password
+Content-Type: application/json
+
+{
+  "email": "noura99@gmail.com"
+}
+
+###
