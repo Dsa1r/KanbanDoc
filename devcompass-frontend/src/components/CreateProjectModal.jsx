@@ -18,8 +18,9 @@ function CreateProjectModal({ onClose, onSubmit }) {
   const [title, setTitle] = useState('');
   const [templateId, setTemplateId] = useState(0);
   const [error, setError] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  function handleSubmit(event) {
+  async function handleSubmit(event) {
     event.preventDefault();
 
     const trimmedTitle = title.trim();
@@ -28,20 +29,23 @@ function CreateProjectModal({ onClose, onSubmit }) {
       return;
     }
 
-    onSubmit({
-  title: trimmedTitle,
-  templateId,
-});
+    setIsSubmitting(true);
+    try {
+      await onSubmit({ title: trimmedTitle, templateId });
+    } catch (submitError) {
+      setError(submitError.message);
+      setIsSubmitting(false);
+    }
   }
 
   function handleKeyDown(event) {
-    if (event.key === 'Escape') {
+    if (event.key === 'Escape' && !isSubmitting) {
       onClose();
     }
   }
 
   return (
-    <div className="modal-overlay" onClick={onClose} onKeyDown={handleKeyDown}>
+    <div className="modal-overlay" onClick={isSubmitting ? undefined : onClose} onKeyDown={handleKeyDown}>
       <div
         className="modal"
         role="dialog"
@@ -70,7 +74,6 @@ function CreateProjectModal({ onClose, onSubmit }) {
 
           {error && <p className="modal__error" role="alert">{error}</p>}
 
-
           <fieldset className="modal__templates">
             <legend className="modal__label">Template</legend>
 
@@ -96,11 +99,11 @@ function CreateProjectModal({ onClose, onSubmit }) {
           </fieldset>
 
           <div className="modal__actions">
-            <button type="button" className="modal__cancel" onClick={onClose}>
+            <button type="button" className="modal__cancel" onClick={onClose} disabled={isSubmitting}>
               Cancel
             </button>
-            <button type="submit" className="modal__submit">
-              Create Project
+            <button type="submit" className="modal__submit" disabled={isSubmitting}>
+              {isSubmitting ? 'Creating…' : 'Create Project'}
             </button>
           </div>
         </form>

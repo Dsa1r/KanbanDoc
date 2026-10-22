@@ -66,3 +66,26 @@
   font-size: 13px;
   color: var(--color-text-muted);
 }
+
+
+.dashboard__status {
+  padding: 64px 24px;
+  text-align: center;
+  color: var(--color-text-muted);
+}
+
+.dashboard__status--error {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  color: var(--color-primary);
+}
+
+.dashboard__retry {
+  padding: 10px 16px;
+  background: none;
+  border: 1px solid var(--color-border);
+  border-radius: 4px;
+  color: var(--color-text);
+}

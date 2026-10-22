@@ -40,7 +40,7 @@ function ProjectCard({ title, description, completedTasks, totalTasks, updatedAt
         <div className="project-card__fill" style={{ width: `${progress}%` }} />
       </div>
 
-      <p className="project-card__updated">Updated {updatedAt}</p>
+      {updatedAt && <p className="project-card__updated">Updated {updatedAt}</p>}
     </article>
   );
 }
