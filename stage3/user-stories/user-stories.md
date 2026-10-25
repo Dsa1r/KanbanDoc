@@ -66,7 +66,7 @@ The following scenarios define how each feature behaves under specific condition
 ### 1.2. User Account Creation
 * **User Story:** As a user, I want to create a new account so I can access the milestone tracking system.
 * **Scenario: Successful Registration**
-  * **Given** a user is on the signup page with valid credentials (email, password, phone, persona),
+  * **Given** a user is on the signup page with valid credentials (email, password, phone).
   * **When** they submit the registration form,
   * **Then** the system invokes `User.sign_up()`, creates a record in the `User` table, and redirects to the dashboard.
 * **Scenario: Duplicate Registration Handling**
