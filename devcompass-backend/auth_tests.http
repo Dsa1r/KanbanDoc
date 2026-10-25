@@ -3,14 +3,25 @@ POST http://127.0.0.1:5000/api/v1/auth/signup
 Content-Type: application/json
 
 {
+  "name": "noura",
   "email": "noura99@gmail.com",
   "password": "password123",
-  "phone": "+966500000000",
-  "name": "noura" 
+  "phone": "+966500000000"
 }
 
 ###
-### Test 2: Log In an existing user
+### Test 2: Sign Up with the same email again (expects 409)
+POST http://127.0.0.1:5000/api/v1/auth/signup
+Content-Type: application/json
+
+{
+  "name": "noura",
+  "email": "noura99@gmail.com",
+  "password": "password123"
+}
+
+###
+### Test 3: Log In (returns access_token and refresh_token)
 POST http://127.0.0.1:5000/api/v1/auth/login
 Content-Type: application/json
 
@@ -20,12 +31,21 @@ Content-Type: application/json
 }
 
 ###
-### Test 3: Log Out
+### Test 4: Log In with a wrong password (expects 401)
+POST http://127.0.0.1:5000/api/v1/auth/login
+Content-Type: application/json
+
+{
+  "email": "noura99@gmail.com",
+  "password": "wrong-password"
+}
+
+###
+### Test 5: Log Out
 POST http://127.0.0.1:5000/api/v1/auth/logout
 
 ###
-
-### Test 4: Forgot Password
+### Test 6: Forgot Password
 POST http://127.0.0.1:5000/api/v1/auth/forgot-password
 Content-Type: application/json
 
