@@ -1,42 +1,21 @@
-import os
-from datetime import timedelta
-
-from dotenv import load_dotenv
-from flask import Flask, jsonify
+from flask import Flask
 from flask_cors import CORS
-
-from app.extensions import jwt
+from app.utils.errors import register_error_handlers
 
 
 def create_app():
-    load_dotenv()
     app = Flask(__name__)
-    
-    app.config["JWT_SECRET_KEY"] = "sb_secret_JgDyf1X4sTLymUp-2HqpfA_MZsxbgLY"
-    
-    app.config["JWT_ACCESS_TOKEN_EXPIRES"] = timedelta(hours=8)
     CORS(app)
-    jwt.init_app(app)
+    register_error_handlers(app)
 
-    # every auth error uses the same {"error": "..."} shape as the rest of the API
-    @jwt.unauthorized_loader
-    def missing_token(reason):
-        return jsonify({"error": "Missing or malformed Authorization header"}), 401
+    from app.api.auth import auth_bp
+    from app.api.dashboard import dashboard_bp
 
-    @jwt.invalid_token_loader
-    def invalid_token(reason):
-        return jsonify({"error": "Invalid token"}), 401
+    app.register_blueprint(auth_bp)
+    app.register_blueprint(dashboard_bp)
 
-    @jwt.expired_token_loader
-    def expired_token(header, payload):
-        return jsonify({"error": "Token has expired"}), 401
-
-    from app.routes.projects import bp as projects_bp
-
-    app.register_blueprint(projects_bp)
-
-    @app.get("/api/health")
-    def health():
-        return jsonify({"status": "ok"}), 200
+    @app.route('/')
+    def index():
+        return {"message": "DevCompass API is running"}
 
     return app
