@@ -1,18 +1,7 @@
-import os
-
-from flask_jwt_extended import JWTManager
 from supabase import create_client
+from app.config import Config
 
-jwt = JWTManager()
+def get_anon_client():
+    return create_client(Config.SUPABASE_URL, Config.SUPABASE_ANON_KEY)
 
-_client = None
-
-
-def get_supabase():
-    """Create the Supabase client once, the first time it is needed."""
-    global _client
-    if _client is None:
-        url = "https://gdkiwmhttwfmxnduapwx.supabase.co"
-        key = "sb_secret_JgDyf1X4sTLymUp-2HqpfA_MZsxbgLY"
-        _client = create_client(url, key)
-    return _client
+admin_client = create_client(Config.SUPABASE_URL, Config.SUPABASE_SERVICE_KEY)
