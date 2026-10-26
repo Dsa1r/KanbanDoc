@@ -1,0 +1,47 @@
+.modal__templates {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  border: none;
+}
+
+.template-option {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 12px 14px;
+  background: #fff;
+  border: 1px solid var(--color-border);
+  border-radius: 4px;
+  cursor: pointer;
+  transition: border-color 0.2s, background-color 0.2s;
+}
+
+.template-option:hover {
+  border-color: var(--color-text-muted);
+}
+
+.template-option--selected {
+  border-color: var(--color-primary);
+  background: rgba(192, 57, 43, 0.04);
+}
+
+.template-option__radio {
+  margin-top: 3px;
+  accent-color: var(--color-primary);
+}
+
+.template-option__label {
+  display: block;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.template-option__description {
+  display: block;
+  margin-top: 2px;
+  font-size: 13px;
+  color: var(--color-text-muted);
+}

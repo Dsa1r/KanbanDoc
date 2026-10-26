@@ -1,0 +1,130 @@
+.dashboard-page {
+  --color-bg: #f6f1e7;
+  --color-surface: #fffdf8;
+  --color-border: #e6ded0;
+  --color-text: #2b3a33;
+  --color-text-muted: #6b6f68;
+  --color-primary: #c0392b;
+  --color-primary-hover: #a93226;
+  --color-accent: #c9a24a;
+  --color-track: #ece4d6;
+  --color-icon-bg: #efe6d6;
+
+--font-heading: 'Newsreader', Georgia, serif;
+--font-body: 'Inter', system-ui, sans-serif;
+
+  min-height: 100vh;
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+}
+
+.dashboard-page *,
+.dashboard-page *::before,
+.dashboard-page *::after {
+  box-sizing: border-box;
+}
+
+.dashboard-page h1,
+.dashboard-page h2,
+.dashboard-page h3,
+.dashboard-page p {
+  margin: 0;
+}
+
+.dashboard-page button {
+  font: inherit;
+  cursor: pointer;
+}
+
+.dashboard {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 56px 32px 64px;
+}
+
+.dashboard__header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 24px;
+  margin-bottom: 40px;
+}
+
+.dashboard__eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.dashboard__eyebrow::before {
+  content: '';
+  width: 36px;
+  height: 1px;
+  background: var(--color-accent);
+}
+
+.dashboard__title {
+  position: relative;
+  margin-top: 16px;
+  padding-bottom: 10px;
+  font-family: var(--font-heading);
+  font-size: 36px;
+  font-weight: 400;
+}
+
+.dashboard__title::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 40px;
+  height: 2px;
+  background: var(--color-accent);
+}
+
+.dashboard__subtitle {
+  margin-top: 16px;
+  font-size: 15px;
+  color: var(--color-text-muted);
+}
+
+.dashboard__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 16px;
+}
+
+.dashboard__count {
+  margin-top: 32px;
+  font-size: 13px;
+  color: var(--color-text-muted);
+}
+
+.dashboard__status {
+  padding: 64px 24px;
+  text-align: center;
+  color: var(--color-text-muted);
+}
+
+.dashboard__status--error {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  color: var(--color-primary);
+}
+
+.dashboard__retry {
+  padding: 10px 16px;
+  background: none;
+  border: 1px solid var(--color-border);
+  border-radius: 4px;
+  color: var(--color-text);
+}
