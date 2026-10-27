@@ -54,8 +54,8 @@ export default function DashboardPage() {
     setIsModalOpen(false);
   }
 
-  async function handleCreateProject({ title, templateId }) {
-    await createProject({ title, templateId });
+    async function handleCreateProject(projectData) {
+    await createProject(projectData);
 
     const dashboard = await getDashboard();
     setProjects(dashboard.projects);

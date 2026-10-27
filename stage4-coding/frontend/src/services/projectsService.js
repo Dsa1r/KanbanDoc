@@ -1,4 +1,5 @@
 import { apiFetch } from './api.js';
+import { mockDashboard } from '../data/mockProjects.js';
 
 function formatRelativeTime(isoDate) {
   if (!isoDate) return null;
@@ -32,8 +33,17 @@ function toProject(apiProject) {
   };
 }
 
+// Mock data is used only in dev mode on /dev/* preview routes
+function shouldUseMocks() {
+  return import.meta.env.DEV && window.location.pathname.startsWith('/dev/');
+}
+
+let mockProjects = [...mockDashboard.projects];
+
 export async function getDashboard() {
-  const data = await apiFetch('/api/v1/dashboard', { auth: true });
+  const data = shouldUseMocks()
+    ? { ...mockDashboard, projects: mockProjects }
+    : await apiFetch('/api/v1/dashboard', { auth: true });
 
   return {
     summaryText: data?.summary_text ?? '',
@@ -41,7 +51,24 @@ export async function getDashboard() {
   };
 }
 
-export async function createProject({ title, templateId }) {
+export async function createProject({ title, templateId, audience, members }) {
+  if (shouldUseMocks()) {
+    console.info('Mock create:', { title, templateId, audience, members });
+    mockProjects = [
+      {
+        project_id: crypto.randomUUID(),
+        name: title,
+        template_id: templateId,
+        progress: { done: 0, total: 0, percent: 0 },
+        created_at: new Date().toISOString(),
+      },
+      ...mockProjects,
+    ];
+    return;
+  }
+
+  // TODO (Dana): confirm field names for the project type and team members,
+  // then send them too, e.g. project_type: audience, member_emails: members
   return apiFetch('/api/v1/projects', {
     method: 'POST',
     body: { name: title, template_id: templateId },

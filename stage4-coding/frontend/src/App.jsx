@@ -24,7 +24,8 @@ export default function App() {
           </ProtectedRoute>
         }
       />
-     {import.meta.env.DEV && <Route path="/dev/kanban" element={<KanbanPage />} />}   
+     {import.meta.env.DEV && <Route path="/dev/kanban" element={<KanbanPage />} />} 
+           {import.meta.env.DEV && <Route path="/dev/dashboard" element={<DashboardPage />} />}   
       <Route path="*" element={<Navigate to="/auth" replace />} />
     </Routes>
   )
