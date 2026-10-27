@@ -299,11 +299,17 @@
 /* ---------- Task card ---------- */
 
 .task-card {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 100%;
   padding: 16px;
+  text-align: left;
   background: var(--color-surface);
   border: 1px solid var(--color-border);
   border-radius: 4px;
-  transition: box-shadow 0.2s, transform 0.2s;
+  color: var(--color-text);
+  transition: box-shadow 0.2s, transform 0.2s, background-color 0.2s, border-color 0.2s;
 }
 
 .task-card:hover {
@@ -311,7 +317,13 @@
   transform: translateY(-2px);
 }
 
+.task-card--selected {
+  background: #f6dcd8;
+  border-color: var(--color-primary);
+}
+
 .task-card__title {
+  display: block;
   margin-top: 14px;
   font-size: 15px;
   font-weight: 500;
@@ -321,6 +333,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+  width: 100%;
   margin-top: 16px;
   padding-top: 14px;
   border-top: 1px solid var(--color-border);
@@ -331,18 +344,13 @@
   color: var(--color-text-muted);
 }
 
-.task-card__open {
-  display: grid;
-  place-items: center;
-  padding: 4px;
-  background: none;
-  border: none;
-  border-radius: 4px;
+.task-card__arrow {
+  flex-shrink: 0;
   color: var(--color-text);
 }
 
-.task-card__open:hover {
-  background: var(--color-track);
+.task-card--selected .task-card__arrow {
+  color: var(--color-primary);
 }
 
 /* ---------- Stage tag ---------- */
@@ -374,6 +382,144 @@
   color: #2f7a6b;
 }
 
+/* ---------- Task drawer ---------- */
+
+.drawer-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: flex;
+  justify-content: flex-end;
+  background: rgba(43, 58, 51, 0.25);
+  backdrop-filter: blur(3px);
+  animation: drawer-fade 0.2s ease;
+}
+
+.drawer {
+  width: min(420px, 100%);
+  height: 100%;
+  overflow-y: auto;
+  background: var(--color-surface);
+  box-shadow: -12px 0 40px rgba(0, 0, 0, 0.12);
+  animation: drawer-slide 0.25s ease;
+}
+
+.drawer__header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 32px 32px 28px;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.drawer__badge {
+  display: inline-block;
+  margin-bottom: 16px;
+  padding: 5px 9px;
+  background: #ecebf3;
+  border: 1px solid #d9d6e6;
+  border-radius: 4px;
+  font-size: 12px;
+  color: #5d5a7a;
+}
+
+.drawer__title {
+  font-family: var(--font-heading);
+  font-size: 28px;
+  font-weight: 500;
+  line-height: 1.2;
+}
+
+.drawer__close {
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  width: 38px;
+  height: 38px;
+  background: none;
+  border: 1px solid var(--color-text);
+  border-radius: 6px;
+  color: var(--color-text);
+}
+
+.drawer__close:hover {
+  background: var(--color-track);
+}
+
+.drawer__section {
+  margin: 0 32px;
+  padding: 28px 0;
+}
+
+.drawer__section + .drawer__section {
+  border-top: 1px solid var(--color-border);
+}
+
+.drawer__label {
+  position: relative;
+  margin-bottom: 16px;
+  padding-bottom: 12px;
+  font-family: var(--font-body);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.drawer__label::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 40px;
+  height: 1px;
+  background: var(--color-accent);
+}
+
+.drawer__text {
+  font-size: 14px;
+  line-height: 1.7;
+  color: var(--color-text-muted);
+}
+
+.drawer__links {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.drawer__links a {
+  font-size: 14px;
+  color: var(--color-text);
+  text-decoration: underline;
+  text-decoration-color: var(--color-accent);
+  text-underline-offset: 3px;
+}
+
+.drawer__links a:hover {
+  color: var(--color-primary);
+}
+
+@keyframes drawer-fade {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes drawer-slide {
+  from { transform: translateX(100%); }
+  to { transform: translateX(0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .drawer-overlay,
+  .drawer {
+    animation: none;
+  }
+}
 /* ---------- Small screens ---------- */
 
 @media (max-width: 720px) {

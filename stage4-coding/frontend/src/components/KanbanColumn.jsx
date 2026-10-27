@@ -1,6 +1,6 @@
 import TaskCard from './TaskCard.jsx';
 
-export default function KanbanColumn({ column, tasks, onOpenTask }) {
+export default function KanbanColumn({ column, tasks, selectedTaskId, onOpenTask }) {
   const titleId = `column-${column.id}-title`;
 
   return (
@@ -24,7 +24,12 @@ export default function KanbanColumn({ column, tasks, onOpenTask }) {
           <p className="kanban-column__empty">No tasks</p>
         ) : (
           tasks.map((task) => (
-            <TaskCard key={task.id} task={task} onOpen={onOpenTask} />
+            <TaskCard
+              key={task.id}
+              task={task}
+              isSelected={task.id === selectedTaskId}
+              onOpen={onOpenTask}
+            />
           ))
         )}
       </div>

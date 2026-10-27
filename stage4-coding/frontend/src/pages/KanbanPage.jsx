@@ -2,16 +2,19 @@ import { useState } from 'react';
 import BoardHeader from '../components/BoardHeader.jsx';
 import NextUpBanner from '../components/NextUpBanner.jsx';
 import KanbanColumn from '../components/KanbanColumn.jsx';
+import TaskDrawer from '../components/TaskDrawer.jsx';
 import { BOARD_COLUMNS, STAGES, mockBoard } from '../data/mockBoard.js';
 import '../styles/kanban.css';
 
 export default function KanbanPage() {
   const { project, tasks } = mockBoard;
   const [activeStages, setActiveStages] = useState([]);
+  const [selectedTaskId, setSelectedTaskId] = useState(null);
 
   const doneCount = tasks.filter((task) => task.status === 'done').length;
   const progress = tasks.length > 0 ? Math.round((doneCount / tasks.length) * 100) : 0;
   const nextTask = tasks.find((task) => task.status === 'todo');
+  const selectedTask = tasks.find((task) => task.id === selectedTaskId);
 
   const visibleTasks =
     activeStages.length === 0
@@ -27,8 +30,11 @@ export default function KanbanPage() {
   }
 
   function handleOpenTask(task) {
-    // TODO: open the task details (page or modal)
-    console.log('Open task', task.id);
+    setSelectedTaskId(task.id);
+  }
+
+  function closeDrawer() {
+    setSelectedTaskId(null);
   }
 
   return (
@@ -51,11 +57,14 @@ export default function KanbanPage() {
               key={column.id}
               column={column}
               tasks={visibleTasks.filter((task) => task.status === column.id)}
+              selectedTaskId={selectedTaskId}
               onOpenTask={handleOpenTask}
             />
           ))}
         </div>
       </main>
+
+      {selectedTask && <TaskDrawer task={selectedTask} onClose={closeDrawer} />}
     </div>
   );
 }
