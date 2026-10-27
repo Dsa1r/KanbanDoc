@@ -4,7 +4,26 @@ from app.extensions import get_supabase
 class ValidationError(Exception):
     pass
 
+from app.repositories import project_repo
 
+
+def get_user_projects(user_id):
+    rows = project_repo.get_user_projects_with_tasks(user_id)
+    projects = []
+    for p in rows:
+        tasks = p.get('project_tasks') or []
+        done = sum(1 for t in tasks if t['current_status'] == 'completed')
+        projects.append({
+            "id": p['id'],
+            "project_name": p['project_name'],
+            "description": p['description'],
+            "created_at": p['created_at'],
+            "total_tasks": len(tasks),
+            "completed_tasks": done,
+        })
+    return projects
+
+    
 def create_project(name, description=None):
     # 1) validate the input
     if not isinstance(name, str) or not name.strip():

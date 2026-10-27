@@ -1,5 +1,5 @@
 from flask import Blueprint, request, jsonify, g, current_app
-from app.config import Config
+from config import Config
 from app.extensions import get_anon_client, admin_client
 from app.middleware.auth import auth_required
 
