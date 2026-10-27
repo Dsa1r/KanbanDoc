@@ -1,0 +1,2 @@
+-- Migration: Initial Setup
+-- Description: Enables core PostgreSQL extensions required for the system.
