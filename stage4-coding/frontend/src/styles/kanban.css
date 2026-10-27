@@ -533,3 +533,53 @@
     font-size: 32px;
   }
 }
+
+/* ---- live board: dragging, status select, messages ---- */
+.kanban-column--over {
+  outline: 2px dashed var(--color-dark-green);
+  outline-offset: -4px;
+}
+
+.kanban-column__draggable {
+  cursor: grab;
+}
+
+.kanban-column__draggable:active {
+  cursor: grabbing;
+}
+
+.drawer__select {
+  width: 100%;
+  padding: 10px 12px;
+  font: inherit;
+  color: var(--color-text);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 6px;
+}
+
+.board-header__back {
+  display: inline-block;
+  margin-bottom: 8px;
+  font-size: 13px;
+  color: var(--color-text-muted);
+  text-decoration: none;
+}
+
+.board-header__back:hover {
+  text-decoration: underline;
+}
+
+.kanban-status {
+  padding: 24px 32px;
+  color: var(--color-text-muted);
+}
+
+.kanban-status--error {
+  margin: 0 0 16px;
+  padding: 10px 14px;
+  font-size: 14px;
+  color: #8f1f19;
+  background: #f6d5d3;
+  border-radius: 6px;
+}

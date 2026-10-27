@@ -10,9 +10,13 @@ def create_app():
 
     from app.api.auth import auth_bp
     from app.api.dashboard import dashboard_bp
+    from app.api.board import board_bp
+    from app.api.tasks import tasks_bp
 
     app.register_blueprint(auth_bp)
     app.register_blueprint(dashboard_bp)
+    app.register_blueprint(board_bp)
+    app.register_blueprint(tasks_bp)
 
     @app.route('/')
     def index():

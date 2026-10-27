@@ -6,14 +6,14 @@ import LearningPathPage from './pages/LearningPathPage.jsx'
 import KanbanPage from './pages/KanbanPage.jsx'
 import ProtectedRoute from './components/ProtectedRoute.jsx'
 
-// كل صفحة = ملف داخل pages/ ، وهنا نربط كل صفحة بمسارها (Route)
+
 export default function App() {
   return (
     <Routes>
       <Route path="/" element={<Navigate to="/auth" replace />} />
       <Route path="/auth" element={<AuthPage />} />
       <Route path="/reset-password" element={<ResetPasswordPage />} />
-      {/* UI فقط حالياً: مفتوحة بدون تسجيل دخول. لاحقاً لفّوها بـ ProtectedRoute */}
+      {/* Redirect /learning-path to /roadmap for backward compatibility */}
       <Route path="/roadmap" element={<LearningPathPage />} />
       <Route path="/learning-path" element={<Navigate to="/roadmap" replace />} />
       <Route
@@ -21,6 +21,14 @@ export default function App() {
         element={
           <ProtectedRoute>
             <DashboardPage />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/projects/:projectId/board"
+        element={
+          <ProtectedRoute>
+            <KanbanPage />
           </ProtectedRoute>
         }
       />

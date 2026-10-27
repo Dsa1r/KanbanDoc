@@ -1,7 +1,8 @@
+import { Link } from 'react-router-dom';
 import { FolderIcon, MoreIcon } from './Icons.jsx';
 import './ProjectCard.css';
 
-function ProjectCard({ title, description, completedTasks, totalTasks, updatedAt }) {
+function ProjectCard({ title, description, completedTasks, totalTasks, updatedAt, boardUrl }) {
   const progress = totalTasks > 0
     ? Math.round((completedTasks / totalTasks) * 100)
     : 0;
@@ -21,7 +22,13 @@ function ProjectCard({ title, description, completedTasks, totalTasks, updatedAt
         </button>
       </div>
 
-      <h3 className="project-card__title">{title}</h3>
+      <h3 className="project-card__title">
+        {boardUrl ? (
+          <Link to={boardUrl} className="project-card__link">{title}</Link>
+        ) : (
+          title
+        )}
+      </h3>
       <p className="project-card__description">{description}</p>
 
       <div className="project-card__stats">
