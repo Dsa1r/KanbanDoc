@@ -53,3 +53,12 @@ export function MoreIcon(props) {
     </svg>
   );
 }
+
+export function ArrowRightIcon(props) {
+  return (
+    <svg {...baseProps} {...props}>
+      <path d="M5 12h14" />
+      <path d="m13 6 6 6-6 6" />
+    </svg>
+  );
+}

@@ -3,6 +3,7 @@ import AuthPage from './pages/AuthPage.jsx'
 import ResetPasswordPage from './pages/ResetPasswordPage.jsx'
 import DashboardPage from './pages/DashboardPage.jsx'
 import LearningPathPage from './pages/LearningPathPage.jsx'
+import KanbanPage from './pages/KanbanPage.jsx'
 import ProtectedRoute from './components/ProtectedRoute.jsx'
 
 // كل صفحة = ملف داخل pages/ ، وهنا نربط كل صفحة بمسارها (Route)
@@ -23,6 +24,7 @@ export default function App() {
           </ProtectedRoute>
         }
       />
+     {import.meta.env.DEV && <Route path="/dev/kanban" element={<KanbanPage />} />}   
       <Route path="*" element={<Navigate to="/auth" replace />} />
     </Routes>
   )
