@@ -7,7 +7,6 @@ const CARD = { w: 149, h: 95 }
 export default function RoadmapMap({ activeId, onSelect }) {
   return (
     <div className="roadmap" style={{ aspectRatio: `${MAP_SIZE.w} / ${MAP_SIZE.h}` }}>
-      {/* المسار: خط عريض + خط منقّط */}
       <svg className="roadmap__path" viewBox={`0 0 ${MAP_SIZE.w} ${MAP_SIZE.h}`} aria-hidden="true">
         <path
           d="M42 48 L100 52 C330 40 560 80 568 180 C572 290 380 330 100 395 L81 407"
@@ -25,7 +24,6 @@ export default function RoadmapMap({ activeId, onSelect }) {
         const num = String(p.id).padStart(2, '0')
         return (
           <div key={p.id} className={`phase ${active ? 'is-active' : ''}`} style={{ '--accent': p.accent }}>
-            {/* الدائرة قابلة للضغط مثل البطاقة */}
             <button
               type="button"
               className="phase__node"
