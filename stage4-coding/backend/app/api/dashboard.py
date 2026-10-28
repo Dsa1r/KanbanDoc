@@ -32,6 +32,7 @@ def create_project():
             description=data.get('description'),
             mode=mode,
             member_emails=members,
+            template_id=data.get('template_id'),
         )
     except project_service.ValidationError as e:
         return jsonify({"error": {"code": "VALIDATION_ERROR", "message": str(e)}}), 400

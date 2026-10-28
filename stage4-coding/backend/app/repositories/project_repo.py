@@ -13,7 +13,7 @@ def get_user_projects_with_tasks(user_id):
         return []
 
     return (ext.admin_client.table('projects')
-            .select('id, project_name, description, created_at, project_tasks(current_status)')
+            .select('id, project_name, description, created_at, tasks(current_status)')
             .in_('team_id', team_ids)
             .order('created_at', desc=True)
             .execute().data)

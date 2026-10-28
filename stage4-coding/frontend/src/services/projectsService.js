@@ -28,12 +28,15 @@ function toProject(apiProject) {
     description: apiProject.description ?? '',
     completedTasks: apiProject.progress?.done ?? 0,
     totalTasks: apiProject.progress?.total ?? 0,
-    boardUrl: apiProject.board_url,
+        boardUrl:
+      apiProject.board_url ??
+      ((apiProject.project_id ?? apiProject.id)
+        ? `/projects/${apiProject.project_id ?? apiProject.id}/board`
+        : undefined),
     updatedAt: formatRelativeTime(apiProject.updated_at ?? apiProject.created_at),
   };
 }
 
-// Mock data is used only in dev mode on /dev/* preview routes
 function shouldUseMocks() {
   return import.meta.env.DEV && window.location.pathname.startsWith('/dev/');
 }
@@ -67,11 +70,17 @@ export async function createProject({ title, templateId, audience, members }) {
     return;
   }
 
-  // TODO (Dana): confirm field names for the project type and team members,
-  // then send them too, e.g. project_type: audience, member_emails: members
-  return apiFetch('/api/v1/projects', {
+    // POST /api/v1/projects -> the new project (with board_url)
+  const created = await apiFetch('/api/v1/projects', {
     method: 'POST',
-    body: { name: title, template_id: templateId },
+    body: {
+      name: title,
+      template_id: templateId,   // 1 = pre-seeded starter tasks, 0 = blank
+      mode: audience,            // 'solo' | 'team'
+      member_emails: members,    // only used when mode is 'team'
+    },
     auth: true,
   });
+
+  return toProject(created);
 }
