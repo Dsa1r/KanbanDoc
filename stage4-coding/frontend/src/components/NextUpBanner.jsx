@@ -5,7 +5,7 @@ export default function NextUpBanner({ task, onOpen }) {
     <section className="next-up" aria-label="Next task">
       <div>
         <p className="next-up__label">
-          Next up <span lang="ja">· 次</span>
+          Next up <span lang="ja">· </span>
         </p>
         <div className="next-up__task">
           <h2 className="next-up__title">{task.title}</h2>

@@ -1,8 +1,8 @@
 export const BOARD_COLUMNS = [
-  { id: 'todo', title: 'To Do', subtitle: '未着手', color: 'gray' },
-  { id: 'in_progress', title: 'In Progress', subtitle: '作業中', color: 'blue' },
-  { id: 'review', title: 'Testing/Review', subtitle: '確認中', color: 'amber' },
-  { id: 'done', title: 'Done', subtitle: '完了', color: 'green' },
+  { id: 'todo', title: 'To Do', subtitle: '', color: 'gray' },
+  { id: 'in_progress', title: 'In Progress', subtitle: '', color: 'blue' },
+  { id: 'review', title: 'Testing/Review', subtitle: '', color: 'amber' },
+  { id: 'done', title: 'Done', subtitle: '', color: 'green' },
 ];
 
 export const STAGES = [

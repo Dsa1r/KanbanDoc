@@ -192,7 +192,7 @@ function CreateProjectModal({ onClose, onSubmit }) {
                       setMemberError('');
                     }}
                     onKeyDown={handleMemberKeyDown}
-                    placeholder="name@company.com"
+                    placeholder="Member@gmail.com"
                   />
                   <button
                     type="button"
