@@ -46,7 +46,6 @@ export default function AuthPage() {
         if (data.access_token) {
           navigate('/dashboard')
         } else {
-          // الحساب انسجل لكن يحتاج تأكيد الإيميل قبل الدخول
           switchMode('login')
           setNotice('Account created. Check your email to confirm it, then log in.')
         }
@@ -55,9 +54,6 @@ export default function AuthPage() {
         navigate('/dashboard')
       }
     } catch (err) {
-      // رسائل الباك اند مطابقة للـ acceptance criteria:
-      // "An account with this email may already exist. Please try signing in"
-      // "Invalid email or password"
       setError(err.message)
     } finally {
       setSubmitting(false)
@@ -103,10 +99,10 @@ export default function AuthPage() {
 
             <form className="auth-form" onSubmit={handleSubmit} noValidate={false}>
               {isSignup && (
-                <Field label="Name" name="name" placeholder="Alex Morgan" autoComplete="name"
+                <Field label="Name" name="name" placeholder="Name" autoComplete="name"
                   value={form.name} onChange={handleChange} required />
               )}
-              <Field label="Email" name="email" type="email" placeholder="alex@company.com"
+              <Field label="Email" name="email" type="email" placeholder="email@gmail.com"
                 autoComplete="email" value={form.email} onChange={handleChange} required />
               <Field label="Password" name="password" type="password"
                 placeholder={isSignup ? 'At least 8 characters' : 'Your password'}
@@ -118,7 +114,7 @@ export default function AuthPage() {
                 </button>
               )}
               {isSignup && (
-                <Field label="Phone number" name="phone" type="tel" placeholder="+1 555 000 0000"
+                <Field label="Phone number" name="phone" type="tel" placeholder="+966 5X XXX XXXX"
                   autoComplete="tel" value={form.phone} onChange={handleChange} />
               )}
 

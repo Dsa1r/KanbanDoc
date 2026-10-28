@@ -1,7 +1,8 @@
 import { useEffect } from 'react';
 import { CloseIcon } from './Icons.jsx';
 
-export default function TaskDrawer({ task, onClose }) {
+// columns + onChangeStatus are optional: they add a "Status" dropdown (works on phones, where dragging does not)
+export default function TaskDrawer({ task, onClose, columns, onChangeStatus }) {
   useEffect(() => {
     const previousOverflow = document.body.style.overflow;
     document.body.style.overflow = 'hidden';
@@ -41,6 +42,22 @@ export default function TaskDrawer({ task, onClose }) {
             <CloseIcon width={18} height={18} />
           </button>
         </header>
+
+        {onChangeStatus && columns && (
+          <section className="drawer__section">
+            <label className="drawer__label" htmlFor="task-status">Status</label>
+            <select
+              id="task-status"
+              className="drawer__select"
+              value={task.status}
+              onChange={(event) => onChangeStatus(task.id, event.target.value)}
+            >
+              {columns.map((column) => (
+                <option key={column.id} value={column.id}>{column.title}</option>
+              ))}
+            </select>
+          </section>
+        )}
 
         <section className="drawer__section">
           <h3 className="drawer__label">Task description</h3>

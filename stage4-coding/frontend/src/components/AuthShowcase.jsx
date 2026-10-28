@@ -1,4 +1,3 @@
-// اللوحة الخضراء على اليسار (التصميم فقط، بدون منطق)
 const FEATURES = [
   {
     title: 'Turn growth into progress',

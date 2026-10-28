@@ -98,6 +98,7 @@ export default function DashboardPage() {
               completedTasks={project.completedTasks}
               totalTasks={project.totalTasks}
               updatedAt={project.updatedAt}
+              boardUrl={project.boardUrl}
             />
           ))}
         </section>

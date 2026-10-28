@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import { CompassIcon } from './Icons.jsx';
 
 export default function BoardHeader({
@@ -7,6 +8,7 @@ export default function BoardHeader({
   stages,
   activeStages,
   onToggleStage,
+  backTo,
 }) {
   return (
     <header className="board-header">
@@ -16,6 +18,8 @@ export default function BoardHeader({
         </span>
         <span className="board-header__brand-name">DevCompass</span>
       </div>
+
+      {backTo && <Link to={backTo} className="board-header__back">← Projects</Link>}
 
       <h1 className="board-header__title">{projectName}</h1>
       {description && <p className="board-header__description">{description}</p>}

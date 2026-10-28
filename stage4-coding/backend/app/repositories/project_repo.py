@@ -1,8 +1,9 @@
-from app.extensions import admin_client
+# read ext.admin_client at call time so tests can swap the database
+from app import extensions as ext
 
 
 def get_user_projects_with_tasks(user_id):
-    memberships = (admin_client.table('team_members')
+    memberships = (ext.admin_client.table('team_members')
                    .select('team_id')
                    .eq('user_id', user_id)
                    .execute().data)
@@ -11,7 +12,7 @@ def get_user_projects_with_tasks(user_id):
     if not team_ids:
         return []
 
-    return (admin_client.table('projects')
+    return (ext.admin_client.table('projects')
             .select('id, project_name, description, created_at, project_tasks(current_status)')
             .in_('team_id', team_ids)
             .order('created_at', desc=True)
