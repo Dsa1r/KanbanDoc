@@ -396,8 +396,8 @@ Example:
     "description": "Personal portfolio web application",
     "template_id": "fullstack_web",
     "team member_id": "b3f1c2a4-1111-2222-3333-444455556666",
-    "team_id": 1, \\ قلنا بالاول مالها داعي لكن طلعت مهمة, نخلي استدعاء التيم ممبرز في ايند بوينت التيم ممبرز مو هنا 
-    "is_completed": false, \\ هنا برقرس 
+    "team_id": 1, 
+    "progress": 0%,  
     "completed_at": null,
     "created_at": "2026-10-11T10:00:00Z"
   }
@@ -452,7 +452,7 @@ Add an existing user to the project team. Send either email or user_id.
     "user_id": "c4d2e3b5-7777-8888-9999-000011112222",
     "team_id": 1,
     "email": "friend@example.com",
-    "joined_at": "2026-10-12T08:00:00Z" \\ تنضاف بالكلاس دياقرام تيم ممبر 
+    "joined_at": "2026-10-12T08:00:00Z" 
   }
 }
 ```
