@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { CompassIcon, SearchIcon, ChevronDownIcon } from './Icons.jsx';
+import { useEffect, useRef, useState } from 'react';
+import { CompassIcon, SearchIcon, ChevronDownIcon, SettingsIcon, LogoutIcon } from './Icons.jsx';
 import './Header.css';
 
 function getInitials(name) {
@@ -12,8 +12,35 @@ function getInitials(name) {
     .join('');
 }
 
-function Header({ userName, onLogout }) {
+function Header({ userName, username, onSettings, onLogout }) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const accountRef = useRef(null);
+
+  // Close the account menu when clicking outside it or pressing Escape
+  useEffect(() => {
+    if (!isMenuOpen) return undefined;
+
+    function handleClick(event) {
+      if (accountRef.current && !accountRef.current.contains(event.target)) {
+        setIsMenuOpen(false);
+      }
+    }
+    function handleKey(event) {
+      if (event.key === 'Escape') setIsMenuOpen(false);
+    }
+
+    document.addEventListener('mousedown', handleClick);
+    document.addEventListener('keydown', handleKey);
+    return () => {
+      document.removeEventListener('mousedown', handleClick);
+      document.removeEventListener('keydown', handleKey);
+    };
+  }, [isMenuOpen]);
+
+  function handleSettings() {
+    setIsMenuOpen(false);
+    onSettings?.();
+  }
 
   return (
     <header className="app-header">
@@ -29,7 +56,7 @@ function Header({ userName, onLogout }) {
           <SearchIcon />
         </button>
 
-        <div className="app-header__account">
+        <div className="app-header__account" ref={accountRef}>
           <button
             type="button"
             className="app-header__user"
@@ -44,13 +71,30 @@ function Header({ userName, onLogout }) {
 
           {isMenuOpen && (
             <div className="app-header__menu" role="menu">
-              {userName && <p className="app-header__menu-name">{userName}</p>}
+              {userName && (
+                <div className="app-header__menu-head">
+                  <p className="app-header__menu-name">{userName}</p>
+                  {username && <p className="app-header__menu-username">@{username}</p>}
+                </div>
+              )}
+              {onSettings && (
+                <button
+                  type="button"
+                  role="menuitem"
+                  className="app-header__menu-item"
+                  onClick={handleSettings}
+                >
+                  <SettingsIcon width={16} height={16} />
+                  Settings
+                </button>
+              )}
               <button
                 type="button"
                 role="menuitem"
                 className="app-header__menu-item"
                 onClick={onLogout}
               >
+                <LogoutIcon width={16} height={16} />
                 Log out
               </button>
             </div>

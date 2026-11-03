@@ -8,7 +8,6 @@ export function AuthProvider({ children }) {
   const [user, setUser] = useState(null)
   const [loading, setLoading] = useState(true)
 
-  // عند فتح الموقع: إذا فيه توكن محفوظ نجيب بيانات المستخدم
   useEffect(() => {
     if (!tokenStorage.get()) {
       setLoading(false)
@@ -33,13 +32,19 @@ export function AuthProvider({ children }) {
     return data
   }, [])
 
+  const updateProfile = useCallback(async (fields) => {
+    const updated = await authService.updateMe(fields)
+    setUser(updated)
+    return updated
+  }, [])
+
   const logout = useCallback(async () => {
     await authService.logout()
     setUser(null)
   }, [])
 
   return (
-    <AuthContext.Provider value={{ user, loading, signup, login, logout }}>
+    <AuthContext.Provider value={{ user, loading, signup, login, logout, updateProfile }}>
       {children}
     </AuthContext.Provider>
   )

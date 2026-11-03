@@ -1,15 +1,17 @@
+const STAGES = ['Database', 'Backend', 'Frontend']
+
 const FEATURES = [
   {
-    title: 'Turn growth into progress',
-    text: 'Break ambitious learning goals into clear, achievable milestones.',
+    title: 'One clear next step',
+    text: 'The Next Up banner points to the single task to work on, so you never wonder where to start.',
   },
   {
-    title: 'Learn better, together',
-    text: 'Get support from peers and timely guidance from experienced supervisors.',
+    title: 'A roadmap, not a blank board',
+    text: 'Begin with a starter template that walks you through the Database, Backend and Frontend stages.',
   },
   {
-    title: "See how far you've come",
-    text: 'Keep your wins, feedback, and next steps organized in one calm workspace.',
+    title: 'Everything on the card',
+    text: 'Each task comes with a description, helpful resources and notes to keep you moving.',
   },
 ]
 
@@ -41,17 +43,27 @@ export default function AuthShowcase() {
       </div>
 
       <div className="showcase__body">
-        <p className="showcase__kicker">Your learning journey, mapped</p>
+        <p className="showcase__kicker">Built for junior developers</p>
         <h1 className="showcase__headline">
-          Small milestones.
+          Always know
           <br />
-          <span>Remarkable growth.</span>
+          <span>your next step.</span>
         </h1>
         <span className="showcase__rule" />
         <p className="showcase__lead">
-          DevCompass gives developer teams a shared place to set goals, build skills, and celebrate
-          real progress—one milestone at a time.
+          DevCompass turns a big project into a guided path. Start from a ready-made roadmap,
+          see the one task to do next, and ship your first real app without the clutter of
+          enterprise tools.
         </p>
+
+        <ol className="showcase__path" aria-label="The DevCompass roadmap">
+          {STAGES.map((stage, i) => (
+            <li key={stage}>
+              <span className="showcase__path-num">{i + 1}</span>
+              {stage}
+            </li>
+          ))}
+        </ol>
 
         <ul className="showcase__cards">
           {FEATURES.map((f) => (
@@ -65,8 +77,8 @@ export default function AuthShowcase() {
       </div>
 
       <div className="showcase__footer">
-        <span>Built for developers who keep moving.</span>
-        <span>© 2025 DevCompass</span>
+        <span>Made for developers who keep moving.</span>
+        <span>© {new Date().getFullYear()} DevCompass</span>
       </div>
     </aside>
   )

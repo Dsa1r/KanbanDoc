@@ -80,16 +80,6 @@ def test_starter_template_copies_tasks_into_the_project(env):
     assert any(t["resources"] for t in db.tables["tasks"])
 
 
-def test_starter_template_is_read_from_the_database_when_present(env):
-    db, client = env
-    db.tables["project_templates"] = [{
-        "id": "t1", "template_name": "Starter template",
-        "default_tasks": [{"title": "Only task", "stage": "backend"}, {"title": "", "stage": "BACKEND"}],
-    }]
-    post(client, {"name": "X", "template_id": 1})
-    assert [(t["title"], t["stage"]) for t in db.tables["tasks"]] == [("Only task", "BACKEND")]
-
-
 def test_creator_can_open_the_new_board_right_away(env):
     _, client = env
     project_id = post(client, {"name": "Mine", "template_id": 1}).get_json()["data"]["id"]

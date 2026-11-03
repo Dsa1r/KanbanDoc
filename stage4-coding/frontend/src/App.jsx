@@ -4,6 +4,7 @@ import ResetPasswordPage from './pages/ResetPasswordPage.jsx'
 import DashboardPage from './pages/DashboardPage.jsx'
 import LearningPathPage from './pages/LearningPathPage.jsx'
 import KanbanPage from './pages/KanbanPage.jsx'
+import SettingsPage from './pages/SettingsPage.jsx'
 import ProtectedRoute from './components/ProtectedRoute.jsx'
 
 
@@ -13,7 +14,6 @@ export default function App() {
       <Route path="/" element={<Navigate to="/auth" replace />} />
       <Route path="/auth" element={<AuthPage />} />
       <Route path="/reset-password" element={<ResetPasswordPage />} />
-      {/* Redirect /learning-path to /roadmap for backward compatibility */}
       <Route path="/roadmap" element={<LearningPathPage />} />
       <Route path="/learning-path" element={<Navigate to="/roadmap" replace />} />
       <Route
@@ -21,6 +21,14 @@ export default function App() {
         element={
           <ProtectedRoute>
             <DashboardPage />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/settings"
+        element={
+          <ProtectedRoute>
+            <SettingsPage />
           </ProtectedRoute>
         }
       />

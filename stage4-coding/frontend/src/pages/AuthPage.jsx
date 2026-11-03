@@ -3,9 +3,13 @@ import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext.jsx'
 import AuthShowcase from '../components/AuthShowcase.jsx'
 import ForgotPasswordModal from '../components/ForgotPasswordModal.jsx'
+import PasswordField from '../components/PasswordField.jsx'
 import '../styles/auth.css'
 
-const EMPTY = { name: '', email: '', password: '', phone: '' }
+const EMPTY = { name: '', username: '', email: '', identifier: '', password: '', phone: '' }
+
+const USERNAME_RE = /^[a-z0-9_.]{3,20}$/
+const USERNAME_RULE = 'Username must be 3–20 characters: letters, numbers, _ or .'
 
 export default function AuthPage() {
   const [mode, setMode] = useState('signup') // 'signup' | 'login'
@@ -34,23 +38,31 @@ export default function AuthPage() {
     setError('')
     setNotice('')
 
-    if (isSignup && form.password.length < 8) {
-      setError('Password must be at least 8 characters.')
-      return
+    if (isSignup) {
+      const username = form.username.trim().toLowerCase().replace(/^@/, '')
+      if (!USERNAME_RE.test(username)) {
+        setError(USERNAME_RULE)
+        return
+      }
+      if (form.password.length < 8) {
+        setError('Password must be at least 8 characters.')
+        return
+      }
     }
 
     setSubmitting(true)
     try {
       if (isSignup) {
-        const data = await signup(form)
+        const data = await signup({ ...form, username: form.username.trim() })
         if (data.access_token) {
           navigate('/dashboard')
         } else {
           switchMode('login')
+          setForm((f) => ({ ...EMPTY, identifier: f.email.trim() }))
           setNotice('Account created. Check your email to confirm it, then log in.')
         }
       } else {
-        await login({ email: form.email, password: form.password })
+        await login({ identifier: form.identifier.trim(), password: form.password })
         navigate('/dashboard')
       }
     } catch (err) {
@@ -67,13 +79,13 @@ export default function AuthPage() {
 
         <section className="auth-panel">
           <div className="auth-panel__inner">
-            <p className="auth-eyebrow">{isSignup ? 'Start your next chapter' : 'Welcome back'}</p>
+            <p className="auth-eyebrow">{isSignup ? 'Start your first project' : 'Welcome back'}</p>
             <h2 className="auth-title">{isSignup ? 'Create your account' : 'Log in to DevCompass'}</h2>
             <span className="auth-rule" />
             <p className="auth-sub">
               {isSignup
-                ? 'Join your team and make every step forward visible.'
-                : 'Pick up where you left off.'}
+                ? 'Set up your workspace in a minute and get your first next step.'
+                : 'Pick up right where you left off.'}
             </p>
 
             <div className="auth-tabs" role="tablist">
@@ -98,23 +110,35 @@ export default function AuthPage() {
             </div>
 
             <form className="auth-form" onSubmit={handleSubmit} noValidate={false}>
-              {isSignup && (
-                <Field label="Name" name="name" placeholder="Name" autoComplete="name"
-                  value={form.name} onChange={handleChange} required />
+              {isSignup ? (
+                <>
+                  <Field label="Name" name="name" placeholder="Your full name" autoComplete="name"
+                    value={form.name} onChange={handleChange} required />
+                  <Field label="Username" name="username" placeholder="e.g. reema_dev"
+                    autoComplete="username" autoCapitalize="none" spellCheck={false}
+                    minLength={3} maxLength={20} value={form.username} onChange={handleChange}
+                    hint="3–20 characters: letters, numbers, _ or ." required />
+                  <Field label="Email" name="email" type="email" placeholder="email@gmail.com"
+                    autoComplete="email" value={form.email} onChange={handleChange} required />
+                </>
+              ) : (
+                <Field label="Username or email" name="identifier" placeholder="Username or email"
+                  autoComplete="username" autoCapitalize="none" spellCheck={false}
+                  value={form.identifier} onChange={handleChange} required />
               )}
-              <Field label="Email" name="email" type="email" placeholder="email@gmail.com"
-                autoComplete="email" value={form.email} onChange={handleChange} required />
-              <Field label="Password" name="password" type="password"
+
+              <PasswordField label="Password" name="password"
                 placeholder={isSignup ? 'At least 8 characters' : 'Your password'}
                 autoComplete={isSignup ? 'new-password' : 'current-password'}
                 value={form.password} onChange={handleChange} required />
+
               {!isSignup && (
                 <button type="button" className="auth-forgot" onClick={() => setShowForgot(true)}>
                   Forgot password?
                 </button>
               )}
               {isSignup && (
-                <Field label="Phone number" name="phone" type="tel" placeholder="+966 5X XXX XXXX"
+                <Field label="Phone number (optional)" name="phone" type="tel" placeholder="+966 5X XXX XXXX"
                   autoComplete="tel" value={form.phone} onChange={handleChange} />
               )}
 
@@ -147,11 +171,12 @@ export default function AuthPage() {
   )
 }
 
-function Field({ label, name, ...props }) {
+function Field({ label, name, hint, ...props }) {
   return (
     <label className="auth-field">
       <span>{label}</span>
       <input id={name} name={name} {...props} />
+      {hint && <small className="auth-hint">{hint}</small>}
     </label>
   )
 }

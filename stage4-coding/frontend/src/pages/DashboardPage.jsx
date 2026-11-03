@@ -56,14 +56,12 @@ export default function DashboardPage() {
     async function handleCreateProject(projectData) {
     const project = await createProject(projectData);
 
-    // Real mode: open the Kanban board of the project we just created
     if (project?.boardUrl) {
       closeModal();
       navigate(project.boardUrl);
       return;
     }
 
-    // Dev mock mode (/dev/dashboard): there is no real board, so just refresh the list
     const dashboard = await getDashboard();
     setProjects(dashboard.projects);
     setSummaryText(dashboard.summaryText);
@@ -119,7 +117,12 @@ export default function DashboardPage() {
 
   return (
     <div className="dashboard-page">
-      <Header userName={user?.name} onLogout={handleLogout} />
+      <Header
+        userName={user?.name}
+        username={user?.username}
+        onSettings={() => navigate('/settings')}
+        onLogout={handleLogout}
+      />
 
       <main className="dashboard">
         <header className="dashboard__header">
