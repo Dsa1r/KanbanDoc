@@ -1,5 +1,3 @@
-const STAGES = ['Database', 'Backend', 'Frontend']
-
 const FEATURES = [
   {
     title: 'One clear next step',
@@ -43,13 +41,11 @@ export default function AuthShowcase() {
       </div>
 
       <div className="showcase__body">
-        <p className="showcase__kicker">Built for junior developers</p>
         <h1 className="showcase__headline">
           Always know
           <br />
           <span>your next step.</span>
         </h1>
-        <span className="showcase__rule" />
         <p className="showcase__lead">
           DevCompass turns a big project into a guided path. Start from a ready-made roadmap,
           see the one task to do next, and ship your first real app without the clutter of
@@ -78,7 +74,7 @@ export default function AuthShowcase() {
 
       <div className="showcase__footer">
         <span>Made for developers who keep moving.</span>
-        <span>© {new Date().getFullYear()} DevCompass</span>
+        <span>© 2026 DevCompass</span>
       </div>
     </aside>
   )
