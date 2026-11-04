@@ -46,3 +46,10 @@ export default function App() {
     </Routes>
   )
 }
+
+{import.meta.env.DEV && (
+  <Route
+    path="/dev/projects/:projectId/board"
+    element={<KanbanPage />}
+  />
+)}

@@ -12,6 +12,7 @@ const FEATURES = [
     text: 'Each task comes with a description, helpful resources and notes to keep you moving.',
   },
 ]
+const STAGES = ['Database', 'Backend', 'Frontend']
 
 function CompassIcon() {
   return (

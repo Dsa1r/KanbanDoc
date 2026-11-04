@@ -5,7 +5,7 @@ import NextUpBanner from '../components/NextUpBanner.jsx';
 import KanbanColumn from '../components/KanbanColumn.jsx';
 import TaskDrawer from '../components/TaskDrawer.jsx';
 import { BOARD_COLUMNS, STAGES, mockBoard } from '../data/mockBoard.js';
-import { getBoard, updateTaskStatus } from '../services/boardService.js';
+import { getBoard, getTaskPhase, updateTaskStatus } from '../services/boardService.js';
 import '../styles/kanban.css';
 
 export default function KanbanPage() {
@@ -19,6 +19,8 @@ export default function KanbanPage() {
   const [error, setError] = useState('');
   const [activeStages, setActiveStages] = useState([]);
   const [selectedTaskId, setSelectedTaskId] = useState(null);
+  // bumped after a move is saved, so the open drawer reads the phase of the NEW status
+  const [phaseVersion, setPhaseVersion] = useState(0);
 
   useEffect(() => {
     if (!projectId) return undefined;
@@ -77,6 +79,7 @@ export default function KanbanPage() {
 
     try {
       await updateTaskStatus(taskId, newStatus);
+      setPhaseVersion((version) => version + 1);
     } catch (err) {
       setStatus(oldStatus);
       setError(err.message);
@@ -131,6 +134,8 @@ export default function KanbanPage() {
           task={selectedTask}
           columns={BOARD_COLUMNS}
           onChangeStatus={readOnly ? undefined : handleMoveTask}
+          loadPhase={projectId ? getTaskPhase : undefined}
+          phaseVersion={phaseVersion}
           onClose={() => setSelectedTaskId(null)}
         />
       )}

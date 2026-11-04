@@ -1,0 +1,18 @@
+### 1. Login to Supabase and get Access Token
+# @name login
+
+POST {{supabaseUrl}}/auth/v1/token?grant_type=password
+Content-Type: application/json
+apikey: {{anonKey}}
+
+{
+    "email": "{{email}}",
+    "password": "{{password}}"
+}
+
+
+### 2. Get Kanban Board for a Specific Project
+
+GET {{baseUrl}}/{{kanbanEndpoint}}/{{projectId}}
+Authorization: Bearer {{login.response.body.access_token}}
+Content-Type: application/json
