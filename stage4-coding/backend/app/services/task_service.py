@@ -98,3 +98,57 @@ def get_task_phase(task_id, user_id):
         raise ApiError("NOT_FOUND", "Task phase not found", 404)
 
     return phase
+
+
+# from app.data.fixed_tasks import FIXED_TASKS
+# from app.extensions : ايررررورimport ext ImportError: cannot import name 'ext' from 'app.extensions' (C:\KanbanDoc\stage4-coding\backend\app\extensions.py)
+
+#في الميثود المسؤولة عن Generate Project، بعد إنشاء المشروع والحصول على بياناته:
+# project = create_project(project_data)
+
+# if project["project_type"] == "FIXED":
+    # task_service.create_fixed_tasks(project["id"])
+from app.tasks_data.fixed import FIXED_TASKS
+from app import extensions as ext
+
+
+def create_fixed_tasks(project_id):
+    created_tasks = []
+
+    for position, task_data in enumerate(FIXED_TASKS, start=1):
+
+        # Insert task
+        task_response = (
+            ext.admin_client.table("tasks")
+            .insert({
+                "project_id": project_id,
+                "title": task_data["title"],
+                "stage": task_data["stage"],
+                "current_status": "TO_DO",
+                "position": position
+            })
+            .execute()
+        )
+
+        task = task_response.data[0]
+        task_id = task["id"]
+
+        # Prepare task phases
+        phases = []
+
+        for status, phase_data in task_data["phases"].items():
+            phases.append({
+                "task_id": task_id,
+                "status": status,
+                "description": phase_data["description"],
+                "why_it_matters": phase_data["why_it_matters"],
+                "resources": phase_data["resources"],
+                "checklist": phase_data["checklist"]
+            })
+
+        # Insert all four phases
+        ext.admin_client.table("task_phases").insert(phases).execute()
+
+        created_tasks.append(task)
+
+    return created_tasks
