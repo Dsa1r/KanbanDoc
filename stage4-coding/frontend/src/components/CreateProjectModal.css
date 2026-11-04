@@ -391,3 +391,48 @@ legend.project-modal__label {
     padding-right: 20px;
   }
 }
+
+/* ---------- Description, validation and hints ---------- */
+
+.project-modal__optional {
+  font-weight: 400;
+  color: var(--color-text-muted);
+}
+
+.project-modal__textarea {
+  min-height: 84px;
+  line-height: 1.5;
+  resize: vertical;
+}
+
+.project-modal__counter {
+  align-self: flex-end;
+  font-size: 12px;
+  color: var(--color-text-muted);
+}
+
+.project-modal__input--invalid,
+.project-modal__input--invalid:focus {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 1px var(--color-primary);
+}
+
+.project-modal__alert {
+  padding: 12px 14px;
+  background: #f6dcd8;
+  border: 1px solid var(--color-primary);
+  border-radius: 4px;
+  font-size: 13px;
+  color: var(--color-primary);
+}
+
+.project-modal__hint {
+  align-self: center;
+  margin-right: auto;
+  font-size: 13px;
+  color: var(--color-primary);
+}
+.project-modal__cancel,
+.project-modal__submit {
+  white-space: nowrap;
+}

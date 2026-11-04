@@ -54,13 +54,13 @@ export async function getDashboard() {
   };
 }
 
-export async function createProject({ title, templateId, audience, members }) {
+export async function createProject({ title, description, templateId, audience, members }) {
   if (shouldUseMocks()) {
-    console.info('Mock create:', { title, templateId, audience, members });
     mockProjects = [
       {
         project_id: crypto.randomUUID(),
         name: title,
+        description,
         template_id: templateId,
         progress: { done: 0, total: 0, percent: 0 },
         created_at: new Date().toISOString(),
@@ -70,11 +70,12 @@ export async function createProject({ title, templateId, audience, members }) {
     return;
   }
 
-    // POST /api/v1/projects -> the new project (with board_url)
+  // POST /api/v1/projects -> the new project (with board_url)
   const created = await apiFetch('/api/v1/projects', {
     method: 'POST',
     body: {
       name: title,
+      description,
       template_id: templateId,   // 1 = pre-seeded starter tasks, 0 = blank
       mode: audience,            // 'solo' | 'team'
       member_emails: members,    // only used when mode is 'team'

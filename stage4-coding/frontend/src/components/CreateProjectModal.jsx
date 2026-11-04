@@ -21,18 +21,41 @@ const TEMPLATE_OPTIONS = [
 ];
 
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const DESCRIPTION_MAX_LENGTH = 200;
 
 function CreateProjectModal({ onClose, onSubmit }) {
   const [title, setTitle] = useState('');
+  const [description, setDescription] = useState('');
   const [audience, setAudience] = useState('solo');
   const [memberEmail, setMemberEmail] = useState('');
   const [members, setMembers] = useState([]);
   const [templateId, setTemplateId] = useState(1);
-  const [error, setError] = useState('');
+  const [errors, setErrors] = useState({});
   const [memberError, setMemberError] = useState('');
+  const [submitError, setSubmitError] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const canSubmit = title.trim().length > 0 && !isSubmitting;
+  const hasErrors = Object.values(errors).some(Boolean);
+
+  function clearError(field) {
+    setErrors((prevErrors) => ({ ...prevErrors, [field]: undefined }));
+  }
+
+  function validate() {
+    const nextErrors = {};
+
+    if (!title.trim()) {
+      nextErrors.title = 'Give your project a name.';
+    }
+
+    if (audience === 'team' && members.length === 0) {
+      nextErrors.members = memberEmail.trim()
+        ? 'Press "Add" to include this email, or switch to Solo.'
+        : 'Add at least one team member, or switch to Solo.';
+    }
+
+    return nextErrors;
+  }
 
   function addMember() {
     const email = memberEmail.trim().toLowerCase();
@@ -49,6 +72,7 @@ function CreateProjectModal({ onClose, onSubmit }) {
     setMembers((prevMembers) => [...prevMembers, email]);
     setMemberEmail('');
     setMemberError('');
+    clearError('members');
   }
 
   function removeMember(email) {
@@ -65,22 +89,24 @@ function CreateProjectModal({ onClose, onSubmit }) {
   async function handleSubmit(event) {
     event.preventDefault();
 
-    const trimmedTitle = title.trim();
-    if (!trimmedTitle) {
-      setError('Project name is required.');
+    const nextErrors = validate();
+    setErrors(nextErrors);
+    if (Object.keys(nextErrors).length > 0) {
       return;
     }
 
+    setSubmitError('');
     setIsSubmitting(true);
     try {
       await onSubmit({
-        title: trimmedTitle,
+        title: title.trim(),
+        description: description.trim(),
         templateId,
         audience,
         members: audience === 'team' ? members : [],
       });
-    } catch (submitError) {
-      setError(submitError.message);
+    } catch (error) {
+      setSubmitError(error.message);
       setIsSubmitting(false);
     }
   }
@@ -126,28 +152,56 @@ function CreateProjectModal({ onClose, onSubmit }) {
           </header>
 
           <div className="project-modal__body">
-            <label className="project-modal__field">
-              <span className="project-modal__label">Project name</span>
+            {submitError && (
+              <p className="project-modal__alert" role="alert">{submitError}</p>
+            )}
+
+            <div className="project-modal__field">
+              <label className="project-modal__label" htmlFor="project-name">
+                Project name
+              </label>
               <input
-                className="project-modal__input"
+                id="project-name"
+                className={`project-modal__input ${errors.title ? 'project-modal__input--invalid' : ''}`}
                 type="text"
                 value={title}
                 onChange={(event) => {
                   setTitle(event.target.value);
-                  setError('');
+                  clearError('title');
                 }}
                 placeholder="e.g. Spring product launch"
                 maxLength={60}
+                aria-invalid={Boolean(errors.title)}
+                aria-describedby={errors.title ? 'project-name-error' : undefined}
                 autoFocus
               />
-            </label>
+              {errors.title && (
+                <p id="project-name-error" className="project-modal__error">{errors.title}</p>
+              )}
+            </div>
 
-            {error && <p className="project-modal__error" role="alert">{error}</p>}
+            <div className="project-modal__field">
+              <label className="project-modal__label" htmlFor="project-description">
+                Description <span className="project-modal__optional">(optional)</span>
+              </label>
+              <textarea
+                id="project-description"
+                className="project-modal__input project-modal__textarea"
+                value={description}
+                onChange={(event) => setDescription(event.target.value)}
+                placeholder="What are you building, and who is it for?"
+                rows={3}
+                maxLength={DESCRIPTION_MAX_LENGTH}
+              />
+              <span className="project-modal__counter">
+                {description.length}/{DESCRIPTION_MAX_LENGTH}
+              </span>
+            </div>
 
             <fieldset className="project-modal__group">
               <legend className="project-modal__label">Who is this project for?</legend>
               <div className="audience-options">
-                {AUDIENCE_OPTIONS.map(({ id, label, description, Icon }) => {
+                {AUDIENCE_OPTIONS.map(({ id, label, description: optionDescription, Icon }) => {
                   const isSelected = audience === id;
 
                   return (
@@ -160,7 +214,10 @@ function CreateProjectModal({ onClose, onSubmit }) {
                         name="audience"
                         value={id}
                         checked={isSelected}
-                        onChange={() => setAudience(id)}
+                        onChange={() => {
+                          setAudience(id);
+                          clearError('members');
+                        }}
                         className="project-modal__radio"
                       />
                       <span className="audience-option__icon">
@@ -168,7 +225,7 @@ function CreateProjectModal({ onClose, onSubmit }) {
                       </span>
                       <span>
                         <span className="audience-option__label">{label}</span>
-                        <span className="audience-option__description">{description}</span>
+                        <span className="audience-option__description">{optionDescription}</span>
                       </span>
                     </label>
                   );
@@ -184,7 +241,7 @@ function CreateProjectModal({ onClose, onSubmit }) {
                 <div className="member-input">
                   <input
                     id="member-email"
-                    className="project-modal__input"
+                    className={`project-modal__input ${errors.members ? 'project-modal__input--invalid' : ''}`}
                     type="email"
                     value={memberEmail}
                     onChange={(event) => {
@@ -193,6 +250,7 @@ function CreateProjectModal({ onClose, onSubmit }) {
                     }}
                     onKeyDown={handleMemberKeyDown}
                     placeholder="Member@gmail.com"
+                    aria-invalid={Boolean(errors.members)}
                   />
                   <button
                     type="button"
@@ -206,6 +264,9 @@ function CreateProjectModal({ onClose, onSubmit }) {
 
                 {memberError && (
                   <p className="project-modal__error" role="alert">{memberError}</p>
+                )}
+                {errors.members && (
+                  <p className="project-modal__error">{errors.members}</p>
                 )}
 
                 {members.length > 0 && (
@@ -260,6 +321,11 @@ function CreateProjectModal({ onClose, onSubmit }) {
           </div>
 
           <footer className="project-modal__actions">
+            {hasErrors && (
+              <p className="project-modal__hint" role="status">
+                Please complete the highlighted fields.
+              </p>
+            )}
             <button
               type="button"
               className="project-modal__cancel"
@@ -268,7 +334,7 @@ function CreateProjectModal({ onClose, onSubmit }) {
             >
               Cancel
             </button>
-            <button type="submit" className="project-modal__submit" disabled={!canSubmit}>
+            <button type="submit" className="project-modal__submit" disabled={isSubmitting}>
               {isSubmitting ? 'Generating…' : 'Generate Project'}
             </button>
           </footer>
