@@ -118,3 +118,67 @@
 .app-header__menu-item:hover {
   background: var(--color-icon-bg);
 }
+
+/* ---------- Main navigation ---------- */
+
+.app-header__nav {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+  margin-left: 48px;
+  margin-right: auto;
+}
+
+.app-header__nav-link {
+  position: relative;
+  padding: 6px 0;
+  font-size: 14px;
+  color: var(--color-text-muted);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.app-header__nav-link:hover {
+  color: var(--color-text);
+}
+
+/* Gold underline that slides in */
+.app-header__nav-link::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -2px;
+  width: 100%;
+  height: 2px;
+  background: var(--color-accent);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.25s ease;
+}
+
+.app-header__nav-link:hover::after,
+.app-header__nav-link--active::after {
+  transform: scaleX(1);
+}
+
+.app-header__nav-link--active {
+  font-weight: 500;
+  color: var(--color-text);
+}
+
+.app-header__nav-link:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 4px;
+  border-radius: 2px;
+}
+
+@media (max-width: 640px) {
+  .app-header__nav {
+    gap: 16px;
+    margin-left: 20px;
+  }
+
+  .app-header__name {
+    display: none;
+  }
+}

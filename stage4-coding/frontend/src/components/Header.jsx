@@ -1,6 +1,11 @@
 import { useEffect, useRef, useState } from 'react';
+import { NavLink } from 'react-router-dom';
 import { CompassIcon, SearchIcon, ChevronDownIcon, SettingsIcon, LogoutIcon } from './Icons.jsx';
 import './Header.css';
+
+const NAV_LINKS = [
+  { to: '/roadmap', label: 'Roadmap' },
+];
 
 function getInitials(name) {
   if (!name) return '?';
@@ -50,6 +55,20 @@ function Header({ userName, username, onSettings, onLogout }) {
         </span>
         <span className="app-header__name">DevCompass</span>
       </div>
+
+      <nav className="app-header__nav" aria-label="Main">
+        {NAV_LINKS.map((link) => (
+          <NavLink
+            key={link.to}
+            to={link.to}
+            className={({ isActive }) =>
+              `app-header__nav-link ${isActive ? 'app-header__nav-link--active' : ''}`
+            }
+          >
+            {link.label}
+          </NavLink>
+        ))}
+      </nav>
 
       <div className="app-header__actions">
         <button type="button" className="app-header__icon-btn" aria-label="Search">
