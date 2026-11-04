@@ -44,6 +44,11 @@ function shouldUseMocks() {
 let mockProjects = [...mockDashboard.projects];
 
 export async function getDashboard() {
+  if (shouldUseMocks()) {
+    // Simulate a slow network in the dev preview so loading states are visible
+    await new Promise((resolve) => setTimeout(resolve, 1200));
+  }
+
   const data = shouldUseMocks()
     ? { ...mockDashboard, projects: mockProjects }
     : await apiFetch('/api/v1/dashboard', { auth: true });

@@ -8,6 +8,7 @@ import CreateProjectModal from '../components/CreateProjectModal.jsx';
 import EmptyState from '../components/EmptyState.jsx';
 import { createProject, getDashboard } from '../services/projectsService.js';
 import '../styles/dashboard.css';
+import ProjectCardSkeleton from '../components/ProjectCardSkeleton.jsx';
 
 export default function DashboardPage() {
   const { user, logout } = useAuth();
@@ -69,8 +70,14 @@ export default function DashboardPage() {
   }
 
   function renderContent() {
-    if (isLoading) {
-      return <p className="dashboard__status">Loading projects…</p>;
+        if (isLoading) {
+      return (
+        <section className="dashboard__grid" aria-busy="true" aria-label="Loading projects">
+          {Array.from({ length: 4 }, (_, index) => (
+            <ProjectCardSkeleton key={index} />
+          ))}
+        </section>
+      );
     }
 
     if (loadError) {
