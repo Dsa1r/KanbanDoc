@@ -31,7 +31,7 @@ function toProject(apiProject) {
         boardUrl:
       apiProject.board_url ??
       ((apiProject.project_id ?? apiProject.id)
-        ? `/projects/${apiProject.project_id ?? apiProject.id}/board`
+        ? `/projects/${apiProject.project_id ?? apiProject.id}/kanban`
         : undefined),
     updatedAt: formatRelativeTime(apiProject.updated_at ?? apiProject.created_at),
   };

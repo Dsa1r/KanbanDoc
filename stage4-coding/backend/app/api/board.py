@@ -3,6 +3,7 @@ from flask import Blueprint, request, jsonify, g
 from app.middleware.auth import auth_required
 from app.middleware.project_access import ensure_project_member
 from app.services import board_service
+from app.services.kanban_service import get_kanban
 
 board_bp = Blueprint('board', __name__, url_prefix='/api/v1/projects')
 
@@ -11,10 +12,26 @@ board_bp = Blueprint('board', __name__, url_prefix='/api/v1/projects')
 # GET /api/v1/projects/<project_id>/board?stage=BACKEND -> only that stage's tasks
 @board_bp.route('/<project_id>/board', methods=['GET'])
 @auth_required
-def get_board(project_id):
-    project = ensure_project_member(project_id, g.user.id)
-    data = board_service.get_board(project, request.args.get('stage'))
-    return jsonify({"data": data}), 200
+def get_project_kanban(project_id):
+    project = ensure_project_member(str(project_id), g.user.id)
+
+    result = get_kanban(project["id"])
+
+    return jsonify({
+        "data": {
+            "project": {
+                "id": project["id"],
+                "name": project["project_name"],
+                "description": project["description"] or "",
+                "is_completed": project["is_completed"]
+            },
+            **result
+        }
+    }), 200
+
+
+
+
 
 
 # GET /api/v1/projects/<project_id>/stages/<stage_id>/upcoming
