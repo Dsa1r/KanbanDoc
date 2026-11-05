@@ -2,7 +2,14 @@ import { useState } from 'react';
 import TaskCard from './TaskCard.jsx';
 
 // onMoveTask is optional: without it the column is read-only (no dragging).
-export default function KanbanColumn({ column, tasks, selectedTaskId, onOpenTask, onMoveTask }) {
+export default function KanbanColumn({
+  column,
+  tasks,
+  selectedTaskId,
+  onOpenTask,
+  onMoveTask,
+  onAddTask
+}) {
   const titleId = `column-${column.id}-title`;
   const [isOver, setIsOver] = useState(false);
 
@@ -41,6 +48,16 @@ export default function KanbanColumn({ column, tasks, selectedTaskId, onOpenTask
           {tasks.length}
         </span>
       </header>
+
+      {onAddTask && (
+  <button
+    type="button"
+    className="kanban-column__add-task"
+    onClick={() => onAddTask(column.id)}
+  >
+    + Add Task
+  </button>
+)}
 
       <div className="kanban-column__list">
         {tasks.length === 0 ? (

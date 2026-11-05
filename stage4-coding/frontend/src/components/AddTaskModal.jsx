@@ -1,6 +1,7 @@
+
 import { useState } from "react";
 import { createTask } from "../services/taskService";
-
+import "./AddTaskModal.css";
 function AddTaskModal({
     projectId,
     stage,
@@ -26,7 +27,7 @@ function AddTaskModal({
 
             const task = await createTask(
                 projectId,
-                title,
+                title.trim(),
                 stage,
                 token
             );
@@ -42,47 +43,70 @@ function AddTaskModal({
     }
 
     return (
-        <div className="modal-overlay">
-            <div className="modal">
-
-                <h2>Add Task</h2>
+        <div className="add-task-overlay" onClick={onClose}>
+            <div
+                className="add-task-modal"
+                onClick={(e) => e.stopPropagation()}
+            >
+                <h2 className="add-task-modal__title">
+                    Add Task
+                </h2>
 
                 <form onSubmit={handleSubmit}>
 
-                    <label>Task Title</label>
+                    <div className="add-task-modal__field">
+                        <label htmlFor="new-task-title">
+                            Task Title
+                        </label>
 
-                    <input
-                        type="text"
-                        value={title}
-                        onChange={(e) => setTitle(e.target.value)}
-                        placeholder="Enter task title"
-                        disabled={loading}
-                    />
+                        <input
+                            id="new-task-title"
+                            type="text"
+                            value={title}
+                            onChange={(e) => setTitle(e.target.value)}
+                            placeholder="Enter task title"
+                            disabled={loading}
+                            autoFocus
+                        />
+                    </div>
 
-                    <label>Stage</label>
+                    <div className="add-task-modal__field">
+                        <label htmlFor="new-task-stage">
+                            Stage
+                        </label>
 
-                    <input
-                        type="text"
-                        value={stage}
-                        disabled
-                    />
+                        <input
+                            id="new-task-stage"
+                            type="text"
+                            value={stage}
+                            disabled
+                        />
+                    </div>
 
-                    {error && <p>{error}</p>}
+                    {error && (
+                        <p className="add-task-modal__error" role="alert">
+                            {error}
+                        </p>
+                    )}
 
-                    <button
-                        type="button"
-                        onClick={onClose}
-                        disabled={loading}
-                    >
-                        Cancel
-                    </button>
+                    <div className="add-task-modal__actions">
+                        <button
+                            type="button"
+                            className="add-task-modal__cancel"
+                            onClick={onClose}
+                            disabled={loading}
+                        >
+                            Cancel
+                        </button>
 
-                    <button
-                        type="submit"
-                        disabled={loading || !title.trim()}
-                    >
-                        {loading ? "Creating..." : "Create Task"}
-                    </button>
+                        <button
+                            type="submit"
+                            className="add-task-modal__submit"
+                            disabled={loading || !title.trim()}
+                        >
+                            {loading ? "Creating..." : "Create Task"}
+                        </button>
+                    </div>
 
                 </form>
             </div>
