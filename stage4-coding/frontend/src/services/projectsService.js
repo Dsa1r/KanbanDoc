@@ -30,7 +30,7 @@ function toProject(apiProject) {
     description: apiProject.description ?? '',
     completedTasks: apiProject.progress?.done ?? 0,
     totalTasks: apiProject.progress?.total ?? 0,
-    boardUrl: apiProject.board_url ?? (projectId ? `/projects/${projectId}/board` : undefined),
+    boardUrl: apiProject.board_url ?? (projectId ? `/projects/${projectId}/kanban` : undefined),
     isOwner: Boolean(apiProject.is_owner),
     updatedAt: formatRelativeTime(apiProject.updated_at ?? apiProject.created_at),
   };

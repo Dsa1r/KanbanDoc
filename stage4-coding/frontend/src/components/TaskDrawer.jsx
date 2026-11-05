@@ -1,8 +1,13 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { CloseIcon } from './Icons.jsx';
 
 // columns + onChangeStatus are optional: they add a "Status" dropdown (works on phones, where dragging does not)
-export default function TaskDrawer({ task, onClose, columns, onChangeStatus }) {
+// loadPhase is optional: with it, the content of the task's current status is fetched from the API and
+// fetched again whenever phaseVersion changes. Without it (the mock board) the content comes from the task itself.
+export default function TaskDrawer({ task, onClose, columns, onChangeStatus, loadPhase, phaseVersion = 0 }) {
+  const [phase, setPhase] = useState(null);
+  const [phaseError, setPhaseError] = useState('');
+
   useEffect(() => {
     const previousOverflow = document.body.style.overflow;
     document.body.style.overflow = 'hidden';
@@ -11,6 +16,29 @@ export default function TaskDrawer({ task, onClose, columns, onChangeStatus }) {
       document.body.style.overflow = previousOverflow;
     };
   }, []);
+
+  useEffect(() => {
+    if (!loadPhase) return undefined;
+    let ignore = false;
+
+    setPhase(null);
+    setPhaseError('');
+    loadPhase(task.id)
+      .then((data) => {
+        if (!ignore) setPhase(data);
+      })
+      .catch((err) => {
+        if (!ignore) setPhaseError(err.message);
+      });
+
+    return () => {
+      ignore = true;
+    };
+  }, [task.id, loadPhase, phaseVersion]);
+
+  // real board: the phase we fetched; mock board: the fields stored on the task
+  const content = loadPhase ? phase : task;
+  const isLoadingPhase = Boolean(loadPhase) && !phase && !phaseError;
 
   function handleKeyDown(event) {
     if (event.key === 'Escape') {
@@ -61,19 +89,40 @@ export default function TaskDrawer({ task, onClose, columns, onChangeStatus }) {
 
         <section className="drawer__section">
           <h3 className="drawer__label">Task description</h3>
-          <p className="drawer__text">{task.description || 'No description yet.'}</p>
+          {isLoadingPhase && <p className="drawer__text">Loading…</p>}
+          {phaseError && <p className="drawer__text" role="alert">{phaseError}</p>}
+          {content && <p className="drawer__text">{content.description || 'No description yet.'}</p>}
         </section>
 
-        {task.resources?.length > 0 && (
+        {content?.whyItMatters && (
+          <section className="drawer__section">
+            <h3 className="drawer__label">Why it matters</h3>
+            <p className="drawer__text">{content.whyItMatters}</p>
+          </section>
+        )}
+
+        {content?.resources?.length > 0 && (
           <section className="drawer__section">
             <h3 className="drawer__label">Reference links &amp; resources</h3>
             <ul className="drawer__links">
-              {task.resources.map((resource) => (
+              {content.resources.map((resource) => (
                 <li key={resource.url}>
                   <a href={resource.url} target="_blank" rel="noreferrer">
                     {resource.label}
                   </a>
                 </li>
+              ))}
+            </ul>
+          </section>
+        )}
+
+        {/* read-only on purpose: there is no backend endpoint yet that saves ticked items */}
+        {content?.checklist?.length > 0 && (
+          <section className="drawer__section">
+            <h3 className="drawer__label">Checklist</h3>
+            <ul className="drawer__links">
+              {content.checklist.map((item, index) => (
+                <li key={index} className="drawer__text">{item.label}</li>
               ))}
             </ul>
           </section>

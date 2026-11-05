@@ -27,9 +27,7 @@ def task_to_dict(row):
         "title": row["title"],
         "stage_id": row["stage"],
         "current_status": row["current_status"],
-        "note": row.get("note") or "",
-        "description": row.get("description") or "",
-        "resources": row.get("resources") or [],
+        "note": row.get("note") or ""
     }
 
 
@@ -37,7 +35,7 @@ def _fetch_tasks(project_id):
     """All tasks of ONE project — this is what makes every project's Kanban separate."""
     return (
         ext.admin_client.table("tasks")
-        .select("id, title, stage, current_status, note, description, resources")
+        .select("id, title, stage, current_status, note")
         .eq("project_id", project_id)
         .order("position")
         .order("created_at")
