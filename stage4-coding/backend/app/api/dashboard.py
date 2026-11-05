@@ -45,3 +45,30 @@ def create_project():
 def delete_project(project_id):
     project_service.delete_project(g.user, project_id)
     return '', 204
+
+# GET /api/v1/projects/<id>  -> project + members for the edit form (owner only)
+@dashboard_bp.route('/api/v1/projects/<project_id>', methods=['GET'])
+@auth_required
+def get_project(project_id):
+    data = project_service.get_project_details(g.user, project_id)
+    return jsonify({"data": data}), 200
+
+
+# PATCH /api/v1/projects/<id>  -> update name, description and members (owner only)
+@dashboard_bp.route('/api/v1/projects/<project_id>', methods=['PATCH'])
+@auth_required
+def update_project(project_id):
+    data = request.get_json(silent=True) or {}
+
+    try:
+        project = project_service.update_project(
+            g.user,
+            project_id,
+            name=data.get('name'),
+            description=data.get('description'),
+            member_emails=data.get('member_emails'),
+        )
+    except project_service.ValidationError as e:
+        return jsonify({"error": {"code": "VALIDATION_ERROR", "message": str(e)}}), 400
+
+    return jsonify({"data": project}), 200

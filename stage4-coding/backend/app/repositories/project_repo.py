@@ -23,3 +23,18 @@ def get_user_projects_with_tasks(user_id):
         project['is_owner'] = owner_by_team.get(project['team_id'], False)
 
     return projects
+
+def get_team_members(team_id):
+    return (ext.admin_client.table('team_members')
+            .select('user_id, is_owner')
+            .eq('team_id', team_id)
+            .execute().data)
+
+
+def get_project_with_tasks(project_id):
+    rows = (ext.admin_client.table('projects')
+            .select('id, team_id, project_name, description, created_at, tasks(current_status)')
+            .eq('id', project_id)
+            .limit(1)
+            .execute().data)
+    return rows[0] if rows else None

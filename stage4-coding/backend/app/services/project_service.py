@@ -187,6 +187,7 @@ def create_project(user, name, description=None, mode="solo",
             500
         ) from exc
 
+
 def delete_project(user, project_id):
     """Delete a project, its tasks and its team. Only the owner can do this."""
     project = ensure_project_owner(project_id, user.id)
@@ -200,3 +201,99 @@ def delete_project(user, project_id):
     except Exception as exc:
         logger.exception("delete_project failed")
         raise ApiError("DATABASE_ERROR", "Could not delete the project. Please try again.", 500) from exc
+
+
+def _get_user_email(user_id):
+    try:
+        response = ext.admin_client.auth.admin.get_user_by_id(user_id)
+        return getattr(response.user, 'email', '') or ''
+    except Exception:
+        logger.warning("Could not load the email of user %s", user_id)
+        return ''
+
+
+def get_project_details(user, project_id):
+    """Project info and its members (with emails) for the edit form. Only the owner can do this."""
+    project = ensure_project_owner(project_id, user.id)
+    members = project_repo.get_team_members(project['team_id'])
+
+    return {
+        "id": project['id'],
+        "name": project['project_name'],
+        "description": project.get('description'),
+        "members": [
+            {
+                "user_id": m['user_id'],
+                "email": _get_user_email(m['user_id']),
+                "is_owner": bool(m.get('is_owner')),
+            }
+            for m in members
+        ],
+    }
+
+
+def update_project(user, project_id, name=None, description=None, member_emails=None):
+    """Update the name, description and members of a project. Only the owner can do this."""
+    project = ensure_project_owner(project_id, user.id)
+
+    if not isinstance(name, str) or not name.strip():
+        raise ValidationError("Project name is required")
+    name = name.strip()
+    if len(name) > 100:
+        raise ValidationError("Project name must be 100 characters or less")
+
+    if description is not None and not isinstance(description, str):
+        raise ValidationError("description must be text")
+    description = (description or '').strip() or None
+
+    if member_emails is None:
+        member_emails = []
+    if not isinstance(member_emails, list):
+        raise ValidationError("member_emails must be a list")
+
+    owner_email = (getattr(user, 'email', '') or '').lower()
+    emails = [
+        e for e in member_emails
+        if isinstance(e, str) and e.strip().lower() != owner_email
+    ]
+    found, missing = _find_user_ids_by_emails(emails)
+    if missing:
+        raise ValidationError("No account found for: " + ", ".join(sorted(missing)))
+
+    team_id = project['team_id']
+    current = project_repo.get_team_members(team_id)
+    current_ids = {m['user_id'] for m in current if not m.get('is_owner')}
+    wanted_ids = set(found.values())
+
+    to_add = wanted_ids - current_ids
+    to_remove = current_ids - wanted_ids
+
+    try:
+        (ext.admin_client.table('projects')
+         .update({"project_name": name, "description": description})
+         .eq('id', project['id'])
+         .execute())
+        (ext.admin_client.table('teams')
+         .update({"team_name": name})
+         .eq('id', team_id)
+         .execute())
+
+        if to_add:
+            ext.admin_client.table('team_members').insert([
+                {"team_id": team_id, "user_id": uid, "is_owner": False}
+                for uid in to_add
+            ]).execute()
+
+        if to_remove:
+            (ext.admin_client.table('team_members')
+             .delete()
+             .eq('team_id', team_id)
+             .in_('user_id', list(to_remove))
+             .execute())
+    except Exception as exc:
+        logger.exception("update_project failed")
+        raise ApiError("DATABASE_ERROR", "Could not save the changes. Please try again.", 500) from exc
+
+    updated = project_repo.get_project_with_tasks(project['id'])
+    updated['is_owner'] = True
+    return _to_api_project(updated)
