@@ -38,3 +38,10 @@ def create_project():
         return jsonify({"error": {"code": "VALIDATION_ERROR", "message": str(e)}}), 400
 
     return jsonify({"data": project}), 201
+
+# DELETE /api/v1/projects/<id>  -> owner only
+@dashboard_bp.route('/api/v1/projects/<project_id>', methods=['DELETE'])
+@auth_required
+def delete_project(project_id):
+    project_service.delete_project(g.user, project_id)
+    return '', 204
