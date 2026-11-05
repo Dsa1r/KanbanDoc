@@ -50,3 +50,25 @@ def ensure_project_member(project_id, user_id):
     if not is_member:
         raise ApiError("NOT_PROJECT_MEMBER", "You are not a member of this project", 403)
     return project
+def ensure_project_owner(project_id, user_id):
+    """Return the project row if `user_id` is the project's owner.
+
+    404 -> project does not exist
+    403 -> the user is not a member, or is a member but not the owner
+    """
+    project = ensure_project_member(project_id, user_id)
+
+    owner = (
+        ext.admin_client.table("team_members")
+        .select("id")
+        .eq("team_id", project["team_id"])
+        .eq("user_id", user_id)
+        .eq("is_owner", True)
+        .limit(1)
+        .execute()
+        .data
+    )
+    if not owner:
+        raise ApiError("NOT_PROJECT_OWNER", "Only the project owner can do this", 403)
+    return project 
+    

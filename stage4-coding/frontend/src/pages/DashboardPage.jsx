@@ -3,12 +3,19 @@ import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext.jsx';
 import Header from '../components/Header.jsx';
 import ProjectCard from '../components/ProjectCard.jsx';
+import ProjectCardSkeleton from '../components/ProjectCardSkeleton.jsx';
 import CreateProjectButton from '../components/CreateProjectButton.jsx';
 import CreateProjectModal from '../components/CreateProjectModal.jsx';
+import EditProjectModal from '../components/EditProjectModal.jsx';
+import ConfirmDialog from '../components/ConfirmDialog.jsx';
 import EmptyState from '../components/EmptyState.jsx';
-import { createProject, getDashboard } from '../services/projectsService.js';
+import {
+  createProject,
+  deleteProject,
+  getDashboard,
+  updateProject,
+} from '../services/projectsService.js';
 import '../styles/dashboard.css';
-import ProjectCardSkeleton from '../components/ProjectCardSkeleton.jsx';
 
 export default function DashboardPage() {
   const { user, logout } = useAuth();
@@ -19,6 +26,8 @@ export default function DashboardPage() {
   const [isLoading, setIsLoading] = useState(true);
   const [loadError, setLoadError] = useState('');
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [projectToDelete, setProjectToDelete] = useState(null);
+  const [projectToEdit, setProjectToEdit] = useState(null);
   const hasProjects = projects.length > 0;
 
   useEffect(() => {
@@ -54,7 +63,8 @@ export default function DashboardPage() {
   function closeModal() {
     setIsModalOpen(false);
   }
-    async function handleCreateProject(projectData) {
+
+  async function handleCreateProject(projectData) {
     const project = await createProject(projectData);
 
     if (project?.boardUrl) {
@@ -69,8 +79,28 @@ export default function DashboardPage() {
     closeModal();
   }
 
+  async function handleConfirmDelete() {
+    await deleteProject(projectToDelete.id);
+    setProjects((prevProjects) =>
+      prevProjects.filter((project) => project.id !== projectToDelete.id),
+    );
+    setProjectToDelete(null);
+  }
+
+  async function handleSaveProject(projectData) {
+    await updateProject(projectToEdit.id, projectData);
+    setProjects((prevProjects) =>
+      prevProjects.map((project) =>
+        project.id === projectToEdit.id
+          ? { ...project, title: projectData.title, description: projectData.description }
+          : project,
+      ),
+    );
+    setProjectToEdit(null);
+  }
+
   function renderContent() {
-        if (isLoading) {
+    if (isLoading) {
       return (
         <section className="dashboard__grid" aria-busy="true" aria-label="Loading projects">
           {Array.from({ length: 4 }, (_, index) => (
@@ -111,6 +141,9 @@ export default function DashboardPage() {
               totalTasks={project.totalTasks}
               updatedAt={project.updatedAt}
               boardUrl={project.boardUrl}
+              isOwner={project.isOwner}
+              onEdit={() => setProjectToEdit(project)}
+              onDelete={() => setProjectToDelete(project)}
             />
           ))}
         </section>
@@ -149,6 +182,25 @@ export default function DashboardPage() {
 
       {isModalOpen && (
         <CreateProjectModal onClose={closeModal} onSubmit={handleCreateProject} />
+      )}
+
+      {projectToEdit && (
+        <EditProjectModal
+          projectId={projectToEdit.id}
+          onClose={() => setProjectToEdit(null)}
+          onSave={handleSaveProject}
+        />
+      )}
+
+      {projectToDelete && (
+        <ConfirmDialog
+          title={`Delete "${projectToDelete.title}"?`}
+          message="This will permanently delete the project, its tasks and its members. This can't be undone."
+          confirmLabel="Delete"
+          pendingLabel="Deleting…"
+          onConfirm={handleConfirmDelete}
+          onCancel={() => setProjectToDelete(null)}
+        />
       )}
     </div>
   );
