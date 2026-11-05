@@ -22,17 +22,16 @@ function formatRelativeTime(isoDate) {
 }
 
 function toProject(apiProject) {
+  const projectId = apiProject.project_id ?? apiProject.id;
+
   return {
-    id: apiProject.project_id ?? apiProject.id,
+    id: projectId,
     title: apiProject.name,
     description: apiProject.description ?? '',
     completedTasks: apiProject.progress?.done ?? 0,
     totalTasks: apiProject.progress?.total ?? 0,
-        boardUrl:
-      apiProject.board_url ??
-      ((apiProject.project_id ?? apiProject.id)
-        ? `/projects/${apiProject.project_id ?? apiProject.id}/board`
-        : undefined),
+    boardUrl: apiProject.board_url ?? (projectId ? `/projects/${projectId}/board` : undefined),
+    isOwner: Boolean(apiProject.is_owner),
     updatedAt: formatRelativeTime(apiProject.updated_at ?? apiProject.created_at),
   };
 }
@@ -64,6 +63,7 @@ export async function createProject({ title, description, templateId, audience, 
     mockProjects = [
       {
         project_id: crypto.randomUUID(),
+        is_owner: true,
         name: title,
         description,
         template_id: templateId,
@@ -89,4 +89,14 @@ export async function createProject({ title, description, templateId, audience, 
   });
 
   return toProject(created);
+}
+
+export async function deleteProject(projectId) {
+  if (shouldUseMocks()) {
+    await new Promise((resolve) => setTimeout(resolve, 600));
+    mockProjects = mockProjects.filter((project) => project.project_id !== projectId);
+    return;
+  }
+
+  await apiFetch(`/api/v1/projects/${projectId}`, { method: 'DELETE', auth: true });
 }
