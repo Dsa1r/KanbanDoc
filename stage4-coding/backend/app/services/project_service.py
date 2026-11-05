@@ -6,6 +6,7 @@ from app.repositories import project_repo
 from app.services.task_service import create_fixed_tasks
 from app.utils.constants import STAGES
 from app.utils.errors import ApiError
+from app.middleware.project_access import ensure_project_owner
 
 
 logger = logging.getLogger(__name__)
@@ -35,6 +36,7 @@ def _to_api_project(p):
         "created_at": p['created_at'],
         # the dashboard card and the "after creating" redirect both open this page
         "board_url": f"/projects/{p['id']}/board",
+        "is_owner": bool(p.get('is_owner')),
         "progress": {
             "done": done,
             "total": total,
@@ -170,6 +172,7 @@ def create_project(user, name, description=None, mode="solo",
             for _ in tasks
         ]
 
+        project['is_owner'] = True
         return _to_api_project(project)
 
     except Exception as exc:
@@ -183,3 +186,17 @@ def create_project(user, name, description=None, mode="solo",
             "Could not create the project. Nothing was saved.",
             500
         ) from exc
+
+def delete_project(user, project_id):
+    """Delete a project, its tasks and its team. Only the owner can do this."""
+    project = ensure_project_owner(project_id, user.id)
+
+    try:
+        # deleting the project also deletes its tasks (on delete cascade)
+        ext.admin_client.table('projects').delete().eq('id', project['id']).execute()
+        # deleting the team also deletes its members (on delete cascade)
+        if project.get('team_id'):
+            ext.admin_client.table('teams').delete().eq('id', project['team_id']).execute()
+    except Exception as exc:
+        logger.exception("delete_project failed")
+        raise ApiError("DATABASE_ERROR", "Could not delete the project. Please try again.", 500) from exc
