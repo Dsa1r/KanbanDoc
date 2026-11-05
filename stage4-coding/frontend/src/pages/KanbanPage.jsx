@@ -5,8 +5,12 @@ import NextUpBanner from '../components/NextUpBanner.jsx';
 import KanbanColumn from '../components/KanbanColumn.jsx';
 import TaskDrawer from '../components/TaskDrawer.jsx';
 import { BOARD_COLUMNS, STAGES, mockBoard } from '../data/mockBoard.js';
-import { getBoard, getTaskPhase, updateTaskStatus } from '../services/boardService.js';
-import '../styles/kanban.css';
+import {
+  getBoard,
+  getTaskPhase,
+  updateTaskStatus,
+  createTask,
+} from '../services/boardService.js';import '../styles/kanban.css';
 
 export default function KanbanPage() {
   // /projects/:projectId/board  -> real data from the API
@@ -21,6 +25,10 @@ export default function KanbanPage() {
   const [selectedTaskId, setSelectedTaskId] = useState(null);
   // bumped after a move is saved, so the open drawer reads the phase of the NEW status
   const [phaseVersion, setPhaseVersion] = useState(0);
+  const [showAddTask, setShowAddTask] = useState(false);
+  const [newTaskTitle, setNewTaskTitle] = useState('');
+  const [newTaskStage, setNewTaskStage] = useState('db');
+  const [isCreatingTask, setIsCreatingTask] = useState(false);
 
   useEffect(() => {
     if (!projectId) return undefined;
@@ -86,6 +94,35 @@ export default function KanbanPage() {
     }
   }
 
+  async function handleCreateTask(e) {
+  e.preventDefault();
+
+  if (!newTaskTitle.trim() || !projectId) return;
+
+  try {
+    setIsCreatingTask(true);
+    setError('');
+
+    const result = await createTask(
+      projectId,
+      newTaskTitle.trim(),
+      newTaskStage,
+    );
+
+    // Add the newly created task to the board
+    setTasks((prev) => [...prev, result]);
+
+    setNewTaskTitle('');
+    setNewTaskStage('db');
+    setShowAddTask(false);
+
+  } catch (err) {
+    setError(err.message);
+  } finally {
+    setIsCreatingTask(false);
+  }
+}
+
   if (isLoading) {
     return <p className="kanban-status">Loading board…</p>;
   }
@@ -112,6 +149,14 @@ export default function KanbanPage() {
 
       <main className="kanban">
         {error && <p className="kanban-status kanban-status--error" role="alert">{error}</p>}
+        {projectId && !readOnly && (
+          <button
+          type="button"
+          onClick={() => setShowAddTask(true)}
+        >
+          + Add Task
+        </button>
+      )}
 
         {nextTask && <NextUpBanner task={nextTask} onOpen={(task) => setSelectedTaskId(task.id)} />}
 
@@ -129,6 +174,68 @@ export default function KanbanPage() {
         </div>
       </main>
 
+      {showAddTask && (
+  <div className="kanban-modal-overlay">
+    <form
+      className="kanban-modal"
+      onSubmit={handleCreateTask}
+    >
+      <h2>Add New Task</h2>
+
+      <label htmlFor="task-title">
+        Task Title
+      </label>
+
+      <input
+        id="task-title"
+        type="text"
+        value={newTaskTitle}
+        onChange={(e) => setNewTaskTitle(e.target.value)}
+        placeholder="Enter task title"
+        required
+        autoFocus
+      />
+
+      <label htmlFor="task-stage">
+        Stage
+      </label>
+
+      <select
+        id="task-stage"
+        value={newTaskStage}
+        onChange={(e) => setNewTaskStage(e.target.value)}
+      >
+        <option value="db">Database</option>
+        <option value="backend">Backend</option>
+        <option value="frontend">Frontend</option>
+      </select>
+
+      {error && (
+        <p className="kanban-status--error" role="alert">
+          {error}
+        </p>
+      )}
+
+      <div className="kanban-modal__actions">
+        <button
+          type="button"
+          onClick={() => setShowAddTask(false)}
+          disabled={isCreatingTask}
+        >
+          Cancel
+        </button>
+
+        <button
+          type="submit"
+          disabled={isCreatingTask || !newTaskTitle.trim()}
+        >
+          {isCreatingTask ? 'Creating...' : 'Create Task'}
+        </button>
+      </div>
+    </form>
+  </div>
+)}
+
       {selectedTask && (
         <TaskDrawer
           task={selectedTask}
@@ -141,4 +248,6 @@ export default function KanbanPage() {
       )}
     </div>
   );
+
+  
 }

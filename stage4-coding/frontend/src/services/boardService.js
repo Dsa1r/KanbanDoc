@@ -65,3 +65,25 @@ export const updateTaskStatus = (taskId, status) =>
     body: { status: STATUS_TO_API[status] },
     auth: true,
   })
+export async function createTask(projectId, title, stage) {
+  const stageToApi = {
+    db: 'DATABASE',
+    backend: 'BACKEND',
+    frontend: 'FRONTEND',
+  };
+
+  const result = await apiFetch('/api/v1/tasks/', {
+    method: 'POST',
+    body: {
+      project_id: projectId,
+      title,
+      stage: stageToApi[stage],
+    },
+    auth: true,
+  });
+
+  // Support the Flask response: { data: task }
+  const apiTask = result.data ?? result;
+
+  return toTask(apiTask);
+}

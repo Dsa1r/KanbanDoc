@@ -3,6 +3,7 @@ from app.utils.constants import STAGES, STATUSES
 from app.utils.errors import ApiError
 
 
+
 def calculate_progress(statuses):
     """statuses: list of current_status values -> {"done", "total", "percent"}"""
     total = len(statuses)
@@ -94,3 +95,5 @@ def get_upcoming(project, stage):
         if r["stage"] == stage and r["current_status"] == "TO_DO"
     ]
     return {"stage": stage, "tasks": tasks}
+
+    

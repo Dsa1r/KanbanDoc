@@ -19,3 +19,15 @@ def update_task_status(task_id):
 def get_task_phase(task_id):
     data = task_service.get_task_phase(task_id, g.user.id)
     return jsonify({"data": data}), 200
+
+@tasks_bp.post("/")
+@auth_required
+def create_task():
+    body = request.get_json(silent=True) or {}
+
+    data = task_service.create_task(
+        g.user.id,
+        body
+    )
+
+    return jsonify({"data": data}), 201

@@ -152,3 +152,71 @@ def create_fixed_tasks(project_id):
         created_tasks.append(task)
 
     return created_tasks
+
+def create_task(user_id, body):
+    project_id = body.get("project_id")
+    title = body.get("title")
+    stage = body.get("stage")
+
+    if not project_id or not title or not stage:
+        raise ApiError("Missing required fields", 400)
+
+    title = title.strip()
+
+    if not title:
+        raise ApiError("Task title is required", 400)
+    
+    if stage not in ["DATABASE", "BACKEND", "FRONTEND"]:
+        raise ApiError("Invalid task stage", 400)
+
+        # Verify that the user belongs to this project
+        # using your existing project authorization logic.
+
+    task_response = (
+        ext.admin_client.table("tasks")
+        .insert({
+            "project_id": project_id,
+            "title": title,
+            "stage": stage,
+            "current_status": "TO_DO"
+        })
+        .execute()
+    )
+
+    task = task_response.data[0]
+    task_id = task["id"]
+
+    try:
+        # Create four empty phases
+        statuses = [
+            "TO_DO",
+            "IN_PROGRESS",
+            "TESTING_REVIEW",
+            "DONE"
+        ]
+
+        phases = [
+                {
+                "task_id": task_id,
+                "status": status,
+                "description": "",
+                "why_it_matters": "",
+                "resources": [],
+                "checklist": []
+            }
+            for status in statuses
+        ]
+
+        ext.admin_client.table("task_phases").insert(
+            phases
+        ).execute()
+
+        return board_service.task_to_dict(task)
+
+    except Exception:
+            # Rollback if phase creation fails
+        ext.admin_client.table("tasks").delete().eq(
+            "id", task_id
+        ).execute()
+
+        raise
