@@ -37,3 +37,18 @@ export const mockDashboard = {
     },
   ],
 };
+
+export const mockMembers = {
+  p1: [
+    { user_id: 'u1', email: 'noura@gmail.com', is_owner: true },
+    { user_id: 'u2', email: 'reema@gmail.com', is_owner: false },
+  ],
+  p2: [
+    { user_id: 'u1', email: 'noura@gmail.com', is_owner: true },
+  ],
+  p3: [
+    { user_id: 'u1', email: 'noura@gmail.com', is_owner: true },
+    { user_id: 'u3', email: 'dana@gmail.com', is_owner: false },
+    { user_id: 'u4', email: 'areej@gmail.com', is_owner: false },
+  ],
+};

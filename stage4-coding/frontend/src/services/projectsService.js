@@ -1,5 +1,5 @@
 import { apiFetch } from './api.js';
-import { mockDashboard } from '../data/mockProjects.js';
+import { mockDashboard, mockMembers } from '../data/mockProjects.js';
 
 function formatRelativeTime(isoDate) {
   if (!isoDate) return null;
@@ -30,22 +30,34 @@ function toProject(apiProject) {
     description: apiProject.description ?? '',
     completedTasks: apiProject.progress?.done ?? 0,
     totalTasks: apiProject.progress?.total ?? 0,
-        boardUrl: apiProject.board_url ?? (projectId ? `/projects/${projectId}/board` : undefined),
+    boardUrl: apiProject.board_url ?? (projectId ? `/projects/${projectId}/board` : undefined),
     isOwner: Boolean(apiProject.is_owner),
     updatedAt: formatRelativeTime(apiProject.updated_at ?? apiProject.created_at),
   };
 }
 
+function toMember(apiMember) {
+  return {
+    userId: apiMember.user_id,
+    email: apiMember.email ?? '',
+    isOwner: Boolean(apiMember.is_owner),
+  };
+}
+
+// Mock data is used only in dev mode on /dev/* preview routes
 function shouldUseMocks() {
   return import.meta.env.DEV && window.location.pathname.startsWith('/dev/');
 }
 
+const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+
 let mockProjects = [...mockDashboard.projects];
+const mockMembersByProject = { ...mockMembers };
 
 export async function getDashboard() {
   if (shouldUseMocks()) {
     // Simulate a slow network in the dev preview so loading states are visible
-    await new Promise((resolve) => setTimeout(resolve, 1200));
+    await delay(1200);
   }
 
   const data = shouldUseMocks()
@@ -93,10 +105,60 @@ export async function createProject({ title, description, templateId, audience, 
 
 export async function deleteProject(projectId) {
   if (shouldUseMocks()) {
-    await new Promise((resolve) => setTimeout(resolve, 600));
+    await delay(600);
     mockProjects = mockProjects.filter((project) => project.project_id !== projectId);
     return;
   }
 
+  // DELETE /api/v1/projects/<id> -> owner only
   await apiFetch(`/api/v1/projects/${projectId}`, { method: 'DELETE', auth: true });
+}
+
+export async function getProjectDetails(projectId) {
+  if (shouldUseMocks()) {
+    await delay(500);
+    const project = mockProjects.find((item) => item.project_id === projectId);
+    if (!project) throw new Error('Project not found');
+
+    return {
+      id: project.project_id,
+      title: project.name,
+      description: project.description ?? '',
+      members: (mockMembersByProject[projectId] ?? []).map(toMember),
+    };
+  }
+
+  // GET /api/v1/projects/<id> -> owner only
+  const data = await apiFetch(`/api/v1/projects/${projectId}`, { auth: true });
+  return {
+    id: data.id,
+    title: data.name,
+    description: data.description ?? '',
+    members: (data.members ?? []).map(toMember),
+  };
+}
+
+export async function updateProject(projectId, { title, description, memberEmails }) {
+  if (shouldUseMocks()) {
+    await delay(600);
+    mockProjects = mockProjects.map((project) =>
+      project.project_id === projectId
+        ? { ...project, name: title, description, updated_at: new Date().toISOString() }
+        : project,
+    );
+    const owners = (mockMembersByProject[projectId] ?? []).filter((member) => member.is_owner);
+    mockMembersByProject[projectId] = [
+      ...owners,
+      ...memberEmails.map((email) => ({ user_id: email, email, is_owner: false })),
+    ];
+    return;
+  }
+
+  // PATCH /api/v1/projects/<id> -> owner only
+  const updated = await apiFetch(`/api/v1/projects/${projectId}`, {
+    method: 'PATCH',
+    body: { name: title, description, member_emails: memberEmails },
+    auth: true,
+  });
+  return toProject(updated);
 }

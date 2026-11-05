@@ -1,0 +1,85 @@
+.edit-members {
+  display: flex;
+  flex-direction: column;
+  max-height: 220px;
+  margin: 0;
+  padding: 0;
+  overflow-y: auto;
+  list-style: none;
+  background: #fff;
+  border: 1px solid var(--color-border);
+  border-radius: 4px;
+}
+
+.edit-members__row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 12px;
+}
+
+.edit-members__row + .edit-members__row {
+  border-top: 1px solid var(--color-border);
+}
+
+.edit-members__avatar {
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  background: var(--color-icon-bg);
+  border-radius: 50%;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--color-text-muted);
+}
+
+.edit-members__email {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 14px;
+}
+
+.edit-members__badge {
+  flex-shrink: 0;
+  padding: 3px 8px;
+  background: var(--color-track);
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+}
+
+.edit-members__badge--new {
+  background: #e3f1ee;
+  color: #2f7a6b;
+}
+
+.edit-members__remove {
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  padding: 4px;
+  background: none;
+  border: none;
+  border-radius: 4px;
+  color: var(--color-text-muted);
+}
+
+.edit-members__remove:hover {
+  background: #f6dcd8;
+  color: var(--color-primary);
+}
+
+.edit-members__status {
+  padding: 32px 0;
+  text-align: center;
+  font-size: 14px;
+  color: var(--color-text-muted);
+}

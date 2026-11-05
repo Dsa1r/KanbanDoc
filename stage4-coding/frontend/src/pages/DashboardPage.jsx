@@ -6,9 +6,15 @@ import ProjectCard from '../components/ProjectCard.jsx';
 import ProjectCardSkeleton from '../components/ProjectCardSkeleton.jsx';
 import CreateProjectButton from '../components/CreateProjectButton.jsx';
 import CreateProjectModal from '../components/CreateProjectModal.jsx';
+import EditProjectModal from '../components/EditProjectModal.jsx';
 import ConfirmDialog from '../components/ConfirmDialog.jsx';
 import EmptyState from '../components/EmptyState.jsx';
-import { createProject, deleteProject, getDashboard } from '../services/projectsService.js';
+import {
+  createProject,
+  deleteProject,
+  getDashboard,
+  updateProject,
+} from '../services/projectsService.js';
 import '../styles/dashboard.css';
 
 export default function DashboardPage() {
@@ -21,6 +27,7 @@ export default function DashboardPage() {
   const [loadError, setLoadError] = useState('');
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [projectToDelete, setProjectToDelete] = useState(null);
+  const [projectToEdit, setProjectToEdit] = useState(null);
   const hasProjects = projects.length > 0;
 
   useEffect(() => {
@@ -80,6 +87,18 @@ export default function DashboardPage() {
     setProjectToDelete(null);
   }
 
+  async function handleSaveProject(projectData) {
+    await updateProject(projectToEdit.id, projectData);
+    setProjects((prevProjects) =>
+      prevProjects.map((project) =>
+        project.id === projectToEdit.id
+          ? { ...project, title: projectData.title, description: projectData.description }
+          : project,
+      ),
+    );
+    setProjectToEdit(null);
+  }
+
   function renderContent() {
     if (isLoading) {
       return (
@@ -123,6 +142,7 @@ export default function DashboardPage() {
               updatedAt={project.updatedAt}
               boardUrl={project.boardUrl}
               isOwner={project.isOwner}
+              onEdit={() => setProjectToEdit(project)}
               onDelete={() => setProjectToDelete(project)}
             />
           ))}
@@ -162,6 +182,14 @@ export default function DashboardPage() {
 
       {isModalOpen && (
         <CreateProjectModal onClose={closeModal} onSubmit={handleCreateProject} />
+      )}
+
+      {projectToEdit && (
+        <EditProjectModal
+          projectId={projectToEdit.id}
+          onClose={() => setProjectToEdit(null)}
+          onSave={handleSaveProject}
+        />
       )}
 
       {projectToDelete && (
