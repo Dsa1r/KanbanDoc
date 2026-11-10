@@ -77,7 +77,6 @@ function AddTaskModal({
                         </label>
 
                         <input
-                            id="new-task-stage"
                             type="text"
                             value={stage}
                             disabled

@@ -14,6 +14,8 @@ def create_app():
     from app.api.tasks import tasks_bp
     from app.api.kanban import kanban_bp
 
+
+
     app.register_blueprint(kanban_bp)
     app.register_blueprint(auth_bp)
     app.register_blueprint(dashboard_bp)
