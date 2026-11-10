@@ -167,7 +167,7 @@ def create_task(user_id, body):
         raise ApiError("Task title is required", 400)
     
     if stage not in ["DATABASE", "BACKEND", "FRONTEND"]:
-        raise ApiError("Invalid task stage", 400)
+        raise ApiError("INVALID_STAGE", "Invalid task stage", 400)
 
         # Verify that the user belongs to this project
         # using your existing project authorization logic.

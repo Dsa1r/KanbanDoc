@@ -249,15 +249,22 @@ export default function KanbanPage() {
       {/* Add Task Modal */}
       {showAddTask && (
 
-        <AddTaskModal
-          projectId={projectId}
-          stage="db"
-          token={token}
-          onClose={() => setShowAddTask(false)}
-          onTaskCreated={(newTask) => {
-            setTasks((prev) => [...prev, newTask]);
-          }}
-        />
+          <AddTaskModal
+              projectId={projectId}
+              stage=""
+              token={token}
+              onClose={() => setShowAddTask(false)}
+              onTaskCreated={() => {
+                  getBoard(projectId)
+                      .then((board) => {
+                          setProject(board.project);
+                          setTasks(board.tasks);
+                      })
+                      .catch((err) => {
+                          setError(err.message);
+                      });
+              }}
+          />
 
       )}
 

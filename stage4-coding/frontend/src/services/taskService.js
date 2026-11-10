@@ -1,32 +1,17 @@
-export async function createTask(
-    projectId,
-    title,
-    stage,
-    token
-) {
-    const response = await fetch(
-        `${API_URL}/api/v1/tasks/`,
-        {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-                "Authorization": `Bearer ${token}`
-            },
-            body: JSON.stringify({
-                project_id: projectId,
-                title,
-                stage
-            })
-        }
-    );
+import { apiFetch } from './api.js';
 
-    const result = await response.json();
-
-    if (!response.ok) {
-        throw new Error(
-            result.message || "Failed to create task"
-        );
+export async function createTask(projectId, title, stage) {
+    if (!projectId) {
+        throw new Error("Project ID is missing or undefined");
     }
 
-    return result.data;
+    return await apiFetch('/api/v1/tasks/', {
+        method: 'POST',
+        body: {
+            project_id: projectId,
+            title,
+            stage
+        },
+        auth: true
+    });
 }

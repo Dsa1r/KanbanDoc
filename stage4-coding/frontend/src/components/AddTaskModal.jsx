@@ -1,17 +1,17 @@
-
 import { useState } from "react";
 import { createTask } from "../services/taskService";
 import "./AddTaskModal.css";
 
 function AddTaskModal({
     projectId,
-    stage,
+    stage: initialStage, // تم إعادة تسمية الـ prop لنتجنب التعارض
     token,
     onClose,
     onTaskCreated
 }) {
     const [title, setTitle] = useState("");
     const [loading, setLoading] = useState(false);
+    const [stage, setStage] = useState(initialStage || ""); // الحالة المحلية المستقلة للـ select
     const [error, setError] = useState("");
 
     async function handleSubmit(e) {
@@ -19,6 +19,11 @@ function AddTaskModal({
 
         if (!title.trim()) {
             setError("Task title is required");
+            return;
+        }
+
+        if (!stage) {
+            setError("Please select a valid stage");
             return;
         }
 
@@ -72,16 +77,19 @@ function AddTaskModal({
                     </div>
 
                     <div className="add-task-modal__field">
-                        <label htmlFor="new-task-stage">
-                            Stage
-                        </label>
-
-                        <input
-                            id="new-task-stage"
-                            type="text"
-                            value={stage}
-                            disabled
-                        />
+                        <div className="form-group">
+                            <label>Stage</label>
+                            <select 
+                                value={stage} 
+                                onChange={(e) => setStage(e.target.value)}
+                                disabled={loading}
+                            >
+                                <option value="">Select Stage</option>
+                                <option value="DATABASE">DATABASE</option>
+                                <option value="FRONTEND">FRONTEND</option>
+                                <option value="BACKEND">BACKEND</option>
+                            </select>
+                        </div>
                     </div>
 
                     {error && (
@@ -103,7 +111,7 @@ function AddTaskModal({
                         <button
                             type="submit"
                             className="add-task-modal__submit"
-                            disabled={loading || !title.trim()}
+                            disabled={loading || !title.trim() || !stage}
                         >
                             {loading ? "Creating..." : "Create Task"}
                         </button>
