@@ -22,8 +22,9 @@ def get_dashboard():
 def create_project():
     data = request.get_json(silent=True) or {}
 
-    members = data.get('member_emails') or []
-    mode = data.get('mode') or ('team' if members else 'solo')
+    member_emails = data.get('member_emails') or []
+    members = data.get('members')
+    mode = data.get('mode') or ('team' if members or member_emails else 'solo')
 
     try:
         project = project_service.create_project(
@@ -31,7 +32,8 @@ def create_project():
             name=data.get('name'),
             description=data.get('description'),
             mode=mode,
-            member_emails=members,
+            member_emails=member_emails,
+            members=members,
             template_id=data.get('template_id'),
         )
     except project_service.ValidationError as e:
@@ -67,6 +69,7 @@ def update_project(project_id):
             name=data.get('name'),
             description=data.get('description'),
             member_emails=data.get('member_emails'),
+            members=data.get('members'),
         )
     except project_service.ValidationError as e:
         return jsonify({"error": {"code": "VALIDATION_ERROR", "message": str(e)}}), 400

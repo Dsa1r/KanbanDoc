@@ -85,9 +85,47 @@ def _rollback(project_id, team_id):
     except Exception:
         pass  # never hide the original error behind a clean-up error
 
+ALLOWED_ROLES = ("member", "qa")
+
+
+def _normalize_members(members, member_emails, owner_email):
+    """Return {email: is_qa}. Accepts the new shape [{email, role}] or the old list of emails."""
+    if members is None:
+        # old shape: every email is a normal member
+        members = [
+            {"email": e, "role": "member"}
+            for e in (member_emails or [])
+            if isinstance(e, str) and e.strip()
+        ]
+
+    if not isinstance(members, list):
+        raise ValidationError("members must be a list")
+
+    result = {}
+    for m in members:
+        if not isinstance(m, dict):
+            raise ValidationError("Each member must have an email and a role")
+
+        email = m.get("email")
+        role = m.get("role") or "member"
+
+        if not isinstance(email, str) or not email.strip():
+            raise ValidationError("Each member needs an email")
+        if role not in ALLOWED_ROLES:
+            raise ValidationError("role must be 'member' or 'qa'")
+
+        email = email.strip().lower()
+        if email == owner_email:
+            continue  # the owner is added separately
+
+        result[email] = (role == "qa")
+
+    return result
+
 
 def create_project(user, name, description=None, mode="solo",
-                   member_emails=None, template_id=BLANK_TEMPLATE, **_ignored):
+                   member_emails=None, members=None,
+                   template_id=BLANK_TEMPLATE, **_ignored):
 
     if not isinstance(name, str) or not name.strip():
         raise ValidationError("Project name is required")
@@ -112,21 +150,18 @@ def create_project(user, name, description=None, mode="solo",
     if isinstance(template_id, bool) or template_id not in (BLANK_TEMPLATE, STARTER_TEMPLATE):
         raise ValidationError("template_id must be 0 (blank) or 1 (starter template)")
 
-    member_ids = []
+    owner_email = (getattr(user, "email", "") or "").lower()
+    member_roles = {}   # user_id -> is_qa
 
-    if mode == "team" and member_emails:
-        emails = [
-            e for e in member_emails
-            if isinstance(e, str)
-            and e.strip().lower() != (getattr(user, "email", "") or "").lower()
-        ]
+    if mode == "team":
+        wanted = _normalize_members(members, member_emails, owner_email)
 
-        found, missing = _find_user_ids_by_emails(emails)
+        found, missing = _find_user_ids_by_emails(list(wanted))
 
         if missing:
             raise ValidationError("No account found for: " + ", ".join(sorted(missing)))
 
-        member_ids = list(found.values())
+        member_roles = {found[email]: is_qa for email, is_qa in wanted.items()}
 
     team_id = project_id = None
 
@@ -137,16 +172,16 @@ def create_project(user, name, description=None, mode="solo",
 
         team_id = team['id']
 
-        members = [
-            {"team_id": team_id, "user_id": user.id, "is_owner": True}
+        member_rows = [
+            {"team_id": team_id, "user_id": user.id, "is_owner": True, "is_qa": False}
         ]
 
-        members += [
-            {"team_id": team_id, "user_id": uid, "is_owner": False}
-            for uid in member_ids
+        member_rows += [
+            {"team_id": team_id, "user_id": uid, "is_owner": False, "is_qa": is_qa}
+            for uid, is_qa in member_roles.items()
         ]
 
-        ext.admin_client.table('team_members').insert(members).execute()
+        ext.admin_client.table('team_members').insert(member_rows).execute()
 
         project = (
             ext.admin_client.table('projects')
@@ -227,13 +262,14 @@ def get_project_details(user, project_id):
                 "user_id": m['user_id'],
                 "email": _get_user_email(m['user_id']),
                 "is_owner": bool(m.get('is_owner')),
+                "is_qa": bool(m.get('is_qa')),
             }
             for m in members
         ],
     }
 
 
-def update_project(user, project_id, name=None, description=None, member_emails=None):
+def update_project(user, project_id, name=None, description=None, member_emails=None, members=None):
     """Update the name, description and members of a project. Only the owner can do this."""
     project = ensure_project_owner(project_id, user.id)
 
@@ -253,21 +289,22 @@ def update_project(user, project_id, name=None, description=None, member_emails=
         raise ValidationError("member_emails must be a list")
 
     owner_email = (getattr(user, 'email', '') or '').lower()
-    emails = [
-        e for e in member_emails
-        if isinstance(e, str) and e.strip().lower() != owner_email
-    ]
-    found, missing = _find_user_ids_by_emails(emails)
+    wanted = _normalize_members(members, member_emails, owner_email)
+    found, missing = _find_user_ids_by_emails(list(wanted))
     if missing:
         raise ValidationError("No account found for: " + ", ".join(sorted(missing)))
+    wanted_roles = {found[email]: is_qa for email, is_qa in wanted.items()}
 
     team_id = project['team_id']
     current = project_repo.get_team_members(team_id)
-    current_ids = {m['user_id'] for m in current if not m.get('is_owner')}
-    wanted_ids = set(found.values())
+    current_roles = {m['user_id']: bool(m.get('is_qa')) for m in current if not m.get('is_owner')}
 
-    to_add = wanted_ids - current_ids
-    to_remove = current_ids - wanted_ids
+    to_add = set(wanted_roles) - set(current_roles)
+    to_remove = set(current_roles) - set(wanted_roles)
+    to_update = {
+        uid for uid in set(wanted_roles) & set(current_roles)
+        if wanted_roles[uid] != current_roles[uid]
+    }
 
     try:
         (ext.admin_client.table('projects')
@@ -281,9 +318,16 @@ def update_project(user, project_id, name=None, description=None, member_emails=
 
         if to_add:
             ext.admin_client.table('team_members').insert([
-                {"team_id": team_id, "user_id": uid, "is_owner": False}
+                {"team_id": team_id, "user_id": uid, "is_owner": False, "is_qa": wanted_roles[uid]}
                 for uid in to_add
             ]).execute()
+
+        for uid in to_update:
+            (ext.admin_client.table('team_members')
+             .update({"is_qa": wanted_roles[uid]})
+             .eq('team_id', team_id)
+             .eq('user_id', uid)
+             .execute())
 
         if to_remove:
             (ext.admin_client.table('team_members')
