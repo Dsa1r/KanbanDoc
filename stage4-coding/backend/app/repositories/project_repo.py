@@ -26,7 +26,7 @@ def get_user_projects_with_tasks(user_id):
 
 def get_team_members(team_id):
     return (ext.admin_client.table('team_members')
-            .select('user_id, is_owner')
+            .select('user_id, is_owner, is_qa')
             .eq('team_id', team_id)
             .execute().data)
 
