@@ -18,8 +18,8 @@ from app.prompts.generate_tasks import (
 from app.services import board_service
 from app.utils.errors import ApiError
 
-PLAN_MODEL = os.getenv("AI_PLAN_MODEL", "gemini-2.5-flash")   # change in .env without touching code
-PHASE_MODEL = os.getenv("AI_PHASE_MODEL", "gemini-2.5-flash")  # one call per task
+PLAN_MODEL = "gemini-3.8-flash"
+PHASE_MODEL = "gemini-3.8-flash"
 MAX_TASKS = 16
 MAX_WORKERS = 2  # free tier has a low requests-per-minute limit
 PHASE_STATUSES = ["TO_DO", "IN_PROGRESS", "TESTING_REVIEW", "DONE"]
