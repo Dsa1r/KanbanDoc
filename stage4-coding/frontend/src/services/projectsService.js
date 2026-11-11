@@ -41,6 +41,7 @@ function toMember(apiMember) {
     userId: apiMember.user_id,
     email: apiMember.email ?? '',
     isOwner: Boolean(apiMember.is_owner),
+    role: apiMember.is_qa ? 'qa' : 'member',
   };
 }
 
@@ -95,7 +96,7 @@ export async function createProject({ title, description, templateId, audience, 
       description,
       template_id: templateId,   // 1 = pre-seeded starter tasks, 0 = blank
       mode: audience,            // 'solo' | 'team'
-      member_emails: members,    // only used when mode is 'team'
+      members,                   // [{ email, role }] — only used when mode is 'team'
     },
     auth: true,
   });
@@ -138,7 +139,7 @@ export async function getProjectDetails(projectId) {
   };
 }
 
-export async function updateProject(projectId, { title, description, memberEmails }) {
+export async function updateProject(projectId, { title, description, members }) {
   if (shouldUseMocks()) {
     await delay(600);
     mockProjects = mockProjects.map((project) =>
@@ -149,7 +150,12 @@ export async function updateProject(projectId, { title, description, memberEmail
     const owners = (mockMembersByProject[projectId] ?? []).filter((member) => member.is_owner);
     mockMembersByProject[projectId] = [
       ...owners,
-      ...memberEmails.map((email) => ({ user_id: email, email, is_owner: false })),
+      ...members.map(({ email, role }) => ({
+        user_id: email,
+        email,
+        is_owner: false,
+        is_qa: role === 'qa',
+      })),
     ];
     return;
   }
@@ -157,7 +163,7 @@ export async function updateProject(projectId, { title, description, memberEmail
   // PATCH /api/v1/projects/<id> -> owner only
   const updated = await apiFetch(`/api/v1/projects/${projectId}`, {
     method: 'PATCH',
-    body: { name: title, description, member_emails: memberEmails },
+    body: { name: title, description, members },
     auth: true,
   });
   return toProject(updated);

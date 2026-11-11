@@ -22,6 +22,11 @@ const TEMPLATE_OPTIONS = [
 
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const DESCRIPTION_MAX_LENGTH = 200;
+const ROLE_OPTIONS = [
+  { id: 'member', label: 'Member' },
+  { id: 'qa', label: 'QA' },
+];
+
 
 function CreateProjectModal({ onClose, onSubmit }) {
   const [title, setTitle] = useState('');
@@ -64,19 +69,25 @@ function CreateProjectModal({ onClose, onSubmit }) {
       setMemberError('Enter a valid email address.');
       return;
     }
-    if (members.includes(email)) {
+    if (members.some((member) => member.email === email)) {
       setMemberError('This member is already added.');
       return;
     }
 
-    setMembers((prevMembers) => [...prevMembers, email]);
+    setMembers((prevMembers) => [...prevMembers, { email, role: 'member' }]);
     setMemberEmail('');
     setMemberError('');
     clearError('members');
   }
 
   function removeMember(email) {
-    setMembers((prevMembers) => prevMembers.filter((item) => item !== email));
+    setMembers((prevMembers) => prevMembers.filter((member) => member.email !== email));
+  }
+
+  function changeMemberRole(email, role) {
+    setMembers((prevMembers) =>
+      prevMembers.map((member) => (member.email === email ? { ...member, role } : member)),
+    );
   }
 
   function handleMemberKeyDown(event) {
@@ -271,9 +282,19 @@ function CreateProjectModal({ onClose, onSubmit }) {
 
                 {members.length > 0 && (
                   <ul className="member-list">
-                    {members.map((email) => (
+                                        {members.map(({ email, role }) => (
                       <li key={email} className="member-chip">
                         {email}
+                        <select
+                          className="member-chip__role"
+                          value={role}
+                          onChange={(event) => changeMemberRole(email, event.target.value)}
+                          aria-label={`Role for ${email}`}
+                        >
+                          {ROLE_OPTIONS.map((option) => (
+                            <option key={option.id} value={option.id}>{option.label}</option>
+                          ))}
+                        </select>
                         <button
                           type="button"
                           className="member-chip__remove"

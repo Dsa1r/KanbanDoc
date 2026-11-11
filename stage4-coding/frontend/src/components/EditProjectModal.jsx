@@ -6,6 +6,10 @@ import './EditProjectModal.css';
 
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const DESCRIPTION_MAX_LENGTH = 200;
+const ROLE_OPTIONS = [
+  { id: 'member', label: 'Member' },
+  { id: 'qa', label: 'QA' },
+];
 
 function EditProjectModal({ projectId, onClose, onSave }) {
   const [isLoading, setIsLoading] = useState(true);
@@ -53,13 +57,19 @@ function EditProjectModal({ projectId, onClose, onSave }) {
       return;
     }
 
-    setMembers((prevMembers) => [...prevMembers, { email, isOwner: false, isNew: true }]);
+    setMembers((prevMembers) => [...prevMembers, { email, isOwner: false, isNew: true, role: 'member' }]);
     setMemberEmail('');
     setMemberError('');
   }
 
   function removeMember(email) {
     setMembers((prevMembers) => prevMembers.filter((member) => member.email !== email));
+  }
+
+  function changeMemberRole(email, role) {
+    setMembers((prevMembers) =>
+      prevMembers.map((member) => (member.email === email ? { ...member, role } : member)),
+    );
   }
 
   function handleMemberKeyDown(event) {
@@ -84,7 +94,9 @@ function EditProjectModal({ projectId, onClose, onSave }) {
       await onSave({
         title: trimmedTitle,
         description: description.trim(),
-        memberEmails: members.filter((member) => !member.isOwner).map((member) => member.email),
+                members: members
+          .filter((member) => !member.isOwner)
+          .map(({ email, role }) => ({ email, role })),
       });
     } catch (error) {
       setSubmitError(error.message);
@@ -159,6 +171,19 @@ function EditProjectModal({ projectId, onClose, onSave }) {
                 {member.isOwner && <span className="edit-members__badge">Owner</span>}
                 {member.isNew && (
                   <span className="edit-members__badge edit-members__badge--new">New</span>
+                )}
+
+                                {!member.isOwner && (
+                  <select
+                    className="edit-members__role"
+                    value={member.role ?? 'member'}
+                    onChange={(event) => changeMemberRole(member.email, event.target.value)}
+                    aria-label={`Role for ${member.email}`}
+                  >
+                    {ROLE_OPTIONS.map((option) => (
+                      <option key={option.id} value={option.id}>{option.label}</option>
+                    ))}
+                  </select>
                 )}
 
                 {!member.isOwner && (
