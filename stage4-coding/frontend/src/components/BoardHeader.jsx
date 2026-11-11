@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import { CompassIcon } from './Icons.jsx';
+import './BoardHeaderOptions.css';
 
 export default function BoardHeader({
   projectName,
@@ -9,6 +10,9 @@ export default function BoardHeader({
   activeStages,
   onToggleStage,
   backTo,
+  showTaskOptions = false, // true only for Empty projects
+  onAiGenerate,
+  onAddManual,
 }) {
   return (
     <header className="board-header">
@@ -23,6 +27,26 @@ export default function BoardHeader({
 
       <h1 className="board-header__title">{projectName}</h1>
       {description && <p className="board-header__description">{description}</p>}
+
+      {showTaskOptions && (
+        <div className="board-header__options" role="group" aria-label="Add tasks">
+          <button type="button" className="header-option" onClick={onAiGenerate}>
+            <span className="header-option__icon" aria-hidden="true">✦</span>
+            <span className="header-option__text">
+              <strong>Generate with AI</strong>
+              <small>Answer a few questions</small>
+            </span>
+          </button>
+
+          <button type="button" className="header-option" onClick={onAddManual}>
+            <span className="header-option__icon" aria-hidden="true">+</span>
+            <span className="header-option__text">
+              <strong>Add tasks manually</strong>
+              <small>One by one</small>
+            </span>
+          </button>
+        </div>
+      )}
 
       <div className="board-header__bottom">
         <div className="board-header__progress">

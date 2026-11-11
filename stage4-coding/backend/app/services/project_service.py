@@ -153,7 +153,8 @@ def create_project(user, name, description=None, mode="solo",
             .insert({
                 "project_name": name,
                 "description": description,
-                "team_id": team_id
+                "team_id": team_id,
+                "template_id": template_id,
             })
             .execute()
             .data[0]

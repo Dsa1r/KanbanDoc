@@ -8,7 +8,7 @@ const STAGE_TO_UI = { DATABASE: 'db', BACKEND: 'backend', FRONTEND: 'frontend' }
 // Only the board path comes from the Flask code that was shared (check its prefix);
 // the phase and status paths must be matched with the real routes.
 const PATHS = {
-  board: (projectId) => `/api/v1/projects/${projectId}/kanban`,
+  board: (projectId) => `/api/v1/projects/${projectId}/board`,
   phase: (taskId) => `/api/v1/tasks/${taskId}/phase`,
   status: (taskId) => `/api/v1/tasks/${taskId}/status`,
 }
@@ -40,6 +40,7 @@ export async function getBoard(projectId) {
       name: project.name ?? 'Project board',
       description: project.description ?? '',
       isCompleted: project.is_completed ?? false,
+      templateId: project.template_id ?? null,
     },
     // the API groups tasks by column; the screen filters them itself, so we flatten them
     tasks: Object.values(data.columns).flat().map(toTask),

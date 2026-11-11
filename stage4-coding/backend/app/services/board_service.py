@@ -56,6 +56,8 @@ def get_board(project, stage=None):
 
     Progress is always calculated on the whole project, even when a stage filter is on.
     """
+    print("PROJECT ROW:", project)
+    
     stage = normalize_stage(stage)
     rows = _fetch_tasks(project["id"])
 
@@ -76,6 +78,7 @@ def get_board(project, stage=None):
             "name": project["project_name"],
             "description": project.get("description") or "",
             "is_completed": bool(project.get("is_completed")),
+            "template_id": project.get("template_id"),
         },
         "active_stage": stage,
         "progress": calculate_progress([r["current_status"] for r in rows]),

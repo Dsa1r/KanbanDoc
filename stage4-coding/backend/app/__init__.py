@@ -13,6 +13,7 @@ def create_app():
     from app.api.board import board_bp
     from app.api.tasks import tasks_bp
     from app.api.kanban import kanban_bp
+    from app.api.ai import ai_bp
 
 
 
@@ -21,7 +22,9 @@ def create_app():
     app.register_blueprint(dashboard_bp)
     app.register_blueprint(board_bp)
     app.register_blueprint(tasks_bp)
+    app.register_blueprint(ai_bp)
 
+    
     print(app.url_map)
 
     @app.route('/')

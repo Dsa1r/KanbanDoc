@@ -1,4 +1,3 @@
-
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
@@ -7,6 +6,7 @@ import NextUpBanner from '../components/NextUpBanner.jsx';
 import KanbanColumn from '../components/KanbanColumn.jsx';
 import TaskDrawer from '../components/TaskDrawer.jsx';
 import AddTaskModal from '../components/AddTaskModal.jsx';
+import AiWizardModal from '../components/AiWizardModal.jsx';
 
 import {
   BOARD_COLUMNS,
@@ -44,8 +44,23 @@ export default function KanbanPage() {
   const [selectedTaskId, setSelectedTaskId] = useState(null);
   const [phaseVersion, setPhaseVersion] = useState(0);
 
-  // Add Task Modal
+  // Modals opened from the two header options (Empty projects only)
   const [showAddTask, setShowAddTask] = useState(false);
+  const [showAiWizard, setShowAiWizard] = useState(false);
+
+  // Reload the board from the server (after adding or generating tasks)
+  function reloadBoard() {
+    if (!projectId) return Promise.resolve();
+
+    return getBoard(projectId)
+      .then((board) => {
+        setProject(board.project);
+        setTasks(board.tasks);
+      })
+      .catch((err) => {
+        setError(err.message);
+      });
+  }
 
   // Load board
   useEffect(() => {
@@ -76,6 +91,13 @@ export default function KanbanPage() {
 
   // Board calculations
   const readOnly = Boolean(project?.isCompleted);
+
+  // The two options appear only for Empty projects (template_id 0).
+  // ADAPT: boardService.js must pass this field through (templateId or template_id).
+  const templateId = project?.templateId ?? project?.template_id;
+
+  const showTaskOptions =
+    Boolean(projectId) && !readOnly && templateId === 0;
 
   const doneCount = tasks.filter(
     (task) => task.status === 'done'
@@ -188,6 +210,9 @@ export default function KanbanPage() {
         activeStages={activeStages}
         onToggleStage={toggleStage}
         backTo={projectId ? '/dashboard' : null}
+        showTaskOptions={showTaskOptions}
+        onAiGenerate={() => setShowAiWizard(true)}
+        onAddManual={() => setShowAddTask(true)}
       />
 
       <main className="kanban">
@@ -199,17 +224,6 @@ export default function KanbanPage() {
           >
             {error}
           </p>
-        )}
-
-        {/* Add Task Button */}
-        {projectId && !readOnly && (
-          <button
-            type="button"
-            className="kanban__add-task-btn"
-            onClick={() => setShowAddTask(true)}
-          >
-            + Add Task
-          </button>
         )}
 
         {/* Next Task */}
@@ -246,26 +260,24 @@ export default function KanbanPage() {
 
       </main>
 
-      {/* Add Task Modal */}
+      {/* Manual: existing Add Task modal */}
       {showAddTask && (
+        <AddTaskModal
+          projectId={projectId}
+          stage=""
+          token={token}
+          onClose={() => setShowAddTask(false)}
+          onTaskCreated={reloadBoard}
+        />
+      )}
 
-          <AddTaskModal
-              projectId={projectId}
-              stage=""
-              token={token}
-              onClose={() => setShowAddTask(false)}
-              onTaskCreated={() => {
-                  getBoard(projectId)
-                      .then((board) => {
-                          setProject(board.project);
-                          setTasks(board.tasks);
-                      })
-                      .catch((err) => {
-                          setError(err.message);
-                      });
-              }}
-          />
-
+      {/* AI: step-by-step questions */}
+      {showAiWizard && (
+        <AiWizardModal
+          projectId={projectId}
+          onClose={() => setShowAiWizard(false)}
+          onGenerated={reloadBoard}
+        />
       )}
 
       {/* Task Details Drawer */}

@@ -5,6 +5,8 @@ def get_kanban(project_id):
     """
     Build the Kanban board from project tasks.
     """
+    print ("PROJECT ID:", project_id)
+
 
     tasks = get_project_tasks(project_id)
 

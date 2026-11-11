@@ -24,7 +24,7 @@ def ensure_project_member(project_id, user_id):
 
     rows = (
         ext.admin_client.table("projects")
-        .select("id, project_name, description, is_completed, team_id")
+        .select("id, project_name, description, is_completed, team_id, template_id")
         .eq("id", project_id)
         .limit(1)
         .execute()
