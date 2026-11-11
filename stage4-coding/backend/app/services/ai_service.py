@@ -20,7 +20,7 @@ from app.utils.errors import ApiError
 
 PLAN_MODEL = "gemini-3.8-flash"
 PHASE_MODEL = "gemini-3.8-flash"
-MAX_TASKS = 16
+MAX_TASKS = 4  # خليناها 4 تاسكات مثل ما طلبتي لتخفيف الضغط
 MAX_WORKERS = 2  # free tier has a low requests-per-minute limit
 PHASE_STATUSES = ["TO_DO", "IN_PROGRESS", "TESTING_REVIEW", "DONE"]
 STAGES = {  # accepts a few spellings, saves your DB values
@@ -49,6 +49,7 @@ def _ask(model, system, user, max_tokens):
     delay = 5
     for attempt in range(4):
         try:
+            print(f">>> [API CALL] Attempt {attempt + 1} using model: {model}")
             resp = _get_client().models.generate_content(
                 model=model,
                 contents=user,
@@ -57,12 +58,15 @@ def _ask(model, system, user, max_tokens):
                     max_output_tokens=max_tokens * 3,  # leaves room for the model's internal thinking
                 ),
             )
+            print(f">>> [API SUCCESS] Received response from {model}")
             return resp.text or ""
         except ApiError:
             raise
         except Exception as exc:
+            print(f">>> [API ERROR] Attempt {attempt + 1} failed: {exc}")
             rate_limited = "429" in str(exc) or "RESOURCE_EXHAUSTED" in str(exc)
             if rate_limited and attempt < 3:
+                print(f">>> Rate limited! Waiting {delay} seconds before retry...")
                 time.sleep(delay)  # free tier: wait and retry
                 delay *= 2
                 continue
@@ -85,6 +89,7 @@ def _parse_json(text, opener, closer):
 
 # ---------- step 1: plan ----------
 def _plan_tasks(project, answers):
+    print(">>> 1. Starting Step 1: Planning tasks...")
     text = _ask(PLAN_MODEL, PLAN_SYSTEM, build_plan_prompt(project, answers), 1500)
     items = _parse_json(text, "[", "]")
     if not isinstance(items, list):
@@ -99,6 +104,7 @@ def _plan_tasks(project, answers):
             tasks.append({"title": title, "stage": stage})
     if not tasks:
         raise _ai_error("AI returned no valid tasks")
+    print(f">>> Step 1 Done. Generated {len(tasks)} tasks.")
     return tasks
 
 
@@ -122,12 +128,15 @@ def _clean_phase(p):
 def _task_phases(project, answers, task):
     """Returns (phases_dict, ok). Never raises: a failed task keeps empty phases."""
     try:
+        print(f">>> 2. Starting Step 2: Fetching phases for task: {task['title']}")
         text = _ask(PHASE_MODEL, PHASE_SYSTEM, build_phase_prompt(project, answers, task), 1500)
         data = _parse_json(text, "{", "}")
         if not isinstance(data, dict):
             raise _ai_error("phases not an object")
+        print(f">>> Successfully got phases for task: {task['title']}")
         return {s: _clean_phase(data.get(s)) for s in PHASE_STATUSES}, True
-    except Exception:
+    except Exception as e:
+        print(f">>> Failed getting phases for task '{task['title']}': {e}")
         return {s: _empty_phase() for s in PHASE_STATUSES}, False
 
 
@@ -142,6 +151,7 @@ def _next_position(project_id):
 
 
 def _save(project_id, tasks, phases_by_index):
+    print(">>> 3. Saving tasks and phases to database...")
     start = _next_position(project_id)
     rows = [
         {"project_id": project_id, "title": t["title"], "stage": t["stage"],
@@ -159,11 +169,13 @@ def _save(project_id, tasks, phases_by_index):
     except Exception:
         ext.admin_client.table("tasks").delete().in_("id", ids).execute()  # rollback
         raise
+    print(">>> Database save completed successfully!")
     return inserted
 
 
 # ---------- public ----------
 def generate_project_tasks(project_id, user_id, answers):
+    print(">>> [START] generate_project_tasks called")
     project_id = parse_uuid(project_id, "Project")
     project = ensure_project_member(project_id, user_id)
 
@@ -173,10 +185,13 @@ def generate_project_tasks(project_id, user_id, answers):
         raise ApiError("INVALID_PROJECT_TYPE", "AI generation is only for empty projects", 400)
 
     tasks = _plan_tasks(project, answers)
+    
+    print(f">>> Spawning ThreadPoolExecutor with max_workers={MAX_WORKERS} for {len(tasks)} tasks...")
     with ThreadPoolExecutor(max_workers=MAX_WORKERS) as pool:
         results = list(pool.map(lambda t: _task_phases(project, answers, t), tasks))
 
     inserted = _save(project_id, tasks, [r[0] for r in results])
+    print(">>> [FINISH] Task generation process finished completely!")
     return {
         "tasks": [board_service.task_to_dict(t) for t in inserted],
         "progress": board_service.get_progress(project_id),

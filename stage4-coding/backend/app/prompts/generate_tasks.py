@@ -5,7 +5,7 @@ PLAN_SYSTEM = """You are a senior software project planner for a Kanban learning
 Turn the project details into concrete development tasks.
 
 Rules:
-- Produce between 10 and 16 tasks, ordered in the sequence they should be built.
+- Produce between 4 tasks, ordered in the sequence they should be built.
 - Each task has a short, specific title (max 80 characters) and exactly one stage:
   "DATABASE", "BACKEND", or "FRONTEND".
 - Cover all three stages. Start with database and setup work, then backend, then frontend.

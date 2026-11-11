@@ -25,8 +25,7 @@ def create_app():
     app.register_blueprint(ai_bp)
 
     
-    print(app.url_map)
-
+ 
     @app.route('/')
     def index():
         return {"message": "DevCompass API is running"}
