@@ -33,6 +33,7 @@ function toProject(apiProject) {
     boardUrl: apiProject.board_url ?? (projectId ? `/projects/${projectId}/board` : undefined),
     isOwner: Boolean(apiProject.is_owner),
     updatedAt: formatRelativeTime(apiProject.updated_at ?? apiProject.created_at),
+    updatedAtDate: apiProject.updated_at ?? apiProject.created_at ?? null,
   };
 }
 

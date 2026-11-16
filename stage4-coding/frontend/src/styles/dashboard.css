@@ -125,3 +125,31 @@
   border-radius: 4px;
   color: var(--color-text);
 }
+
+/* Sidebar layout (search and filters on the left) */
+
+.dashboard-layout--with-sidebar {
+  display: grid;
+  grid-template-columns: 280px minmax(0, 1fr);
+  min-height: calc(100vh - 75px);
+}
+
+/* the cards fill the space next to the sidebar */
+.dashboard-layout--with-sidebar .dashboard {
+  width: 100%;
+}
+
+.dashboard__status .dashboard__retry {
+  margin-top: 16px;
+}
+
+@media (max-width: 900px) {
+  .dashboard-layout--with-sidebar {
+    grid-template-columns: 1fr;
+    min-height: 0;
+  }
+
+  .dashboard-layout--with-sidebar .dashboard {
+    padding: 32px 20px 48px;
+  }
+}

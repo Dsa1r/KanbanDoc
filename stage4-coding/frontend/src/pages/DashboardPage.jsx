@@ -1,9 +1,10 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext.jsx';
 import Header from '../components/Header.jsx';
 import ProjectCard from '../components/ProjectCard.jsx';
 import ProjectCardSkeleton from '../components/ProjectCardSkeleton.jsx';
+import ProjectFilters from '../components/ProjectFilters.jsx';
 import CreateProjectButton from '../components/CreateProjectButton.jsx';
 import CreateProjectModal from '../components/CreateProjectModal.jsx';
 import EditProjectModal from '../components/EditProjectModal.jsx';
@@ -15,6 +16,7 @@ import {
   getDashboard,
   updateProject,
 } from '../services/projectsService.js';
+import { countByStatus, filterProjects } from '../utils/projectFilters.js';
 import '../styles/dashboard.css';
 
 export default function DashboardPage() {
@@ -28,7 +30,18 @@ export default function DashboardPage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [projectToDelete, setProjectToDelete] = useState(null);
   const [projectToEdit, setProjectToEdit] = useState(null);
+  const [query, setQuery] = useState('');
+  const [statusFilter, setStatusFilter] = useState('all');
+  const [daysFilter, setDaysFilter] = useState('any');
   const hasProjects = projects.length > 0;
+
+  const statusCounts = useMemo(() => countByStatus(projects), [projects]);
+  const visibleProjects = useMemo(
+    () => filterProjects(projects, { query, status: statusFilter, days: daysFilter }),
+    [projects, query, statusFilter, daysFilter],
+  );
+  const hasActiveFilters = query.trim() !== '' || statusFilter !== 'all' || daysFilter !== 'any';
+  const showSidebar = !loadError && (isLoading || hasProjects);
 
   useEffect(() => {
     let ignore = false;
@@ -54,6 +67,12 @@ export default function DashboardPage() {
   async function handleLogout() {
     await logout();
     navigate('/auth');
+  }
+
+  function clearFilters() {
+    setQuery('');
+    setStatusFilter('all');
+    setDaysFilter('any');
   }
 
   function openModal() {
@@ -129,10 +148,21 @@ export default function DashboardPage() {
       return <EmptyState onCreate={openModal} />;
     }
 
+    if (visibleProjects.length === 0) {
+      return (
+        <div className="dashboard__status">
+          <p>No projects match your filters.</p>
+          <button type="button" className="dashboard__retry" onClick={clearFilters}>
+            Clear filters
+          </button>
+        </div>
+      );
+    }
+
     return (
       <>
         <section className="dashboard__grid">
-          {projects.map((project) => (
+          {visibleProjects.map((project) => (
             <ProjectCard
               key={project.id}
               title={project.title}
@@ -149,7 +179,7 @@ export default function DashboardPage() {
         </section>
 
         <p className="dashboard__count">
-          Showing {projects.length} project workspaces
+          Showing {visibleProjects.length} of {projects.length} project workspaces
         </p>
       </>
     );
@@ -163,6 +193,22 @@ export default function DashboardPage() {
         onSettings={() => navigate('/settings')}
         onLogout={handleLogout}
       />
+
+      <div className={`dashboard-layout ${showSidebar ? 'dashboard-layout--with-sidebar' : ''}`}>
+      {showSidebar && (
+        <ProjectFilters
+          query={query}
+          onQueryChange={setQuery}
+          status={statusFilter}
+          onStatusChange={setStatusFilter}
+          days={daysFilter}
+          onDaysChange={setDaysFilter}
+          counts={statusCounts}
+          hasActiveFilters={hasActiveFilters}
+          onClear={clearFilters}
+          disabled={isLoading}
+        />
+      )}
 
       <main className="dashboard">
         <header className="dashboard__header">
@@ -179,6 +225,7 @@ export default function DashboardPage() {
 
         {renderContent()}
       </main>
+      </div>
 
       {isModalOpen && (
         <CreateProjectModal onClose={closeModal} onSubmit={handleCreateProject} />

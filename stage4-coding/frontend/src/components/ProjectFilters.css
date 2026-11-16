@@ -1,0 +1,197 @@
+/* The sidebar uses the same colors as the rest of the dashboard (see .dashboard-page in dashboard.css) */
+
+.project-filters {
+  background: var(--color-surface);
+  border-right: 1px solid var(--color-border);
+}
+
+.project-filters__inner {
+  position: sticky;
+  top: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+  padding: 32px 20px 40px;
+}
+
+.project-filters__label {
+  display: block;
+  padding: 0;
+  margin-bottom: 10px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+}
+
+/* Search */
+
+.project-filters__search {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  height: 42px;
+  padding: 0 10px 0 12px;
+  color: var(--color-text-muted);
+  background: #fff;
+  border: 1px solid var(--color-border);
+  border-radius: 4px;
+}
+
+.project-filters__search:focus-within {
+  border-color: var(--color-text);
+  box-shadow: 0 0 0 3px rgba(43, 58, 51, 0.15);
+}
+
+.project-filters__search input {
+  flex: 1;
+  min-width: 0;
+  height: 100%;
+  padding: 0;
+  font: inherit;
+  font-size: 14px;
+  color: var(--color-text);
+  background: transparent;
+  border: 0;
+  outline: 0;
+}
+
+.project-filters__search input::placeholder {
+  color: var(--color-text-muted);
+}
+
+/* hide the browser's own "x" in search fields, we draw our own clear button */
+.project-filters__search input::-webkit-search-cancel-button,
+.project-filters__search input::-webkit-search-decoration {
+  display: none;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.project-filters__clear-search {
+  display: grid;
+  place-items: center;
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  color: var(--color-text-muted);
+  background: none;
+  border: 0;
+  border-radius: 4px;
+}
+
+.project-filters__clear-search:hover {
+  color: var(--color-text);
+  background: var(--color-icon-bg);
+}
+
+/* Option lists (status and days) */
+
+.project-filters__group {
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.project-filters__option {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 10px;
+  font-size: 14px;
+  color: var(--color-text-muted);
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.project-filters__option:hover {
+  color: var(--color-text);
+  background: var(--color-icon-bg);
+}
+
+.project-filters__option--active {
+  font-weight: 600;
+  color: var(--color-text);
+  background: var(--color-icon-bg);
+}
+
+/* the real radio button stays for keyboards and screen readers, but is not drawn */
+.project-filters__option input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.project-filters__option:focus-within {
+  outline: 2px solid var(--color-text);
+  outline-offset: 1px;
+}
+
+.project-filters__option-text {
+  flex: 1;
+}
+
+.project-filters__count {
+  font-size: 13px;
+  font-weight: 400;
+  color: var(--color-text-muted);
+}
+
+.project-filters__group:disabled .project-filters__option {
+  opacity: 0.5;
+  cursor: default;
+}
+
+/* small colored dot in front of each status */
+.project-filters__dot {
+  flex: none;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+
+.project-filters__dot--all,
+.project-filters__dot--any,
+.project-filters__dot--today,
+.project-filters__dot--7,
+.project-filters__dot--30,
+.project-filters__dot--older {
+  display: none;
+}
+
+.project-filters__dot--in-progress { background: var(--color-primary); }
+.project-filters__dot--completed { background: #2f7a6b; }
+.project-filters__dot--not-started { background: #b9b2a3; }
+
+/*Clear button*/
+
+.project-filters__reset {
+  align-self: flex-start;
+  padding: 9px 14px;
+  font-size: 13px;
+  color: var(--color-primary);
+  background: none;
+  border: 1px solid var(--color-border);
+  border-radius: 4px;
+}
+
+.project-filters__reset:hover {
+  background: #f6dcd8;
+  border-color: var(--color-primary);
+}
+
+
+@media (max-width: 900px) {
+  .project-filters {
+    border-right: 0;
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .project-filters__inner {
+    position: static;
+    padding: 24px 20px;
+  }
+}

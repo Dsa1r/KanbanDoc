@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { EditIcon, FolderIcon, MoreIcon, TrashIcon } from './Icons.jsx';
+import { ArrowRightIcon, EditIcon, FolderIcon, MoreIcon, TrashIcon } from './Icons.jsx';
 import './ProjectCard.css';
 
 function ProjectCard({
@@ -123,7 +123,16 @@ function ProjectCard({
         <div className="project-card__fill" style={{ width: `${progress}%` }} />
       </div>
 
-      {updatedAt && <p className="project-card__updated">Updated {updatedAt}</p>}
+      <div className="project-card__footer">
+        {updatedAt && <p className="project-card__updated">Updated {updatedAt}</p>}
+
+        {boardUrl && (
+          <Link to={boardUrl} className="project-card__open">
+            Open Kanban
+            <ArrowRightIcon width={16} height={16} />
+          </Link>
+        )}
+      </div>
     </article>
   );
 }

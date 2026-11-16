@@ -143,3 +143,31 @@
   from { opacity: 0; transform: translateY(-4px); }
   to { opacity: 1; transform: translateY(0); }
 }
+
+/* ---------- Open Kanban button ---------- */
+
+.project-card__footer {
+  margin-top: auto;
+}
+
+.project-card__open {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  height: 40px;
+  margin-top: 16px;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--color-primary);
+  text-decoration: none;
+  background: rgba(192, 57, 43, 0.06);
+  border: 1px solid var(--color-primary);
+  border-radius: 4px;
+  transition: background 0.15s, color 0.15s;
+}
+
+.project-card__open:hover {
+  color: #fff;
+  background: var(--color-primary);
+}
