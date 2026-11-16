@@ -114,7 +114,7 @@ export default function AuthPage() {
                 <>
                   <Field label="Name" name="name" placeholder="Your full name" autoComplete="name"
                     value={form.name} onChange={handleChange} required />
-                  <Field label="Username" name="username" placeholder="e.g. reema_dev"
+                  <Field label="Username" name="username" placeholder="e.g. username"
                     autoComplete="username" autoCapitalize="none" spellCheck={false}
                     minLength={3} maxLength={20} value={form.username} onChange={handleChange}
                     hint="3–20 characters: letters, numbers, _ or ." required />

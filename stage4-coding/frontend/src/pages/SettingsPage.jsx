@@ -7,6 +7,7 @@ import '../styles/settings.css';
 
 const USERNAME_RE = /^[a-z0-9_.]{3,20}$/;
 const USERNAME_RULE = 'Username must be 3–20 characters: letters, numbers, _ or .';
+const EMAIL_RE = /^[^@\s]+@[^@\s]+\.[^@\s]+$/;
 
 export default function SettingsPage() {
   const { user, logout, updateProfile } = useAuth();
@@ -15,6 +16,7 @@ export default function SettingsPage() {
   const [form, setForm] = useState({
     name: user?.name || '',
     username: user?.username || '',
+    email: user?.email || '',
     phone: user?.phone || '',
   });
   const [error, setError] = useState('');
@@ -38,12 +40,15 @@ export default function SettingsPage() {
 
     const name = form.name.trim();
     const username = form.username.trim().toLowerCase().replace(/^@/, '');
+    const email = form.email.trim().toLowerCase();
 
     if (!name) return setError('Please enter your name.');
     if (username && !USERNAME_RE.test(username)) return setError(USERNAME_RULE);
+    if (!EMAIL_RE.test(email)) return setError('Please enter a valid email address.');
 
     const changes = { name, phone: form.phone.trim() };
     if (username) changes.username = username;
+    if (email !== (user?.email || '').toLowerCase()) changes.email = email;
 
     setSaving(true);
     try {
@@ -51,6 +56,7 @@ export default function SettingsPage() {
       setForm({
         name: updated.name || '',
         username: updated.username || '',
+        email: updated.email || '',
         phone: updated.phone || '',
       });
       setSaved(true);
@@ -95,7 +101,7 @@ export default function SettingsPage() {
           <label className="settings__field">
             <span>Username</span>
             <input name="username" value={form.username} onChange={handleChange}
-              placeholder="e.g. reema_dev" autoComplete="username" autoCapitalize="none"
+              placeholder="e.g. user_name382" autoComplete="username" autoCapitalize="none"
               spellCheck={false} maxLength={20} />
             <small>
               {user?.username
@@ -106,8 +112,10 @@ export default function SettingsPage() {
 
           <label className="settings__field">
             <span>Email</span>
-            <input value={user?.email || ''} readOnly disabled />
-            <small>Your email is used to sign in and recover your password.</small>
+            <input name="email" type="email" value={form.email} onChange={handleChange}
+              placeholder="email@gmail.com" autoComplete="email" autoCapitalize="none"
+              spellCheck={false} required />
+            <small>Used to sign in and recover your password. A change takes effect right away.</small>
           </label>
 
           <label className="settings__field">

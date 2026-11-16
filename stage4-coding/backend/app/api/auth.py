@@ -14,6 +14,7 @@ def error(code, message, status):
 
 USERNAME_RE = re.compile(r'^[a-z0-9_.]{3,20}$')
 USERNAME_RULE = "Username must be 3-20 characters: letters, numbers, _ or ."
+EMAIL_RE = re.compile(r'^[^@\s]+@[^@\s]+\.[^@\s]+$')
 
 
 def user_to_dict(user):
@@ -180,32 +181,54 @@ def update_me():
             return error("USERNAME_TAKEN", "This username is already taken", 409)
         meta['username'] = new_username
 
+    new_email = None
+    if 'email' in data:
+        candidate = (data.get('email') or '').strip().lower()
+        if not EMAIL_RE.match(candidate):
+            return error("VALIDATION_ERROR", "Please enter a valid email address", 400)
+        if candidate != (g.user.email or '').lower():
+            new_email = candidate
+
+    attributes = {"user_metadata": meta}
+    if new_email:
+        attributes["email"] = new_email
+        attributes["email_confirm"] = True
+
     try:
-        admin_client.auth.admin.update_user_by_id(g.user.id, {"user_metadata": meta})
+        admin_client.auth.admin.update_user_by_id(g.user.id, attributes)
     except Exception as e:
         current_app.logger.warning("update profile failed: %s", e)
+        if new_email and any(word in str(e).lower() for word in ("already", "registered", "exists", "duplicate")):
+            return error("EMAIL_TAKEN", "This email is already in use", 409)
         return error("VALIDATION_ERROR", "Could not update your settings", 400)
 
-    if new_username:
+    if new_username or new_email:
         try:
             existing = (admin_client.table('user_profiles').select('user_id')
                         .eq('user_id', g.user.id).limit(1).execute().data)
+            changes = {}
+            if new_username:
+                changes["username"] = new_username
+            if new_email:
+                changes["email"] = new_email
             if existing:
-                (admin_client.table('user_profiles').update({"username": new_username})
+                (admin_client.table('user_profiles').update(changes)
                  .eq('user_id', g.user.id).execute())
-            else:
+            elif meta.get('username'):
                 admin_client.table('user_profiles').insert({
                     "user_id": g.user.id,
-                    "username": new_username,
-                    "email": (g.user.email or '').lower(),
+                    "username": meta['username'],
+                    "email": new_email or (g.user.email or '').lower(),
                 }).execute()
         except Exception as e:
             current_app.logger.warning("profile save failed: %s", e)
-            return error("USERNAME_TAKEN", "This username is already taken", 409)
+            if new_username:
+                return error("USERNAME_TAKEN", "This username is already taken", 409)
+            return error("VALIDATION_ERROR", "Could not update your settings", 400)
 
     return jsonify({"data": {
         "id": g.user.id,
-        "email": g.user.email,
+        "email": new_email or g.user.email,
         "phone": meta.get("phone"),
         "name": meta.get("name"),
         "username": meta.get("username"),
