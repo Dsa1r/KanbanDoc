@@ -24,11 +24,6 @@ export default function Footer() {
             </Link>
           ))}
         </nav>
-
-        <p className="site-footer__status">
-          <span className="site-footer__pulse" aria-hidden="true" />
-          All systems normal
-        </p>
       </div>
     </footer>
   );
