@@ -1,0 +1,140 @@
+.site-footer {
+  --footer-bg: var(--primary, #c8372d);
+  --footer-fg: var(--surface, #fffcf6);
+  --footer-border: var(--border, #e6dfd0);
+
+  background: var(--footer-bg);
+  color: var(--footer-fg);
+  border-top: 1px solid var(--footer-border);
+  font-family: var(--font-body, var(--font-sans, 'Inter', system-ui, sans-serif));
+}
+
+.site-footer *,
+.site-footer *::before,
+.site-footer *::after {
+  box-sizing: border-box;
+}
+
+.site-footer p {
+  margin: 0;
+}
+
+.site-footer__inner {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+  align-items: center;
+  gap: 24px 32px;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 32px;
+}
+
+/* Left */
+
+.site-footer__built {
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: -0.005em;
+}
+
+.site-footer__copy {
+  margin-top: 4px;
+  font-size: 13px;
+  line-height: 1.5;
+  color: color-mix(in srgb, var(--footer-fg) 92%, transparent);
+}
+
+/* Center */
+
+.site-footer__nav {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 4px 28px;
+}
+
+.site-footer__link {
+  padding: 6px 0;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--footer-fg);
+  text-decoration: underline;
+  text-decoration-color: transparent;
+  text-underline-offset: 6px;
+  opacity: 0.88;
+  transition: opacity 0.2s ease, text-decoration-color 0.2s ease;
+}
+
+.site-footer__link:hover {
+  opacity: 1;
+  text-decoration-color: currentColor;
+}
+
+.site-footer a:focus-visible {
+  outline: 2px solid var(--footer-fg);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+/* Right */
+
+.site-footer__status {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  justify-self: end;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.site-footer__pulse {
+  position: relative;
+  flex: none;
+  width: 8px;
+  height: 8px;
+  background: #fff;
+  border-radius: 50%;
+}
+
+.site-footer__pulse::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: #fff;
+  border-radius: 50%;
+  animation: footer-pulse 1.8s ease-out infinite;
+}
+
+@keyframes footer-pulse {
+  from { transform: scale(1); opacity: 0.6; }
+  to { transform: scale(2.8); opacity: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .site-footer__pulse::after {
+    animation: none;
+    transform: scale(1.8);
+    opacity: 0.35;
+  }
+
+  .site-footer__link {
+    transition: none;
+  }
+}
+
+/* Small screens: stack the three sections */
+
+@media (max-width: 860px) {
+  .site-footer__inner {
+    grid-template-columns: 1fr;
+    padding: 28px 20px;
+  }
+
+  .site-footer__nav {
+    justify-content: flex-start;
+  }
+
+  .site-footer__status {
+    justify-self: start;
+  }
+}
