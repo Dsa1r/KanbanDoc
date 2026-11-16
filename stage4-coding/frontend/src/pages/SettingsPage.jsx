@@ -101,7 +101,7 @@ export default function SettingsPage() {
           <label className="settings__field">
             <span>Username</span>
             <input name="username" value={form.username} onChange={handleChange}
-              placeholder="e.g. user_name382" autoComplete="username" autoCapitalize="none"
+              placeholder="e.g. username" autoComplete="username" autoCapitalize="none"
               spellCheck={false} maxLength={20} />
             <small>
               {user?.username
