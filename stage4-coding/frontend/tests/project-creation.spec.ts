@@ -6,28 +6,28 @@ test.describe('Empty Kanban Project', () => {
 
   test('should create an Empty project and add a task', async ({ page }) => {
 
-    // 1. تسجيل الدخول
+    // هان نسجل الدخول لان مهم قبل ما نقدر نسوي اي شي لازم نسوي تسجيل دخول
     await login(page);
 
-    // 2. فتح نافذة إنشاء المشروع
+    // نفتح خانه إنشاء المشروع
     await page.getByRole('button', { name: /Generate New Project/i }).click();
 
-    // 3. إدخال اسم المشروع
+    // ندخل اسم المشروع
     await page.getByLabel('Project name').fill('Playwright Empty Project');
 
-    // 4. اختيار القالب الفارغ
+    // نبي نختار القالب الامبتي
     await page.getByText('Blank Slate Custom Template', { exact: true }).click();
 
-    // 5. إنشاء المشروع
+    // نبي نضغط إنشاء المشروع
     await page.getByRole('button', { name: 'Generate Project' }).click();
 
-    // 6. انتظار الانتقال إلى لوحة المشروع
+    // انتظار الانتقال إلى لوحة المشروع
     await expect(page).toHaveURL(/\/projects\/[^/]+\/board/, {
       timeout: 60000
     });
 
     console.log(await page.locator('body').innerText());
-    
+
     // التأكد من ظهور المراحل
         await expect(page.getByText('To Do', { exact: true })).toBeVisible();
         await expect(page.getByText('In Progress', { exact: true })).toBeVisible();

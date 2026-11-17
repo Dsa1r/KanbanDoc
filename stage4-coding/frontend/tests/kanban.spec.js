@@ -7,36 +7,36 @@ test.describe('Fixed Kanban Project', () => {
 
     await login(page);
 
-    // فتح إنشاء مشروع
+    // بيسوي إنشاء للمشروع
     await page.getByRole('button', { name: /Generate New Project/i }).click();
 
-    // اسم المشروع
+    // هنا نسمي المشروع
     await page.getByLabel('Project name').fill('Playwright Fixed Project');
 
-    // اختيار القالب الثابت
+    // يختار القالب الفكسد
     await page.getByText('Pre-seeded Fixed Template', { exact: true }).click();
 
-    // إنشاء المشروع
+    // نضغط انشاء المشروع
     await page.getByRole('button', { name: /Generate Project/i }).click();
 
 
-    // انتظار فتح لوحة المشروع
+    // هنا يودينا للكانبان
     await expect(page).toHaveURL(/\/projects\/[^/]+\/board/, {
-      timeout: 30000
+      timeout: 30000 // لازم نسألهم عن الوقت كيف نعرف وش الصح
     });
 
-    // التأكد من ظهور المراحل
+    // الفيزز لازم تظهر اول
     await expect(page.getByText('To Do', { exact: true })).toBeVisible();
     await expect(page.getByText('In Progress', { exact: true })).toBeVisible();
     await expect(page.getByText(/Testing.*Review/i)).toBeVisible();
     await expect(page.getByText('Done', { exact: true })).toBeVisible();
 
-    // التأكد من وجود مهام ثابتة
+    // هنا لازم تكون فيه مهام ثابتة
     const taskCards = page.locator('.task-card');
 
     await expect(taskCards.first()).toBeVisible();
 
-    // التأكد من عدم وجود زر إضافة مهمة
+    // لازم مايكون فيهاضافة تاسك هنا
     await expect(
       page.getByRole('button', { name: /add task/i })
     ).toHaveCount(0);

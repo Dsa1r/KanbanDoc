@@ -25,25 +25,25 @@ test.describe('Authentication Flow', () => {
     throw new Error('Missing test credentials');
   }
 
-  // فتح صفحة المصادقة
+  // ابي افتح صفحة المصادقة
   await page.goto('/auth');
 
-  // التحويل من Sign Up إلى Log In
+  // بحول من Sign Up إلى Log In
   await page.getByRole('tab', { name: 'Log in' }).click();
 
-  // التأكد من ظهور نموذج تسجيل الدخول
+  // ابي اتاكد من ظهور نموذج تسجيل الدخول
   await expect(
     page.locator('input[name="identifier"]')
   ).toBeVisible();
 
-  // إدخال بيانات الدخول
+  // هنا ندخل بيانات الدخول
   await page.locator('input[name="identifier"]').fill(email);
   await page.locator('input[name="password"]').fill(password);
 
-  // الضغط على Log In
+  // يضغط على Log In
   await page.getByRole('button', { name: 'Log in' }).click();
 
-  // التأكد من الانتقال إلى Dashboard
+  // نبي نتاكد انه ينتقل إلى Dashboard
   await expect(page).toHaveURL(/dashboard/);
 });
 
