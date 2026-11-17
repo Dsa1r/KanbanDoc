@@ -20,7 +20,7 @@ from app.utils.errors import ApiError
 
 PLAN_MODEL = "gemini-3.8-flash"
 PHASE_MODEL = "gemini-3.8-flash"
-MAX_TASKS = 4  # خليناها 4 تاسكات مثل ما طلبتي لتخفيف الضغط
+MAX_TASKS = 1  
 MAX_WORKERS = 2  # free tier has a low requests-per-minute limit
 PHASE_STATUSES = ["TO_DO", "IN_PROGRESS", "TESTING_REVIEW", "DONE"]
 STAGES = {  # accepts a few spellings, saves your DB values
