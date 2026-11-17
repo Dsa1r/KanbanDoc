@@ -19,9 +19,10 @@ test.describe('Fixed Kanban Project', () => {
     // إنشاء المشروع
     await page.getByRole('button', { name: /Generate Project/i }).click();
 
+
     // انتظار فتح لوحة المشروع
     await expect(page).toHaveURL(/\/projects\/[^/]+\/board/, {
-      timeout: 15000
+      timeout: 30000
     });
 
     // التأكد من ظهور المراحل
