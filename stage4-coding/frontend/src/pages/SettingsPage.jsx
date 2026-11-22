@@ -1,22 +1,18 @@
 import { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext.jsx';
-import Header from '../components/Header.jsx';
 import '../styles/dashboard.css';
 import '../styles/settings.css';
 
 const USERNAME_RE = /^[a-z0-9_.]{3,20}$/;
 const USERNAME_RULE = 'Username must be 3–20 characters: letters, numbers, _ or .';
-const EMAIL_RE = /^[^@\s]+@[^@\s]+\.[^@\s]+$/;
 
 export default function SettingsPage() {
-  const { user, logout, updateProfile } = useAuth();
-  const navigate = useNavigate();
+  const { user, updateProfile } = useAuth();
 
   const [form, setForm] = useState({
     name: user?.name || '',
     username: user?.username || '',
-    email: user?.email || '',
     phone: user?.phone || '',
   });
   const [error, setError] = useState('');
@@ -28,11 +24,6 @@ export default function SettingsPage() {
     setSaved(false);
   }
 
-  async function handleLogout() {
-    await logout();
-    navigate('/auth');
-  }
-
   async function handleSubmit(event) {
     event.preventDefault();
     setError('');
@@ -40,15 +31,12 @@ export default function SettingsPage() {
 
     const name = form.name.trim();
     const username = form.username.trim().toLowerCase().replace(/^@/, '');
-    const email = form.email.trim().toLowerCase();
 
     if (!name) return setError('Please enter your name.');
     if (username && !USERNAME_RE.test(username)) return setError(USERNAME_RULE);
-    if (!EMAIL_RE.test(email)) return setError('Please enter a valid email address.');
 
     const changes = { name, phone: form.phone.trim() };
     if (username) changes.username = username;
-    if (email !== (user?.email || '').toLowerCase()) changes.email = email;
 
     setSaving(true);
     try {
@@ -56,7 +44,6 @@ export default function SettingsPage() {
       setForm({
         name: updated.name || '',
         username: updated.username || '',
-        email: updated.email || '',
         phone: updated.phone || '',
       });
       setSaved(true);
@@ -69,13 +56,6 @@ export default function SettingsPage() {
 
   return (
     <div className="dashboard-page">
-      <Header
-        userName={user?.name}
-        username={user?.username}
-        onSettings={() => navigate('/settings')}
-        onLogout={handleLogout}
-      />
-
       <main className="dashboard settings">
         <Link to="/dashboard" className="settings__back">
           ← Back to dashboard
@@ -112,10 +92,8 @@ export default function SettingsPage() {
 
           <label className="settings__field">
             <span>Email</span>
-            <input name="email" type="email" value={form.email} onChange={handleChange}
-              placeholder="email@gmail.com" autoComplete="email" autoCapitalize="none"
-              spellCheck={false} required />
-            <small>Used to sign in and recover your password. A change takes effect right away.</small>
+            <input value={user?.email || ''} readOnly disabled />
+            <small>Your email is used to sign in and recover your password.</small>
           </label>
 
           <label className="settings__field">
