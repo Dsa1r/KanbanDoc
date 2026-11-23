@@ -1,44 +1,32 @@
-import { useEffect, useState } from 'react';
-import { CloseIcon } from './Icons.jsx';
+import { useEffect } from 'react'
+import { CloseIcon } from './Icons.jsx'
+import { useTaskPhase } from '../hooks/useTaskPhase.js'
 
-// columns + onChangeStatus are optional: they add a "Status" dropdown (works on phones, where dragging does not)
-// loadPhase is optional: with it, the content of the task's current status is fetched from the API and
-// fetched again whenever phaseVersion changes. Without it (the mock board) the content comes from the task itself.
-export default function TaskDrawer({ task, onClose, columns, onChangeStatus, loadPhase, phaseVersion = 0 }) {
-  const [phase, setPhase] = useState(null);
-  const [phaseError, setPhaseError] = useState('');
-
+export default function TaskDrawer({
+  task,
+  onClose,
+  columns,
+  onChangeStatus,
+  loadPhase,
+}) {
   useEffect(() => {
-    const previousOverflow = document.body.style.overflow;
-    document.body.style.overflow = 'hidden';
+    const previousOverflow = document.body.style.overflow
+    document.body.style.overflow = 'hidden'
 
     return () => {
-      document.body.style.overflow = previousOverflow;
-    };
-  }, []);
+      document.body.style.overflow = previousOverflow
+    }
+  }, [])
 
-  useEffect(() => {
-    if (!loadPhase) return undefined;
-    let ignore = false;
+  const phaseQuery = useTaskPhase(
+    task.id,
+    task.status,
+    Boolean(loadPhase)
+  )
 
-    setPhase(null);
-    setPhaseError('');
-    loadPhase(task.id)
-      .then((data) => {
-        if (!ignore) setPhase(data);
-      })
-      .catch((err) => {
-        if (!ignore) setPhaseError(err.message);
-      });
-
-    return () => {
-      ignore = true;
-    };
-  }, [task.id, loadPhase, phaseVersion]);
-
-  // real board: the phase we fetched; mock board: the fields stored on the task
-  const content = loadPhase ? phase : task;
-  const isLoadingPhase = Boolean(loadPhase) && !phase && !phaseError;
+  const content = loadPhase ? phaseQuery.data : task
+  const isLoadingPhase = Boolean(loadPhase) && phaseQuery.isLoading
+  const phaseError = phaseQuery.error?.message || ''
 
   function handleKeyDown(event) {
     if (event.key === 'Escape') {

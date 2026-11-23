@@ -4,6 +4,10 @@ const STATUS_TO_UI = { TO_DO: 'todo', IN_PROGRESS: 'in_progress', TESTING_REVIEW
 const STATUS_TO_API = Object.fromEntries(Object.entries(STATUS_TO_UI).map(([api, ui]) => [ui, api]))
 const STAGE_TO_UI = { DATABASE: 'db', BACKEND: 'backend', FRONTEND: 'frontend' }
 
+export function toApiStatus(status) {
+  return STATUS_TO_API[status] ?? status
+}
+
 // Every URL in one place, so it is easy to match them with the Flask routes.
 // Only the board path comes from the Flask code that was shared (check its prefix);
 // the phase and status paths must be matched with the real routes.
@@ -47,10 +51,19 @@ export async function getBoard(projectId) {
   }
 }
 
-// GET phase  ->  the content of the task's CURRENT status (the backend reads tasks.current_status)
-export async function getTaskPhase(taskId) {
-  const data = await apiFetch(PATHS.phase(taskId), { auth: true })
+// GET phase -> content of a specific task phase
+export async function getTaskPhase(taskId, status) {
+  const query = status
+    ? `?status=${encodeURIComponent(status)}`
+    : ''
+
+  const data = await apiFetch(
+    `${PATHS.phase(taskId)}${query}`,
+    { auth: true }
+  )
+
   const phase = data.phase ?? data
+
   return {
     description: phase.description ?? '',
     whyItMatters: phase.why_it_matters ?? '',
@@ -73,6 +86,7 @@ export async function createTask(projectId, title, stage) {
     frontend: 'FRONTEND',
   };
 
+
   const result = await apiFetch('/api/v1/tasks/', {
     method: 'POST',
     body: {
@@ -88,3 +102,4 @@ export async function createTask(projectId, title, stage) {
 
   return toTask(apiTask);
 }
+
