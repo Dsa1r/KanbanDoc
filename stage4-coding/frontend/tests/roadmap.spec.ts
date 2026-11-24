@@ -1,5 +1,4 @@
 import { test, expect, type Page } from '@playwright/test';
-// @ts-ignore
 import { PHASES } from '../src/data/phases.js';
 
 type Tool = { name: string; note: string; url: string };
