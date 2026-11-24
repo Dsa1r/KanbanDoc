@@ -17,7 +17,9 @@ export async function login(page) {
 
   await page.getByRole('button', { name: 'Log in' }).click();
 
-  await expect(page).toHaveURL(/dashboard/, {
-    timeout: 15000
+  await expect(page).toHaveURL(/\/dashboard/, {
+    timeout: 15000,
   });
+
+  await expect(page.getByRole('button', { name: /Generate New Project/i })).toBeVisible();
 }

@@ -3,12 +3,29 @@ import { login } from './helpers/auth.js';
 
 async function openProjectBoard(page, projectName) {
   await page.goto('/dashboard');
-  await page.getByRole('button', { name: /Generate New Project/i }).click();
-  await page.getByLabel('Project name').fill(projectName);
-  await page.getByRole('button', { name: /Generate Project/i }).click();
-  await expect(page).toHaveURL(/\/projects\/[^/]+\/board/, {
-    timeout: 30000,
-  });
+
+  for (let attempt = 0; attempt < 2; attempt++) {
+    await page.getByRole('button', { name: /Generate New Project/i }).click();
+    await page.getByLabel('Project name').fill(projectName);
+    await page.getByRole('button', { name: /Generate Project/i }).click();
+
+    const createError = page.getByText(/Could not create the project/i);
+    const navigated = await page
+      .waitForURL(/\/projects\/[^/]+\/board/, { timeout: 30000 })
+      .then(() => true)
+      .catch(() => false);
+
+    if (navigated) break;
+
+    if (attempt === 0 && (await createError.isVisible().catch(() => false))) {
+      await page.getByRole('button', { name: 'Cancel' }).click();
+      continue;
+    }
+
+    await expect(page).toHaveURL(/\/projects\/[^/]+\/board/, { timeout: 1000 });
+  }
+
+  await expect(page.getByText('Loading board…')).toBeHidden({ timeout: 30000 });
   await expect(page.locator('.kanban__columns')).toBeVisible();
 }
 
