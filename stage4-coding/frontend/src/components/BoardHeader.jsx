@@ -1,5 +1,4 @@
 import { Link } from 'react-router-dom';
-import { CompassIcon } from './Icons.jsx';
 import './BoardHeaderOptions.css';
 
 export default function BoardHeader({
@@ -10,19 +9,12 @@ export default function BoardHeader({
   activeStages,
   onToggleStage,
   backTo,
-  showTaskOptions = false, // true only for Empty projects
+  showTaskOptions = false,
   onAiGenerate,
   onAddManual,
 }) {
   return (
     <header className="board-header">
-      <div className="board-header__brand">
-        <span className="board-header__logo">
-          <CompassIcon width={16} height={16} />
-        </span>
-        <span className="board-header__brand-name">DevCompass</span>
-      </div>
-
       {backTo && <Link to={backTo} className="board-header__back">← Projects</Link>}
 
       <h1 className="board-header__title">{projectName}</h1>

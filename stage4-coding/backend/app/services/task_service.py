@@ -68,12 +68,12 @@ def update_status(task_id, user_id, new_status):
     }
 
 
-def get_task_phase(task_id, user_id):
-    """Get the phase details that match the task's current status."""
+def get_task_phase(task_id, user_id, requested_status=None):
+    """Get phase details for a specific status, or the current status."""
 
     task_id = parse_uuid(task_id, "Task")
 
-    # 1. Fetch the task.
+    # Fetch the task
     rows = (
         ext.admin_client.table("tasks")
         .select("id, project_id, current_status")
@@ -88,11 +88,21 @@ def get_task_phase(task_id, user_id):
 
     task = rows[0]
 
-    # 2. Verify project membership.
+    # Verify project membership
     ensure_project_member(task["project_id"], user_id)
 
-    # 3. Fetch the phase matching the current task status.
-    phase = fetch_task_phase(task_id, task["current_status"])
+    # Use requested status, or fall back to current status
+    status = requested_status or task["current_status"]
+
+    if status not in STATUSES:
+        raise ApiError(
+            "VALIDATION_ERROR",
+            "status must be one of TO_DO, IN_PROGRESS, TESTING_REVIEW, DONE",
+            400,
+        )
+
+    # Fetch the requested phase
+    phase = fetch_task_phase(task_id, status)
 
     if not phase:
         raise ApiError("NOT_FOUND", "Task phase not found", 404)

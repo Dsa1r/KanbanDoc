@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useSearchParams } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext.jsx'
 import AuthShowcase from '../components/AuthShowcase.jsx'
 import ForgotPasswordModal from '../components/ForgotPasswordModal.jsx'
@@ -12,7 +12,8 @@ const USERNAME_RE = /^[a-z0-9_.]{3,20}$/
 const USERNAME_RULE = 'Username must be 3–20 characters: letters, numbers, _ or .'
 
 export default function AuthPage() {
-  const [mode, setMode] = useState('signup') // 'signup' | 'login'
+  const [params, setParams] = useSearchParams()
+  const mode = params.get('mode') === 'login' ? 'login' : 'signup' // 'signup' | 'login'
   const [form, setForm] = useState(EMPTY)
   const [error, setError] = useState('')
   const [notice, setNotice] = useState('')
@@ -24,7 +25,7 @@ export default function AuthPage() {
   const isSignup = mode === 'signup'
 
   function switchMode(next) {
-    setMode(next)
+    setParams({ mode: next }, { replace: true })
     setError('')
     setNotice('')
   }

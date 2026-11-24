@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-
 import BoardHeader from '../components/BoardHeader.jsx';
 import NextUpBanner from '../components/NextUpBanner.jsx';
 import KanbanColumn from '../components/KanbanColumn.jsx';
@@ -23,7 +22,6 @@ import {
 import '../styles/kanban.css';
 
 export default function KanbanPage() {
-
   const { projectId } = useParams();
 
   // Authentication token
@@ -42,13 +40,12 @@ export default function KanbanPage() {
 
   const [activeStages, setActiveStages] = useState([]);
   const [selectedTaskId, setSelectedTaskId] = useState(null);
-  const [phaseVersion, setPhaseVersion] = useState(0);
 
-  // Modals opened from the two header options (Empty projects only)
+  // Modals
   const [showAddTask, setShowAddTask] = useState(false);
   const [showAiWizard, setShowAiWizard] = useState(false);
 
-  // Reload the board from the server (after adding or generating tasks)
+  // Reload board from server
   function reloadBoard() {
     if (!projectId) return Promise.resolve();
 
@@ -64,7 +61,6 @@ export default function KanbanPage() {
 
   // Load board
   useEffect(() => {
-
     if (!projectId) return undefined;
 
     let ignore = false;
@@ -86,14 +82,11 @@ export default function KanbanPage() {
     return () => {
       ignore = true;
     };
-
   }, [projectId]);
 
   // Board calculations
   const readOnly = Boolean(project?.isCompleted);
 
-  // The two options appear only for Empty projects (template_id 0).
-  // ADAPT: boardService.js must pass this field through (templateId or template_id).
   const templateId = project?.templateId ?? project?.template_id;
 
   const showTaskOptions =
@@ -124,18 +117,15 @@ export default function KanbanPage() {
         );
 
   function toggleStage(stageId) {
-
     setActiveStages((prevStages) =>
       prevStages.includes(stageId)
         ? prevStages.filter((id) => id !== stageId)
         : [...prevStages, stageId]
     );
-
   }
 
   // Move task between columns
   async function handleMoveTask(taskId, newStatus) {
-
     const task = tasks.find(
       (item) => item.id === taskId
     );
@@ -160,21 +150,16 @@ export default function KanbanPage() {
     setStatus(newStatus);
     setError('');
 
+    // Mock board does not need an API request
     if (!projectId) return;
 
     try {
-
       await updateTaskStatus(taskId, newStatus);
-
-      setPhaseVersion((version) => version + 1);
-
     } catch (err) {
-
+      // Roll back if the API request fails
       setStatus(oldStatus);
       setError(err.message);
-
     }
-
   }
 
   // Loading state
@@ -199,7 +184,6 @@ export default function KanbanPage() {
   }
 
   return (
-
     <div className="kanban-page">
 
       <BoardHeader
@@ -236,9 +220,7 @@ export default function KanbanPage() {
 
         {/* Kanban Columns */}
         <div className="kanban__columns">
-
           {BOARD_COLUMNS.map((column) => (
-
             <KanbanColumn
               key={column.id}
               column={column}
@@ -253,14 +235,12 @@ export default function KanbanPage() {
                 readOnly ? undefined : handleMoveTask
               }
             />
-
           ))}
-
         </div>
 
       </main>
 
-      {/* Manual: existing Add Task modal */}
+      {/* Manual: Add Task modal */}
       {showAddTask && (
         <AddTaskModal
           projectId={projectId}
@@ -271,7 +251,7 @@ export default function KanbanPage() {
         />
       )}
 
-      {/* AI: step-by-step questions */}
+      {/* AI Wizard */}
       {showAiWizard && (
         <AiWizardModal
           projectId={projectId}
@@ -282,7 +262,6 @@ export default function KanbanPage() {
 
       {/* Task Details Drawer */}
       {selectedTask && (
-
         <TaskDrawer
           task={selectedTask}
           columns={BOARD_COLUMNS}
@@ -292,14 +271,10 @@ export default function KanbanPage() {
           loadPhase={
             projectId ? getTaskPhase : undefined
           }
-          phaseVersion={phaseVersion}
           onClose={() => setSelectedTaskId(null)}
         />
-
       )}
 
     </div>
-
   );
-
 }

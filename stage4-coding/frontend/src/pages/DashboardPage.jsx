@@ -1,7 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useAuth } from '../context/AuthContext.jsx';
-import Header from '../components/Header.jsx';
 import ProjectCard from '../components/ProjectCard.jsx';
 import ProjectCardSkeleton from '../components/ProjectCardSkeleton.jsx';
 import ProjectFilters from '../components/ProjectFilters.jsx';
@@ -20,7 +18,6 @@ import { countByStatus, filterProjects } from '../utils/projectFilters.js';
 import '../styles/dashboard.css';
 
 export default function DashboardPage() {
-  const { user, logout } = useAuth();
   const navigate = useNavigate();
 
   const [projects, setProjects] = useState([]);
@@ -63,11 +60,6 @@ export default function DashboardPage() {
       ignore = true;
     };
   }, []);
-
-  async function handleLogout() {
-    await logout();
-    navigate('/auth');
-  }
 
   function clearFilters() {
     setQuery('');
@@ -187,13 +179,6 @@ export default function DashboardPage() {
 
   return (
     <div className="dashboard-page">
-      <Header
-        userName={user?.name}
-        username={user?.username}
-        onSettings={() => navigate('/settings')}
-        onLogout={handleLogout}
-      />
-
       <div className={`dashboard-layout ${showSidebar ? 'dashboard-layout--with-sidebar' : ''}`}>
       {showSidebar && (
         <ProjectFilters

@@ -16,9 +16,7 @@ function Section({ num, title, children }) {
 
 export default function PhasePanel({ phase }) {
   const bodyRef = useRef(null)
-  const progress = Math.round((phase.id / PHASES.length) * 100)
-
-  // كل ما تتغير المرحلة نرجّع التمرير لفوق
+  
   useEffect(() => {
     bodyRef.current?.scrollTo({ top: 0 })
   }, [phase.id])
@@ -59,7 +57,7 @@ export default function PhasePanel({ phase }) {
           </ol>
         </Section>
 
-        <Section num="03" title="Alternative Tools & Resources">
+        <Section num="03" title="Tools & Resources">
           <ul className="tool-list">
             {phase.tools.map((t) => (
               <li key={t.name}>
@@ -76,16 +74,6 @@ export default function PhasePanel({ phase }) {
           </ul>
         </Section>
       </div>
-
-      <footer className="panel__foot">
-        <div className="progress__row">
-          <span>Overall progress</span>
-          <span>{progress}%</span>
-        </div>
-        <div className="progress__track">
-          <span style={{ width: `${progress}%` }} />
-        </div>
-      </footer>
     </aside>
   )
 }

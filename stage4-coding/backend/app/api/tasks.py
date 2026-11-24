@@ -14,10 +14,18 @@ def update_task_status(task_id):
     data = task_service.update_status(task_id, g.user.id, body.get('status'))
     return jsonify({"data": data}), 200
 
+
 @tasks_bp.get('/<task_id>/phase')
 @auth_required
 def get_task_phase(task_id):
-    data = task_service.get_task_phase(task_id, g.user.id)
+    status = request.args.get("status")
+
+    data = task_service.get_task_phase(
+        task_id,
+        g.user.id,
+        status
+    )
+
     return jsonify({"data": data}), 200
 
 @tasks_bp.post("/")
