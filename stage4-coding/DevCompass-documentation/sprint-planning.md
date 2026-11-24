@@ -6,7 +6,7 @@ To divide the development phase into short, manageable iterations,
 prioritize tasks, identify dependencies, and assign responsibilities.
 
 ## Sprint Duration
-4 Sprints — 1 week per sprint.
+4 Sprints — 1-2 week per sprint.
 
 Priorities are assigned based on the original task order. 
 The earlier tasks are considered higher priority, while later tasks 
