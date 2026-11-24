@@ -9,7 +9,7 @@ export default function BoardHeader({
   activeStages,
   onToggleStage,
   backTo,
-  showTaskOptions = false, // true only for Empty projects
+  showTaskOptions = false,
   onAiGenerate,
   onAddManual,
 }) {

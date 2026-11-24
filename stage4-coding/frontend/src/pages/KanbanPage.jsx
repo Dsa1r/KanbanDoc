@@ -1,7 +1,5 @@
-
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-
 import BoardHeader from '../components/BoardHeader.jsx';
 import NextUpBanner from '../components/NextUpBanner.jsx';
 import KanbanColumn from '../components/KanbanColumn.jsx';

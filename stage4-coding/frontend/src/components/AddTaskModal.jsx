@@ -4,14 +4,14 @@ import "./AddTaskModal.css";
 
 function AddTaskModal({
     projectId,
-    stage: initialStage, // تم إعادة تسمية الـ prop لنتجنب التعارض
+    stage: initialStage,
     token,
     onClose,
     onTaskCreated
 }) {
     const [title, setTitle] = useState("");
     const [loading, setLoading] = useState(false);
-    const [stage, setStage] = useState(initialStage || ""); // الحالة المحلية المستقلة للـ select
+    const [stage, setStage] = useState(initialStage || "");
     const [error, setError] = useState("");
 
     async function handleSubmit(e) {

@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import TaskCard from './TaskCard.jsx';
 
-// onMoveTask is optional: without it the column is read-only (no dragging).
 export default function KanbanColumn({
   column,
   tasks,
@@ -64,7 +63,6 @@ export default function KanbanColumn({
           <p className="kanban-column__empty">No tasks</p>
         ) : (
           tasks.map((task) => (
-            // the wrapper is what gets dragged (buttons are not draggable in every browser)
             <div
               key={task.id}
               className="kanban-column__draggable"
