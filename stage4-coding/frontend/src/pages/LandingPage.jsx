@@ -1,6 +1,29 @@
-import { Link } from 'react-router-dom';
-import Logo from '../components/Logo';
+import { useLayoutEffect, useRef } from 'react';
 import './LandingPage.css';
+
+const FOREGROUND_DURATION = 1600;
+const FOREGROUND_SCROLL_THRESHOLD = 70;
+
+function shouldStartForeground(scrollY, initialScrollY) {
+  return scrollY - initialScrollY >= FOREGROUND_SCROLL_THRESHOLD;
+}
+
+/** A single transform interpolates all three axes into the existing layout box. */
+function foregroundKeyframes(
+  rect,
+  viewportWidth,
+  viewportHeight,
+  minimumTop = 0,
+) {
+  const scale = Math.min(2.8, viewportWidth * 0.9 / rect.width);
+  const x = viewportWidth / 2 - (rect.left + rect.width / 2);
+  // Reveal the upright, horizontally centered board beneath the opening copy.
+  const y = Math.max(viewportHeight * 0.85, minimumTop) - rect.top + rect.height * (scale - 1) / 2;
+  return [
+    { transform: `translate3d(${x}px, ${y}px, 0) scale(${scale}) perspective(1400px) rotateY(0deg) rotateZ(0deg)` },
+    { transform: 'translate3d(0px, 0px, 0) scale(1) perspective(1400px) rotateY(-10deg) rotateZ(5deg)' },
+  ];
+}
 
 const BOARD = [
   {
@@ -64,25 +87,94 @@ const FEATURES = [
 ];
 
 function LandingPage() {
+  const board = useRef(null);
+  const copy = useRef(null);
+  const scene = useRef(null);
+  useLayoutEffect(() => {
+    const element = board.current;
+    if (!element || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    const rect = element.getBoundingClientRect();
+    const text = copy.current;
+    const textRect = text?.getBoundingClientRect();
+    const initialWidth = Math.min(620, window.innerWidth - 48);
+    const textMotion = text && textRect ? text.animate([
+      {
+        transform: `translate3d(${(window.innerWidth - initialWidth) / 2 - textRect.left}px, ${window.innerWidth > 900 ? -40 : 28}px, 0)`,
+        width: `${initialWidth}px`,
+        textAlign: 'center',
+      },
+      { transform: 'translate3d(0px, 0px, 0)', width: `${textRect.width}px`, textAlign: window.innerWidth > 900 ? 'left' : 'center' },
+    ], { duration: FOREGROUND_DURATION, easing: 'cubic-bezier(0.22, 0.68, 0.25, 1)', fill: 'both' }) : null;
+    textMotion?.pause();
+    if (textMotion) textMotion.currentTime = 0;
+    const ctaBottom = text?.querySelector('.landing__btn')?.getBoundingClientRect().bottom ?? 0;
+    const motion = element.animate(
+      foregroundKeyframes(rect, window.innerWidth, window.innerHeight, ctaBottom + 24),
+      { duration: FOREGROUND_DURATION, easing: 'cubic-bezier(0.22, 0.68, 0.25, 1)', fill: 'both' },
+    );
+    motion.pause();
+    motion.currentTime = 0;
+    const initialScrollY = window.scrollY;
+    let taskTimer;
+    let taskMotion;
+    motion.onfinish = () => {
+      taskTimer = setTimeout(() => {
+        const columns = element.querySelectorAll('.landing__col');
+        const source = columns.item(0);
+        const destination = columns.item(1);
+        const task = source?.querySelector('.landing__card');
+        if (!task || !source || !destination) return;
+        const before = task.getBoundingClientRect();
+        destination.appendChild(task);
+        const after = task.getBoundingClientRect();
+        taskMotion = task.animate([
+          { transform: `translate(${before.left - after.left}px, ${before.top - after.top}px)`, opacity: 0.85 },
+          { transform: 'translate(0px, 0px)', opacity: 1 },
+        ], { duration: 1300, easing: 'cubic-bezier(0.22, 0.68, 0.25, 1)' });
+        const sourceCount = source.querySelector('.landing__col-title span');
+        const destinationCount = destination.querySelector('.landing__col-title span');
+        if (sourceCount) sourceCount.textContent = '1';
+        if (destinationCount) destinationCount.textContent = '2';
+      }, 600);
+    };
+    const onScroll = () => {
+      if (!shouldStartForeground(window.scrollY, initialScrollY)) return;
+      window.removeEventListener('scroll', onScroll);
+      scene.current?.classList.add('landing__hero-scene--blended');
+      motion.play();
+      textMotion?.play();
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => {
+      window.removeEventListener('scroll', onScroll);
+      motion.cancel();
+      clearTimeout(taskTimer);
+      taskMotion?.cancel();
+      textMotion?.cancel();
+      scene.current?.classList.remove('landing__hero-scene--blended');
+    };
+  }, []);
   return (
     <div className="landing">
       <header className="landing__header">
-        <Link to="/" className="landing__brand" aria-label="Devcompass home">
-          <Logo height={46} />
-        </Link>
+        <a href="/" className="landing__brand" aria-label="Devcompass home">
+          <svg width="22" height="40" viewBox="0 0 22 40" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden="true"><path d="M13 2l1 17-9 5 2 11-5 3M17 2l1 19-9 5 1 8M21 1l1 22-9 5 1 6-5 4" /></svg><span>Devcompass</span>
+        </a>
         <nav className="landing__nav">
-          <Link to="/auth" className="landing__login">
+          <a href="/auth" className="landing__login">
             Log in
-          </Link>
-          <Link to="/auth" className="landing__header-cta">
+          </a>
+          <a href="/auth" className="landing__header-cta">
             Get started
-          </Link>
+          </a>
         </nav>
       </header>
 
       <main>
+        <div className="landing__scroll-scene">
+        <div ref={scene} className="landing__hero-scene">
         <section className="landing__hero">
-          <div className="landing__hero-text">
+          <div ref={copy} className="landing__hero-text">
             <h1 className="landing__title">
               Always know your <span className="landing__accent">next step.</span>
             </h1>
@@ -91,12 +183,12 @@ function LandingPage() {
               create a personalized task plan, manage your workflow, and track your
               progress.
             </p>
-            <Link to="/auth" className="landing__btn landing__btn--primary">
+            <a href="/auth" className="landing__btn landing__btn--primary">
               Get started →
-            </Link>
+            </a>
           </div>
 
-          <div className="landing__window" aria-hidden="true">
+          <div ref={board} className="landing__window" aria-hidden="true">
             <div className="landing__window-bar">
               <span className="landing__dot" />
               <span className="landing__dot" />
@@ -136,7 +228,10 @@ function LandingPage() {
             </div>
           </div>
         </section>
+        </div>
+        </div>
 
+        <div className="landing__continuation">
         <section className="landing__stages">
           {STAGES.map((stage) => (
             <div key={stage.n} className="landing__stage">
@@ -173,7 +268,6 @@ function LandingPage() {
               >
                 <path d="m9 6 6 6-6 6" />
               </svg>
-              <span className="landing__stage-n">{stage.n}</span>
             </div>
           ))}
         </section>
@@ -202,15 +296,16 @@ function LandingPage() {
         <section className="landing__cta">
           <div className="landing__cta-card">
             <h2 className="landing__cta-title">Ready to plan your next project?</h2>
-            <Link to="/auth" className="landing__cta-btn">
+            <a href="/auth" className="landing__cta-btn">
               Get started →
-            </Link>
+            </a>
           </div>
         </section>
+        </div>
       </main>
 
       <footer className="landing__footer">
-        © {new Date().getFullYear()} Devcompass
+        © 2026 Devcompass
       </footer>
     </div>
   );
