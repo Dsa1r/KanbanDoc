@@ -107,13 +107,13 @@ Implement AI task generation, develop the Roadmap interface, integrate project f
 
 ### Completed Work
 - AI task generation is working successfully.
-- AI provider/model setup using Grok (xAI), with four models selected to distribute load.
+- AI provider/model setup using Groq, with four models selected to distribute load.
 - Cross-feature integration.
 - Final workflow testing using a workflow-testing tool.
 - UI adjustments to improve the application's appearance and attractiveness.
 
 ### Changes & Improvements
-- The team moved to Grok through xAI after facing provider reliability issues and free-tier usage limitations with the previous provider.
+- The team moved to Groq after facing provider reliability issues and free-tier usage limitations with the previous provider.
 - Four models were selected to distribute the load.
 - The UI was adjusted during final development to improve its visual appeal.
 - The team collaborated through repeated meetings and clear assignments of code files, supporting integration across features.
