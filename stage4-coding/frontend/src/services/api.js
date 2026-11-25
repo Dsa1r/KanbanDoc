@@ -1,4 +1,7 @@
-const BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://127.0.0.1:5001'
+// ملف واحد لكل طلبات الـ API — كل الصفحات تستخدمه
+// Same-origin by default: Vercel routes /api/* to the backend service.
+// Set VITE_API_BASE_URL only to point at a backend running elsewhere.
+const BASE_URL = import.meta.env.VITE_API_BASE_URL ?? ''
 
 export const tokenStorage = {
   get: () => localStorage.getItem('access_token'),
