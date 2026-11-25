@@ -1,7 +1,6 @@
 import { useState } from 'react'
 import { useNavigate, useSearchParams } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext.jsx'
-import AuthShowcase from '../components/AuthShowcase.jsx'
 import ForgotPasswordModal from '../components/ForgotPasswordModal.jsx'
 import PasswordField from '../components/PasswordField.jsx'
 import '../styles/auth.css'
@@ -76,8 +75,6 @@ export default function AuthPage() {
   return (
     <main className="auth-page">
       <div className="auth-shell">
-        <AuthShowcase />
-
         <section className="auth-panel">
           <div className="auth-panel__inner">
             <p className="auth-eyebrow">{isSignup ? 'Start your first project' : 'Welcome back'}</p>
