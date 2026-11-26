@@ -2,7 +2,7 @@ from flask import Blueprint, request, jsonify, g
 
 from app.middleware.auth import auth_required
 from app.middleware.project_access import ensure_project_member
-from app.services import board_service
+from app.services import board_service, task_service
 
 board_bp = Blueprint('board', __name__, url_prefix='/api/v1/projects')
 
@@ -14,6 +14,7 @@ board_bp = Blueprint('board', __name__, url_prefix='/api/v1/projects')
 def get_project_kanban(project_id):
     project = ensure_project_member(str(project_id), g.user.id)
     data = board_service.get_board(project, request.args.get('stage'))
+    data["can_move_to_done"] = task_service._can_move_to_done(project["team_id"], g.user.id)
     return jsonify({"data": data}), 200
 
 

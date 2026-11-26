@@ -10,9 +10,25 @@ from app.utils.constants import STATUSES
 from app.utils.errors import ApiError
 
 
-def update_status(task_id, user_id, new_status):
-    """Move a task to another Kanban column and save it in the database."""
+def _can_move_to_done(team_id, user_id):
+    rows = (
+        ext.admin_client.table("team_members")
+        .select("is_owner, is_qa")
+        .eq("team_id", team_id)
+        .eq("user_id", user_id)
+        .limit(1)
+        .execute()
+        .data
+    )
 
+    if not rows:
+        return False
+
+    member = rows[0]
+    return bool(member.get("is_owner")) or bool(member.get("is_qa"))
+
+
+def update_status(task_id, user_id, new_status):
     task_id = parse_uuid(task_id, "Task")
 
     if new_status not in STATUSES:
@@ -23,20 +39,19 @@ def update_status(task_id, user_id, new_status):
         )
 
     rows = (
-    ext.admin_client.table("tasks")
-    .select("id, project_id, title, stage, current_status")
-    .eq("id", task_id)
-    .limit(1)
-    .execute()
-    .data
-)
+        ext.admin_client.table("tasks")
+        .select("id, project_id, title, stage, current_status")
+        .eq("id", task_id)
+        .limit(1)
+        .execute()
+        .data
+    )
 
     if not rows:
         raise ApiError("NOT_FOUND", "Task not found", 404)
 
     task = rows[0]
 
-    # Verify that the user belongs to the task's project team.
     project = ensure_project_member(task["project_id"], user_id)
 
     if project.get("is_completed"):
@@ -45,6 +60,14 @@ def update_status(task_id, user_id, new_status):
             "Completed projects are read-only",
             409,
         )
+
+    if new_status == "DONE" and task["current_status"] != "DONE":
+        if not _can_move_to_done(project["team_id"], user_id):
+            raise ApiError(
+                "QA_ONLY",
+                "Only QA or the project owner can move tasks to Done.",
+                403,
+            )
 
     if task["current_status"] != new_status:
         res = (
@@ -66,7 +89,6 @@ def update_status(task_id, user_id, new_status):
         "task": board_service.task_to_dict(task),
         "progress": board_service.get_progress(project["id"]),
     }
-
 
 def get_task_phase(task_id, user_id, requested_status=None):
     """Get phase details for a specific status, or the current status."""

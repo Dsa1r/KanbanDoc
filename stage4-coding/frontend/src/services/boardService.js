@@ -48,6 +48,7 @@ export async function getBoard(projectId) {
     },
     // the API groups tasks by column; the screen filters them itself, so we flatten them
     tasks: Object.values(data.columns).flat().map(toTask),
+    canMoveToDone: data.can_move_to_done ?? true,
   }
 }
 

@@ -79,8 +79,8 @@ class FakeDB:
     def __init__(self):
         self.tables = {
             "team_members": [
-                {"id": "m1", "team_id": TEAM1, "user_id": ALICE},
-                {"id": "m2", "team_id": TEAM2, "user_id": BOB},
+                {"id": "m1", "team_id": TEAM1, "user_id": ALICE, "is_owner": True, "is_qa": False},
+                {"id": "m2", "team_id": TEAM2, "user_id": BOB, "is_owner": True, "is_qa": False},
             ],
             "projects": [
                 {"id": P1, "project_name": "Portfolio", "is_completed": False, "team_id": TEAM1},

@@ -7,10 +7,12 @@ export default function KanbanColumn({
   selectedTaskId,
   onOpenTask,
   onMoveTask,
-  onAddTask
+  onAddTask,
+  acceptsDrop = true
 }) {
   const titleId = `column-${column.id}-title`;
   const [isOver, setIsOver] = useState(false);
+  const canDrop = Boolean(onMoveTask) && acceptsDrop;
 
   function handleDrop(event) {
     event.preventDefault();
@@ -24,7 +26,7 @@ export default function KanbanColumn({
       className={`kanban-column ${isOver ? 'kanban-column--over' : ''}`}
       aria-labelledby={titleId}
       onDragOver={
-        onMoveTask
+        canDrop
           ? (event) => {
               event.preventDefault();
               setIsOver(true);

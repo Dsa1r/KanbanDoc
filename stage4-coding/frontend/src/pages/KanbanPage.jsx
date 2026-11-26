@@ -34,6 +34,8 @@ export default function KanbanPage() {
   const [tasks, setTasks] = useState(
     projectId ? [] : mockBoard.tasks
   );
+    
+ const [canMoveToDone, setCanMoveToDone] = useState(true);
 
   const [isLoading, setIsLoading] = useState(Boolean(projectId));
   const [error, setError] = useState('');
@@ -53,6 +55,7 @@ export default function KanbanPage() {
       .then((board) => {
         setProject(board.project);
         setTasks(board.tasks);
+        setCanMoveToDone(board.canMoveToDone);
       })
       .catch((err) => {
         setError(err.message);
@@ -71,6 +74,7 @@ export default function KanbanPage() {
 
         setProject(board.project);
         setTasks(board.tasks);
+        setCanMoveToDone(board.canMoveToDone);
       })
       .catch((err) => {
         if (!ignore) setError(err.message);
@@ -131,6 +135,11 @@ export default function KanbanPage() {
     );
 
     if (!task || task.status === newStatus || readOnly) {
+      return;
+    }
+
+        if (newStatus === 'done' && !canMoveToDone) {
+      setError('Only QA or the project owner can move tasks to Done.');
       return;
     }
 
@@ -233,6 +242,9 @@ export default function KanbanPage() {
               }
               onMoveTask={
                 readOnly ? undefined : handleMoveTask
+              }
+                            acceptsDrop={
+                column.id !== 'done' || canMoveToDone
               }
             />
           ))}
