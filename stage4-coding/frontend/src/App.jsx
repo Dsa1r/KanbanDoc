@@ -12,8 +12,8 @@ import SiteLayout from './components/SiteLayout.jsx'
 export default function App() {
   return (
     <Routes>
-      <Route path="/" element={<LandingPage />} />
       <Route element={<SiteLayout />}>
+        <Route path="/" element={<LandingPage />} />
         <Route path="/auth" element={<AuthPage />} />
         <Route path="/reset-password" element={<ResetPasswordPage />} />
         <Route path="/roadmap" element={<LearningPathPage />} />

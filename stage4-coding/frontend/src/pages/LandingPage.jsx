@@ -156,157 +156,139 @@ function LandingPage() {
   }, []);
   return (
     <div className="landing">
-      <header className="landing__header">
-        <a href="/" className="landing__brand" aria-label="Devcompass home">
-          <svg width="22" height="40" viewBox="0 0 22 40" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden="true"><path d="M13 2l1 17-9 5 2 11-5 3M17 2l1 19-9 5 1 8M21 1l1 22-9 5 1 6-5 4" /></svg><span>Devcompass</span>
-        </a>
-        <nav className="landing__nav">
-          <a href="/auth" className="landing__login">
-            Log in
-          </a>
-          <a href="/auth" className="landing__header-cta">
-            Get started
-          </a>
-        </nav>
-      </header>
-
       <main>
         <div className="landing__scroll-scene">
-        <div ref={scene} className="landing__hero-scene">
-        <section className="landing__hero">
-          <div ref={copy} className="landing__hero-text">
-            <h1 className="landing__title">
-              Always know your <span className="landing__accent">next step.</span>
-            </h1>
-            <p className="landing__lead">
-              Turn your project ideas into organized, actionable tasks. Use AI to
-              create a personalized task plan, manage your workflow, and track your
-              progress.
-            </p>
-            <a href="/auth" className="landing__btn landing__btn--primary">
-              Get started →
-            </a>
-          </div>
+          <div ref={scene} className="landing__hero-scene">
+            <section className="landing__hero">
+              <div ref={copy} className="landing__hero-text">
+                <h1 className="landing__title">
+                  Always know your <span className="landing__accent">next step.</span>
+                </h1>
+                <p className="landing__lead">
+                  Turn your project ideas into organized, actionable tasks. Use AI to
+                  create a personalized task plan, manage your workflow, and track your
+                  progress.
+                </p>
+                <a href="/auth" className="landing__btn landing__btn--primary">
+                  Get started →
+                </a>
+              </div>
 
-          <div ref={board} className="landing__window" aria-hidden="true">
-            <div className="landing__window-bar">
-              <span className="landing__dot" />
-              <span className="landing__dot" />
-              <span className="landing__dot" />
-            </div>
-            <div className="landing__window-body">
-              <div className="landing__window-head">
-                <div>
-                  <p className="landing__window-label">Project</p>
-                  <p className="landing__window-title">Recipe app</p>
+              <div ref={board} className="landing__window" aria-hidden="true">
+                <div className="landing__window-bar">
+                  <span className="landing__dot" />
+                  <span className="landing__dot" />
+                  <span className="landing__dot" />
                 </div>
-                <span className="landing__avatar">NF</span>
-              </div>
+                <div className="landing__window-body">
+                  <div className="landing__window-head">
+                    <div>
+                      <p className="landing__window-label">Project</p>
+                      <p className="landing__window-title">Recipe app</p>
+                    </div>
+                    <span className="landing__avatar">NF</span>
+                  </div>
 
-              <div className="landing__next">
-                <span className="landing__next-label">NEXT UP</span>
-                <span className="landing__next-task">Build your first API endpoint</span>
-              </div>
+                  <div className="landing__next">
+                    <span className="landing__next-label">NEXT UP</span>
+                    <span className="landing__next-task">Build your first API endpoint</span>
+                  </div>
 
-              <div className="landing__board">
-                {BOARD.map((col) => (
-                  <div key={col.title} className="landing__col">
-                    <p className="landing__col-title">
-                      {col.title} <span>{col.tasks.length}</span>
-                    </p>
-                    {col.tasks.map((task) => (
-                      <div key={task.name} className="landing__card">
-                        <p>{task.name}</p>
-                        <span className={`landing__tag landing__tag--${task.tag.toLowerCase()}`}>
-                          {task.tag}
-                        </span>
+                  <div className="landing__board">
+                    {BOARD.map((col) => (
+                      <div key={col.title} className="landing__col">
+                        <p className="landing__col-title">
+                          {col.title} <span>{col.tasks.length}</span>
+                        </p>
+                        {col.tasks.map((task) => (
+                          <div key={task.name} className="landing__card">
+                            <p>{task.name}</p>
+                            <span className={`landing__tag landing__tag--${task.tag.toLowerCase()}`}>
+                              {task.tag}
+                            </span>
+                          </div>
+                        ))}
                       </div>
                     ))}
                   </div>
-                ))}
+                </div>
               </div>
-            </div>
+            </section>
           </div>
-        </section>
-        </div>
         </div>
 
         <div className="landing__continuation">
-        <section className="landing__stages">
-          {STAGES.map((stage) => (
-            <div key={stage.n} className="landing__stage">
-              <span className="landing__stage-icon">
+          <section className="landing__stages">
+            {STAGES.map((stage) => (
+              <div key={stage.n} className="landing__stage">
+                <span className="landing__stage-icon">
+                  <svg
+                    width="20"
+                    height="20"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    aria-hidden="true"
+                  >
+                    <path d={stage.icon} />
+                  </svg>
+                </span>
+                <div>
+                  <p className="landing__stage-name">{stage.name}</p>
+                  <p className="landing__stage-sub">{stage.sub}</p>
+                </div>
                 <svg
-                  width="20"
-                  height="20"
+                  className="landing__stage-arrow"
+                  width="14"
+                  height="14"
                   viewBox="0 0 24 24"
                   fill="none"
                   stroke="currentColor"
-                  strokeWidth="2"
+                  strokeWidth="2.4"
                   strokeLinecap="round"
                   strokeLinejoin="round"
                   aria-hidden="true"
                 >
-                  <path d={stage.icon} />
+                  <path d="m9 6 6 6-6 6" />
                 </svg>
-              </span>
-              <div>
-                <p className="landing__stage-name">{stage.name}</p>
-                <p className="landing__stage-sub">{stage.sub}</p>
               </div>
-              <svg
-                className="landing__stage-arrow"
-                width="14"
-                height="14"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2.4"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                aria-hidden="true"
-              >
-                <path d="m9 6 6 6-6 6" />
-              </svg>
-            </div>
-          ))}
-        </section>
-
-        <section className="landing__features">
-          <div className="landing__features-head">
-            <p className="landing__eyebrow">FEATURES</p>
-            <h2 className="landing__h2">Less guessing. More building.</h2>
-            <p className="landing__features-sub">
-              Devcompass gives junior developers a clear plan, smart task suggestions
-              and a live view of their progress.
-            </p>
-          </div>
-
-          <div className="landing__feature-grid">
-            {FEATURES.map((f) => (
-              <article key={f.n} className="landing__feature">
-                <p className="landing__feature-n">{f.n}</p>
-                <h3 className="landing__feature-title">{f.title}</h3>
-                <p className="landing__feature-text">{f.text}</p>
-              </article>
             ))}
-          </div>
-        </section>
+          </section>
 
-        <section className="landing__cta">
-          <div className="landing__cta-card">
-            <h2 className="landing__cta-title">Ready to plan your next project?</h2>
-            <a href="/auth" className="landing__cta-btn">
-              Get started →
-            </a>
-          </div>
-        </section>
+          <section className="landing__features">
+            <div className="landing__features-head">
+              <p className="landing__eyebrow">FEATURES</p>
+              <h2 className="landing__h2">Less guessing. More building.</h2>
+              <p className="landing__features-sub">
+                Devcompass gives junior developers a clear plan, smart task suggestions
+                and a live view of their progress.
+              </p>
+            </div>
+
+            <div className="landing__feature-grid">
+              {FEATURES.map((f) => (
+                <article key={f.n} className="landing__feature">
+                  <p className="landing__feature-n">{f.n}</p>
+                  <h3 className="landing__feature-title">{f.title}</h3>
+                  <p className="landing__feature-text">{f.text}</p>
+                </article>
+              ))}
+            </div>
+          </section>
+
+          <section className="landing__cta">
+            <div className="landing__cta-card">
+              <h2 className="landing__cta-title">Ready to plan your next project?</h2>
+              <a href="/auth" className="landing__cta-btn">
+                Get started →
+              </a>
+            </div>
+          </section>
         </div>
       </main>
-
-      <footer className="landing__footer">
-        © 2026 Devcompass
-      </footer>
     </div>
   );
 }
